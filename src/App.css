@@ -1,3 +1,27 @@
+form {
+  margin: 50px 0;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+}
+
+button[type="submit"] {
+  display: block;
+  margin: 15px auto;
+}
+
+form {
+  border: 2px solid crimson;
+  padding: 30px;
+}
+
+.individual-item {
+  border: 2px solid deepskyblue;
+  margin: 10px 0;
+}
+
 .App {
   text-align: center;
 }
