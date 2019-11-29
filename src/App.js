@@ -20,7 +20,9 @@ class App extends Component {
       person2: '',
       
       currentBillItem: '',  // WUT IS DIS - oh it's the whole bill object
-      currentBillKey: ''
+      currentBillKey: '',
+
+      displayBill: false
 
     }
   }
@@ -156,7 +158,11 @@ finishedAddingItems = () => {
             : null
         }
 
+        {/* {
+          // WHAT CONDITION???? (displayBill = true/false ???) - can set this after items are done being added - eg. when you click the submit form button
+          ? <DisplayBill /> // need to pass in bill Info
 
+        } */}
 
         {/* 
         // DISPLAY THE MONEYS
@@ -169,20 +175,8 @@ finishedAddingItems = () => {
         */}
 
 
-        <section id="showMeTheMoney">
+        {/* <ListAllBills /> */}
 
-          <h2>{this.state.billName}</h2>
-          <h3>{this.state.person1}</h3>
-          <ul>
-            <li></li>
-          </ul>
-          <h3>{this.state.person2}</h3>
-          <ul>
-            <li></li>
-          </ul>
-
-
-        </section>
 
       </div>
     );

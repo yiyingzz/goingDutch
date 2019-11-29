@@ -26,6 +26,9 @@ class ItemForm extends Component {
     console.log("billRef in componentDidMount");
     console.log(billRef);
 
+
+    //billRef won't work for this cuz it holds the people
+      // but maybe I need to have a seaparate array just to display on this page temporarily????
     billRef.on('value', (snapshot) => {
       const itemList = snapshot.val();
 
@@ -77,35 +80,46 @@ class ItemForm extends Component {
       // check for which person is paying
       if (person1.checked === true && person2.checked === true) {
         console.log("both are checked!");
+        // calculation function here
+
+        console.log("itemCost:", itemCost);
+        const costPerPerson = itemCost / 2;
+        console.log("costPerPerson:", costPerPerson);
+        
+        // push to billsRef in the correct spot
+        const item = {
+          itemName: itemName,
+          itemCost: costPerPerson
+        }
+        billRef.people[0].items.push(item);
+        billRef.people[1].items.push(item);
+
       } else if (person1.checked === true) {
         console.log("person1 is checked!");
-        
+        // calculation function here
+
+        // push to billsRef in the correct spot
+        const item = {
+          itemName: itemName,
+          itemCost: itemCost
+        }
+        billRef.people[0].items.push(item);
+
       } else if (person2.checked === true) {
         console.log("person2 is checked!");
+        // calculation function here
+
+        // push to billsRef in the correct spot
+        const item = {
+          itemName: itemName,
+          itemCost: itemCost
+        }
+        billRef.people[1].items.push(item);
       }
       
-      
-      console.log("itemCost:", itemCost);
-      const costPerPerson = itemCost / 2;
-      console.log("costPerPerson:", costPerPerson);
-      const item = {
-        itemName: costPerPerson
-      }
-      billRef.people[0].items.push(item);
-      billRef.people[1].items.push(item);
-      
-      
-      
-      // should it start calculating total here? 
-      // eg. update totalAmount as each item is added
-        // I think this makes the most sense if we were to keep a running tab
-        // also can't push to database without calculations
 
-    // MATH TIME!
-    // item cost / num of People = amountPaidPerPerson
+    // actually this is all 1 formula for all calculations // refactor later
 
-    // give amountPaidPerPerson to each person involved
-    // actually this is all 1 formula
   }
 
   render() {
@@ -137,6 +151,13 @@ class ItemForm extends Component {
         */}
 
         <h2>{this.state.billName}</h2>
+
+
+          {/* 
+              ONCE an item has been added, make it show up here
+              ternary to check if at least one item is there
+
+           */}
 
           <form className="individual-item">
             
