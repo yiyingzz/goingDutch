@@ -2,18 +2,49 @@ import React, { Component } from 'react';
 import firebase from './firebase.js';
 
 class ItemForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
 
-      person1: '',
-      person2: '',
+      billName: this.props.billName,
+      person1: this.props.person1,
+      person2: this.props.person2,
       itemName: '',
-      itemCost: ''
+      itemCost: '',
+      currentBillKey: this.props.currentBillKey,
 
+      items: []
     }
   }
 
+  // this needs to use the currentBillKey to input data onto the right bill
+  componentDidMount() {
+    const billRef = firebase.database().ref(this.props.currentBillKey);
+    console.log("this.props.currentBillKey in componentDidMount");
+    console.log(this.props.currentBillKey);
+
+    console.log("billRef in componentDidMount");
+    console.log(billRef);
+
+    billRef.on('value', (snapshot) => {
+      const itemList = snapshot.val();
+
+      // this may not be necessary
+      const newItems = [];
+      for (let key in itemList) {
+        console.log("itemList[key]");
+        console.log(itemList[key]); // logging out keys
+        newItems.push(itemList[key]); // push onto new array
+        console.log("newItems list");
+        console.log(newItems);
+      }
+    })
+
+    // this.setState({
+    //   items: newItems
+    // })
+
+  }
 
   // this needs to add individual items to each person
   addItemToBill = (event) => {
@@ -54,14 +85,14 @@ class ItemForm extends Component {
       }
       
       
-      // console.log("itemCost:", itemCost);
-      // const costPerPerson = itemCost / 2;
-      // console.log("costPerPerson:", costPerPerson);
-      // const item = {
-      //   itemName: costPerPerson
-      // }
-      // billRef.people[0].items.push(item);
-      // billRef.people[1].items.push(item);
+      console.log("itemCost:", itemCost);
+      const costPerPerson = itemCost / 2;
+      console.log("costPerPerson:", costPerPerson);
+      const item = {
+        itemName: costPerPerson
+      }
+      billRef.people[0].items.push(item);
+      billRef.people[1].items.push(item);
       
       
       
@@ -78,9 +109,21 @@ class ItemForm extends Component {
   }
 
   render() {
+
+    console.log("this.props in ItemForm.js");
+    console.log(this.props);
+    console.log("this.props.billName") 
+    console.log(this.props.billName);
+    console.log("this.state.billName");
+    console.log(this.state.billName);
+    console.log("this.props.currentBillKey");
+    console.log(this.props.currentBillKey);
+
     return (
 
       <div>
+
+        
 
 
         {/* 

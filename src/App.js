@@ -18,20 +18,14 @@ class App extends Component {
 
       person1: '',
       person2: '',
-
-
-      itemName: '',
-      itemCost: '',
-
-
-
-      currentBillItem: '',
+      
+      currentBillItem: '',  // WUT IS DIS - oh it's the whole bill object
       currentBillKey: ''
 
     }
   }
   
-  
+
   componentDidMount() {
     // connect to firebase database in componentDidMount()
     const dbRef = firebase.database().ref();
@@ -46,7 +40,6 @@ class App extends Component {
       for (let key in bills) {
         console.log(bills[key]); // logging out all the keys (separate bills)
         newBills.push(bills[key]); // push onto new array
-        console.log(newBills); // we can see the new array
       }
 
       this.setState({
@@ -106,6 +99,9 @@ class App extends Component {
     })
   
     // if statement to add third person
+    
+    console.log("newBillItem.key", newBillItem.key);
+    console.log("newBillKey", newBillKey);
 
   }
 
@@ -119,6 +115,12 @@ finishedAddingItems = () => {
 
 
   render() {
+
+    console.log("this.props in App.js");
+    console.log(this.props);
+    console.log("currentBillKey");
+    console.log(this.state.currentBillKey);
+
     return (
       <div className="App">
         <h1>Going Dutch!</h1>
@@ -148,8 +150,12 @@ finishedAddingItems = () => {
         </form>
 
 
+        {
+          this.state.currentBillKey 
+            ? <ItemForm currentBillKey={this.state.currentBillKey} billName={this.state.billName} person1={this.state.person1} person2={this.state.person2} />
+            : null
+        }
 
-        <ItemForm />
 
 
         {/* 
