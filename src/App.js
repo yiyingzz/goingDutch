@@ -13,7 +13,7 @@ class App extends Component {
     this.state = {
 
       // events is an array representing the database
-      bills: [],
+      bills: [], // I HAVEN'T EVEN USED THIS THOUGH
 
       // need multiple input values, one for each input
       // need to get these from NewBillForm
@@ -35,30 +35,30 @@ class App extends Component {
   }
   
 
-  componentDidMount() {
-    // connect to firebase database in componentDidMount()
-    const dbRef = firebase.database().ref();
-    console.log(dbRef);
+  // componentDidMount() {
+  //   // connect to firebase database in componentDidMount()
+  //   const dbRef = firebase.database().ref();
+  //   console.log(dbRef);
     
-    // need to listen for changes in database
-      // then add to this.state.bills array
-    dbRef.on('value', (snapshot) => {
-      const bills = snapshot.val();
+  //   // need to listen for changes in database
+  //     // then add to this.state.bills array
+  //   dbRef.on('value', (snapshot) => {
+  //     const bills = snapshot.val();
 
-      const newBills = [];
-      for (let key in bills) {
-        console.log(bills[key]); // logging out all the keys (separate bills)
-        newBills.push(bills[key]); // push onto new array
-      }
+  //     const newBills = [];
+  //     for (let key in bills) {
+  //       console.log(bills[key]); // logging out all the keys (separate bills)
+  //       newBills.push(bills[key]); // push onto new array
+  //     }
 
-      this.setState({
-        bills: newBills
-      })
+  //     this.setState({
+  //       bills: newBills
+  //     })
 
-      console.log("logging this.state.bills from componentDidMount", this.state.bills);
-    })
+  //     console.log("logging this.state.bills from componentDidMount", this.state.bills);
+  //   })
 
-  }
+  // }
 
 
   getBillInfo = (billName, person1, person2, billKey) => {
@@ -75,17 +75,24 @@ class App extends Component {
   }
 
 
-doneAddingItems = (event) => {
-  event.preventDefault();
-  // basically just needs to take us to a page displaying what each person is paying for
-  console.log("doneAddingItems() running in App.js!");
+  doneAddingItems = (event) => {
+    event.preventDefault();
+    // basically just needs to take us to a page displaying what each person is paying for
+    console.log("doneAddingItems() running in App.js!");
 
-  this.setState({
-    showItemForm: false,
-    displayBill: true   // making this true displays the bill info with total $$
-  })
-}
+    this.setState({
+      showItemForm: false,
+      displayBill: true   // making this true displays the bill info with total $$
+    })
+  }
 
+  showFrontPage = (event) => {
+    event.preventDefault();
+    this.setState({
+      showNewBillForm: true,
+      displayBill: false
+    })
+  }
 
   render() {
 
@@ -119,8 +126,9 @@ doneAddingItems = (event) => {
         {
           this.state.displayBill
           ? <DisplayBill 
-              currentBillKey={this.state.currentBillKey} 
-            /> // need to pass in bill Info
+              currentBillKey={this.state.currentBillKey}
+              showFrontPage={this.showFrontPage}
+            />
           : null
         }
 

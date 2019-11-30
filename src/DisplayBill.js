@@ -94,7 +94,7 @@ class DisplayBill extends Component {
             )
           })
         }
-        {/* <p>Total Amount Owed: <span>{this.state.person1.totalAmount}</span></p> */}
+        <p>Total Amount Owed: <span>{this.state.person1.totalAmount}</span></p>
      
         <h3>{this.state.person2.name}</h3> 
 
@@ -110,7 +110,10 @@ class DisplayBill extends Component {
         
         
 
-        {/* <p>Total Amount Owed: <span>{this.state.person2.totalAmount}</span></p> */}
+        <p>Total Amount Owed: <span>{this.state.person2.totalAmount}</span></p>
+
+
+        <button onClick={(event) => this.props.showFrontPage(event)}>Split Another Bill?</button>
         
       </div>
 

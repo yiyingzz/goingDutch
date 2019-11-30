@@ -8,7 +8,6 @@ class NewBillForm extends Component {
       billName: '',
       person1: '',
       person2: '',
-      currentBillKey: ''
     }
   }
   
@@ -18,8 +17,6 @@ class NewBillForm extends Component {
     this.setState({
       [event.target.id]: inputValue
     })
-
-    console.log(this.state[event.target.id]);
   }
 
   // this submits the first form that gets bill name & people names
@@ -45,14 +42,7 @@ class NewBillForm extends Component {
     });
 
     const newBillKey = newBillItem.key;
-
-    this.setState({
-      currentBillKey: newBillKey,
-      showItemForm: true
-    })
-  
-    // if statement to add third person
-    
+      
     this.props.getBillInfo(this.state.billName, this.state.person1, this.state.person2, newBillKey)
 
   }

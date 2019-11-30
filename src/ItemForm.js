@@ -95,41 +95,14 @@ class ItemForm extends Component {
       <div>
 
 
-        {/* 
-
-          // ADDING ITEMS 
-          // page shows inputs for adding items & cost for the event 
-          // also shows people's names (maybe button-like element that you can click and "tag" people to the item
-          // (this would determine if the item cost needs to be split between x num of people or not)
-
-          // calculation time!
-          // based on how items were split, calculate what each person needs to pay
-          // each person would have an array of what they need to pay for, so app just needs to add it all up and get a total amount
-          // send to database - update each person's total amount
-
-          // send info to database
-            // as items & costs are added, they show up on the page in a list
-            // [submit/done] button - or some sort of indicator from user that they are done adding items
-
-
-        */}
-
         <h2>{this.props.billName}</h2>
 
-
-          {/* 
-              ONCE an item has been added, make it show up here
-              ternary to check if at least one item is there
-          */}
 
           {
             this.state.showItemsList 
               ? <ItemsList allItems={this.state.allItems} />
               : null
           }
-
-
-
 
           <form className="individual-item">
             
@@ -140,9 +113,6 @@ class ItemForm extends Component {
             <input type="number" min="0" step="0.01" id="itemCost" placeholder="0.00" value={this.itemCost} onChange={this.inputChange}></input>
 
             <legend>Who is paying for this item?</legend>
-
-            {/* SET A VALUE CORRESPONDING TO ORDER EACH PERSON WAS INPUTTED ORIGINALLY */}
-            {/* NEED ERROR HANDLING FOR DECIMAL VALUES */}
 
             <input type="checkbox" id="itemPerson1" name="person"></input>
             <label htmlFor="itemPerson1">{this.props.person1}</label>
