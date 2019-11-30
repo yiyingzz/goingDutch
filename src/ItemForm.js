@@ -46,8 +46,7 @@ class ItemForm extends Component {
         itemCost: costPerPerson
       }
 
-      person1Ref.child('items').push(item);
-      person2Ref.child('items').push(item);
+      
       person1CurrentTotal += costPerPerson;
       person2CurrentTotal += costPerPerson;
       this.setState({
@@ -62,6 +61,11 @@ class ItemForm extends Component {
         costPerPerson: costPerPerson,
         whosPaying: `${this.props.person1}, ${this.props.person2}` 
       })
+
+      person1Ref.child('items').push(item);
+      person2Ref.child('items').push(item);
+      person1Ref.child('totalAmount').set(person1CurrentTotal);
+      person2Ref.child('totalAmount').set(person2CurrentTotal);
 
     } else if (person1.checked === true) {
       const item = {
@@ -85,6 +89,7 @@ class ItemForm extends Component {
         person1Total: person1CurrentTotal,
         whosPaying: this.props.person1 
       })
+      person1Ref.child('totalAmount').set(person1CurrentTotal);
 
     } else if (person2.checked === true) {
       const item = {
@@ -103,10 +108,12 @@ class ItemForm extends Component {
         person2Total: person2CurrentTotal,
         whosPaying: this.props.person2 
       })
+      person2Ref.child('totalAmount').set(person2CurrentTotal);
     }
 
-    // how to push total to database????
+
     // clear inputs
+    document.getElementById('itemForm').reset();
 
     this.setState({
       showItemsList: true
@@ -133,7 +140,7 @@ class ItemForm extends Component {
               : null
           }
 
-          <form className="individual-item">
+          <form id="itemForm">
             
             <label htmlFor="itemName">Enter an item</label>
             <input type="text" id="itemName" value={this.itemName} onChange={this.inputChange}></input>
