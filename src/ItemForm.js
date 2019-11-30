@@ -10,6 +10,9 @@ class ItemForm extends Component {
       allItems: [],
       person1Items: [],
       person2Items: [],
+      person1Total: 0,
+      person2Total: 0,
+
       showItemsList: false
     }
   }
@@ -27,9 +30,17 @@ class ItemForm extends Component {
     const person1 = document.getElementById('itemPerson1');
     const person2 = document.getElementById('itemPerson2');
 
+    let person1CurrentTotal = this.state.person1Total;
+    let person2CurrentTotal = this.state.person2Total;
+    console.log("loggin person1CurerntTtoal as number");
+    console.log(person1CurrentTotal);
+    console.log("loggin itemCost");
+    console.log(itemCost);
+
     // check for which person is paying
     if (person1.checked === true && person2.checked === true) {
-      const costPerPerson = (itemCost / 2).toFixed(2);
+      let costPerPerson = (itemCost / 2).toFixed(2);
+      costPerPerson = Number(costPerPerson);
       const item = {
         itemName: `1/2 ${itemName}`,
         itemCost: costPerPerson
@@ -37,7 +48,12 @@ class ItemForm extends Component {
 
       person1Ref.child('items').push(item);
       person2Ref.child('items').push(item);
-
+      person1CurrentTotal += costPerPerson;
+      person2CurrentTotal += costPerPerson;
+      this.setState({
+        person1Total: person1CurrentTotal,
+        person2Total: person2CurrentTotal
+      })
       this.state.person1Items.push(item);
       this.state.person2Items.push(item);
       this.state.allItems.push({
@@ -53,12 +69,20 @@ class ItemForm extends Component {
         itemCost: itemCost
       }
       person1Ref.child('items').push(item);
+      
 
+      person1CurrentTotal += itemCost;
+      person1Ref.totalAmount = person1CurrentTotal;
+
+      this.setState({
+        person1Total: person1CurrentTotal
+      })
 
       this.state.person1Items.push(item);
       this.state.allItems.push({
         itemName: itemName,
         itemCost: itemCost,
+        person1Total: person1CurrentTotal,
         whosPaying: this.props.person1 
       })
 
@@ -68,16 +92,21 @@ class ItemForm extends Component {
         itemCost: itemCost
       }
       person2Ref.child('items').push(item);
-
+      person2CurrentTotal += itemCost;
+      this.setState({
+        person2Total: person2CurrentTotal
+      })
       this.state.person2Items.push(item);
       this.state.allItems.push({
         itemName: itemName,
         itemCost: itemCost,
+        person2Total: person2CurrentTotal,
         whosPaying: this.props.person2 
       })
     }
 
-    // I FORGOT TO CALCULATE TOTAL AMOUNT FOR EACH PERSON!!!!
+    // how to push total to database????
+    // clear inputs
 
     this.setState({
       showItemsList: true

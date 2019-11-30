@@ -32,11 +32,11 @@ class NewBillForm extends Component {
       people: [
         {
           name: this.state.person1,
-          totalAmount: '' // maybe not necessary right here
+          totalAmount: 0 // maybe not necessary right here
         },
         {
           name: this.state.person2,
-          totalAmount: ''
+          totalAmount: 0
         }
       ]
     });
