@@ -6,12 +6,12 @@ class ItemForm extends Component {
     super();
     this.state = {
 
-      billName: this.props.billName,
-      person1: this.props.person1,
-      person2: this.props.person2,
-      itemName: '',
-      itemCost: '',
-      currentBillKey: this.props.currentBillKey,
+      // billName: this.props.billName,
+      // person1: this.props.person1,
+      // person2: this.props.person2,
+      // itemName: '',
+      // itemCost: '',
+      // currentBillKey: this.props.currentBillKey,
 
       items: []
     }
@@ -54,84 +54,46 @@ class ItemForm extends Component {
     event.preventDefault();
 
     // set ref for current bill obj
-    const billRef = firebase.database().ref(this.state.currentBillKey);
+    // const billRef = firebase.database().ref(this.props.currentBillKey);
     
+    const person1Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [0]);
+    const person2Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [1]);
 
+    const itemName = document.getElementById('itemName').value;
+    const itemCost = Number(document.getElementById('itemCost').value);
+    const person1 = document.getElementById('itemPerson1');
+    const person2 = document.getElementById('itemPerson2');
 
-    console.log("this.state.itemName", this.state.itemName);
-    console.log("this.state.itemCost", this.state.itemCost);
-
-    console.log("this.state.person1", this.state.person1);
-
-    // issue is how to get the right person for each item?
-    // need to get the selected checkbox id - this is the person
-      // add the item & cost to their items array
-
-      const itemName = document.getElementById('itemName').value;
-      console.log(itemName);
-
-      const itemCost = document.getElementById('itemCost').value;
-      console.log(itemCost);
-
-      const person1 = document.getElementById('itemPerson1');
-      const person2 = document.getElementById('itemPerson2');
-      console.log(person1, person2);
-      console.log('person1.checked', person1.checked)
-      // check for which person is paying
-      if (person1.checked === true && person2.checked === true) {
-        console.log("both are checked!");
-        // calculation function here
-
-        console.log("itemCost:", itemCost);
-        const costPerPerson = itemCost / 2;
-        console.log("costPerPerson:", costPerPerson);
-        
-        // push to billsRef in the correct spot
-        const item = {
-          itemName: itemName,
-          itemCost: costPerPerson
-        }
-        billRef.people[0].items.push(item);
-        billRef.people[1].items.push(item);
-
-      } else if (person1.checked === true) {
-        console.log("person1 is checked!");
-        // calculation function here
-
-        // push to billsRef in the correct spot
-        const item = {
-          itemName: itemName,
-          itemCost: itemCost
-        }
-        billRef.people[0].items.push(item);
-
-      } else if (person2.checked === true) {
-        console.log("person2 is checked!");
-        // calculation function here
-
-        // push to billsRef in the correct spot
-        const item = {
-          itemName: itemName,
-          itemCost: itemCost
-        }
-        billRef.people[1].items.push(item);
+    // check for which person is paying
+    if (person1.checked === true && person2.checked === true) {
+      const costPerPerson = itemCost / 2;
+      const item = {
+        itemName: itemName,
+        itemCost: costPerPerson
       }
+      person1Ref.push(item);
+      person2Ref.push(item);
+
+    } else if (person1.checked === true) {
+      const item = {
+        itemName: itemName,
+        itemCost: itemCost
+      }
+      person1Ref.push(item);
+
+    } else if (person2.checked === true) {
+      const item = {
+        itemName: itemName,
+        itemCost: itemCost
+      }
+      person2Ref.push(item);
+    }
+
+    // NOW THE ISSUE IS HOW TO PUSH ITEMS ON TO ITS OWN ARRAY?????
       
-
-    // actually this is all 1 formula for all calculations // refactor later
-
   }
 
   render() {
-
-    console.log("this.props in ItemForm.js");
-    console.log(this.props);
-    console.log("this.props.billName") 
-    console.log(this.props.billName);
-    console.log("this.state.billName");
-    console.log(this.state.billName);
-    console.log("this.props.currentBillKey");
-    console.log(this.props.currentBillKey);
 
     return (
 
@@ -157,7 +119,7 @@ class ItemForm extends Component {
 
         */}
 
-        <h2>{this.state.billName}</h2>
+        <h2>{this.props.billName}</h2>
 
 
           {/* 
@@ -178,16 +140,19 @@ class ItemForm extends Component {
 
             {/* SET A VALUE CORRESPONDING TO ORDER EACH PERSON WAS INPUTTED ORIGINALLY */}
             {/* NEED ERROR HANDLING FOR DECIMAL VALUES */}
+
             <input type="checkbox" id="itemPerson1" name="person"></input>
-            <label htmlFor="itemPerson1">{this.state.person1}</label>
+            <label htmlFor="itemPerson1">{this.props.person1}</label>
 
             <input type="checkbox" id="itemPerson2" name="person"></input>
-            <label htmlFor="itemPerson2">{this.state.person2}</label>
+            <label htmlFor="itemPerson2">{this.props.person2}</label>
 
             <button onClick={this.addItemToBill}>Add Item</button>
 
             
           </form>
+
+          <button>I'm done adding items!</button>
 
       </div>
 

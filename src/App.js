@@ -175,20 +175,20 @@ finishedAddingItems = () => {
             // **** technically can just use currentBillKey to get data from database & prob don't need the other props ??
         }
 
-        {
+        {/* {
           this.state.displayBill
           ? <DisplayBill 
               currentBillKey={this.state.currentBillKey} 
             /> // need to pass in bill Info
           : null
-        }
+        } */}
 
 
-        { 
+        {/* { 
           this.state.listAllBills
             ? <ListAllBills /> 
             : null
-        }
+        } */}
 
 
       </div>
