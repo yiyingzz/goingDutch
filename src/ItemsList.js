@@ -4,7 +4,7 @@ class ItemsList extends Component {
   constructor() {
     super();
     this.state = {
-      itemList: this.props.allItems
+      // itemList: this.props.allItems
     }
   }
 
@@ -14,6 +14,11 @@ class ItemsList extends Component {
   }
   
   render() {
+
+    console.log("this.props.allItems in render(), outside return()");
+    console.log(this.props.allItems);
+    // console.log(this.state.itemList);
+
     return (
       
       <div>
@@ -25,11 +30,14 @@ class ItemsList extends Component {
 
         
 
-        this.state.itemList.forEach((item) => {
-          return (`
-          <p>${item.itemName} <span>Total Cost: ${item.itemCost}</span></p>
-          <p>Who's Paying? <span>${item.whosPaying}</span></p>
-          `) 
+
+        this.props.allItems.map((item) => {
+          return (
+            <div>
+              <p>{item.itemName} <span>Total Cost: {item.itemCost}</span></p>
+              <p>Who's Paying? <span>{item.whosPaying}</span></p>
+            </div>
+          ) 
         })
       }
 

@@ -66,7 +66,7 @@ class ItemForm extends Component {
       })
     }
 
-    console.log(this.state.allTtems);
+    console.log(this.state.allItems); 
 
     // NOW THE ISSUE IS HOW TO PUSH ITEMS ON TO ITS OWN ARRAY?????
     // what if instead of pushing to the database, I push it onto an array on this component to list it on the page,
@@ -77,9 +77,9 @@ class ItemForm extends Component {
       // also calculate total amount per person
 
 
-    // this.setState({
-    //   showItemsList: true
-    // })
+    this.setState({
+      showItemsList: true
+    })
       
   }
 
@@ -124,9 +124,7 @@ class ItemForm extends Component {
 
           {
             this.state.showItemsList 
-              ? <ItemsList 
-                  allItems={this.state.allItems}
-                />
+              ? <ItemsList allItems={this.state.allItems} />
               : null
           }
 
