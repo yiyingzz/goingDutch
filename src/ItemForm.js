@@ -6,42 +6,32 @@ class ItemForm extends Component {
     super();
     this.state = {
 
-      // billName: this.props.billName,
-      // person1: this.props.person1,
-      // person2: this.props.person2,
-      // itemName: '',
-      // itemCost: '',
-      // currentBillKey: this.props.currentBillKey,
-
-      items: []
+      person1Items: [],
+      person2Items: [],
+      showItemsList: false
     }
   }
 
   // this needs to use the currentBillKey to input data onto the right bill
   componentDidMount() {
-    const billRef = firebase.database().ref(this.props.currentBillKey);
-    console.log("this.props.currentBillKey in componentDidMount");
-    console.log(this.props.currentBillKey);
-
-    console.log("billRef in componentDidMount");
-    console.log(billRef);
+    // const billRef = firebase.database().ref(this.props.currentBillKey);
 
 
     //billRef won't work for this cuz it holds the people
       // but maybe I need to have a seaparate array just to display on this page temporarily????
-    billRef.on('value', (snapshot) => {
-      const itemList = snapshot.val();
+    // billRef.on('value', (snapshot) => {
+    //   const itemList = snapshot.val();
 
-      // this may not be necessary
-      const newItems = [];
-      for (let key in itemList) {
-        console.log("itemList[key]");
-        console.log(itemList[key]); // logging out keys
-        newItems.push(itemList[key]); // push onto new array
-        console.log("newItems list");
-        console.log(newItems);
-      }
-    })
+    //   // this may not be necessary
+    //   const newItems = [];
+    //   for (let key in itemList) {
+    //     console.log("itemList[key]");
+    //     console.log(itemList[key]); // logging out keys
+    //     newItems.push(itemList[key]); // push onto new array
+    //     console.log("newItems list");
+    //     console.log(newItems);
+    //   }
+    // })
 
     // this.setState({
     //   items: newItems
@@ -50,14 +40,63 @@ class ItemForm extends Component {
   }
 
   // this needs to add individual items to each person
+  // addItemToBill = (event) => {
+  //   event.preventDefault();
+
+  //   // set ref for current bill obj
+  //   // const billRef = firebase.database().ref(this.props.currentBillKey);
+    
+  //   const person1Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [0]);
+  //   const person2Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [1]);
+
+  //   const itemName = document.getElementById('itemName').value;
+  //   const itemCost = Number(document.getElementById('itemCost').value);
+  //   const person1 = document.getElementById('itemPerson1');
+  //   const person2 = document.getElementById('itemPerson2');
+
+  //   // check for which person is paying
+  //   if (person1.checked === true && person2.checked === true) {
+  //     const costPerPerson = (itemCost / 2).toFixed(2);
+  //     const item = {
+  //       itemName: `1/2 ${itemName}`,
+  //       itemCost: costPerPerson
+  //     }
+  //     person1Ref.push(item);
+  //     person2Ref.push(item);
+
+  //   } else if (person1.checked === true) {
+  //     const item = {
+  //       itemName: itemName,
+  //       itemCost: itemCost
+  //     }
+  //     person1Ref.push(item);
+
+  //   } else if (person2.checked === true) {
+  //     const item = {
+  //       itemName: itemName,
+  //       itemCost: itemCost
+  //     }
+  //     person2Ref.push(item);
+  //   }
+
+  //   // NOW THE ISSUE IS HOW TO PUSH ITEMS ON TO ITS OWN ARRAY?????
+  //   // what if instead of pushing to the database, I push it onto an array on this component to list it on the page,
+  //     // then, when user presses "I'm done adding items!", it pushes it to the database??
+
+  //     // need 2 item arrays - one for each person
+
+  //     // also calculate total amount per person
+      
+  // }
+
+
+
   addItemToBill = (event) => {
     event.preventDefault();
 
     // set ref for current bill obj
     // const billRef = firebase.database().ref(this.props.currentBillKey);
     
-    const person1Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [0]);
-    const person2Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [1]);
 
     const itemName = document.getElementById('itemName').value;
     const itemCost = Number(document.getElementById('itemCost').value);
@@ -66,32 +105,44 @@ class ItemForm extends Component {
 
     // check for which person is paying
     if (person1.checked === true && person2.checked === true) {
-      const costPerPerson = itemCost / 2;
+      const costPerPerson = (itemCost / 2).toFixed(2);
       const item = {
-        itemName: itemName,
+        itemName: `1/2 ${itemName}`,
         itemCost: costPerPerson
       }
-      person1Ref.push(item);
-      person2Ref.push(item);
+      this.state.person1Items.push(item);
+      this.state.person2Items.push(item);
 
     } else if (person1.checked === true) {
       const item = {
         itemName: itemName,
         itemCost: itemCost
       }
-      person1Ref.push(item);
+      this.state.person1Items.push(item);
 
     } else if (person2.checked === true) {
       const item = {
         itemName: itemName,
         itemCost: itemCost
       }
-      person2Ref.push(item);
+      this.state.person2Items.push(item);
     }
 
     // NOW THE ISSUE IS HOW TO PUSH ITEMS ON TO ITS OWN ARRAY?????
+    // what if instead of pushing to the database, I push it onto an array on this component to list it on the page,
+      // then, when user presses "I'm done adding items!", it pushes it to the database??
+
+      // need 2 item arrays - one for each person
+
+      // also calculate total amount per person
+
+      this.setState({
+        showItemsList: true
+      })
       
   }
+
+
 
   render() {
 
@@ -126,7 +177,14 @@ class ItemForm extends Component {
               ONCE an item has been added, make it show up here
               ternary to check if at least one item is there
 
+              <ItemsList 
+                person1Items={this.state.person1Items} 
+                person2Items={this.state.person2Items}
+              />
+
            */}
+
+
 
           <form className="individual-item">
             
@@ -152,7 +210,7 @@ class ItemForm extends Component {
             
           </form>
 
-          <button>I'm done adding items!</button>
+          <button onClick={(event) => this.props.doneAddingItems(event)}>I'm done adding items!</button>
 
       </div>
 

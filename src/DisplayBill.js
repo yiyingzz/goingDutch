@@ -24,7 +24,7 @@ class DisplayBill extends Component {
       */}
 
 
-        <h2></h2>
+        <h2>displaying the moneys</h2>
           
       </div>
 

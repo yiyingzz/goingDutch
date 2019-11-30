@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import firebase from './firebase.js';
+import NewBillForm from './NewBillForm.js';
 import ItemForm from './ItemForm.js';
+import DisplayBill from './DisplayBill.js';
 
 class App extends Component {
 
@@ -14,14 +16,16 @@ class App extends Component {
       bills: [],
 
       // need multiple input values, one for each input
+      // need to get these from NewBillForm
       billName: '',
 
       person1: '',
       person2: '',
       
-      currentBillItem: '',  // WUT IS DIS - oh it's the whole bill object
       currentBillKey: '',
 
+      showNewBillForm: true,
+      showItemForm: false,
       displayBill: false,
       listAllBills: false
 
@@ -55,76 +59,34 @@ class App extends Component {
   }
 
 
-  
-  inputChange = (event) => {
-    const inputValue = event.target.value;
-    console.log(inputValue);
-    // we need to store the inputValue so we can attach it to the input and addNewBill event handler
+  getBillInfo = (billName, person1, person2, billKey) => {
 
     this.setState({
-      [event.target.id]: inputValue
+      billName: billName,
+      person1: person1,
+      person2: person2,
+      currentBillKey: billKey,
+
+      showNewBillForm: false,
+      showItemForm: true
     })
-
-    console.log(this.state[event.target.id]);
-  }
-
-  // this submits the first form that gets bill name & people names
-  addNewBill = (event) => {
-    event.preventDefault();
-    
-    console.log("loggin billName, person1, person2");
-    console.log(this.state.billName, this.state.person1, this.state.person2);
-
-    //assign input value to new top level object in dbRef
-    const dbRef = firebase.database().ref();
-    console.log(dbRef);
-
-      // push the new bill item & save the key
-    const newBillItem = dbRef.push({
-      billName: this.state.billName,
-      people: [
-        {
-          name: this.state.person1,
-          totalAmount: '' // maybe not necessary right here
-        },
-        {
-          name: this.state.person2,
-          totalAmount: ''
-        }
-      ]
-    });
-
-    const newBillKey = newBillItem.key;
-
-    this.setState({
-      currentBillItem: newBillItem, // prob don't need this
-      currentBillKey: newBillKey
-    })
-  
-    // if statement to add third person
-    
-    console.log("newBillItem.key", newBillItem.key);
-    console.log("newBillKey", newBillKey);
-
   }
 
 
-
-finishedAddingItems = () => {
+doneAddingItems = (event) => {
+  event.preventDefault();
   // basically just needs to take us to a page displaying what each person is paying for
+  console.log("doneAddingItems() running in App.js!");
 
   this.setState({
-    displayBill: true   // making this true displays the bill info with total $$
+    showItemForm: false,
+    // displayBill: true   // making this true displays the bill info with total $$
   })
 }
 
 
   render() {
 
-    console.log("this.props in App.js");
-    console.log(this.props);
-    console.log("currentBillKey");
-    console.log(this.state.currentBillKey);
 
     return (
       <div className="App">
@@ -144,7 +106,7 @@ finishedAddingItems = () => {
             Use ternary to determine when it shows up for viewer
         */}
 
-        <form className="bill-name-form">
+        {/* <form className="bill-name-form">
 
           <label htmlFor="billName">What's the bill for?/Enter a name for this bill (could be event name)</label>
           <input type="text" id="billName" value={this.state.billName} onChange={this.inputChange}></input>
@@ -157,31 +119,40 @@ finishedAddingItems = () => {
 
           <button type="submit" onClick={this.addNewBill}>Submit</button>
 
-        </form>
+        </form> */}
 
         {/* 
          */}
+
+        {
+          this.state.showNewBillForm
+            ? <NewBillForm 
+                getBillInfo={this.getBillInfo}
+              />
+            : null
+        }
         
         {
-          this.state.currentBillKey  // change to showItemForm
+          this.state.showItemForm  // change to showItemForm
             ? <ItemForm 
                 currentBillKey={this.state.currentBillKey} 
                 billName={this.state.billName} // ****
                 person1={this.state.person1} 
-                person2={this.state.person2} 
+                person2={this.state.person2}
+                doneAddingItems={this.doneAddingItems}
               />
             : null
 
             // **** technically can just use currentBillKey to get data from database & prob don't need the other props ??
         }
 
-        {/* {
+        {
           this.state.displayBill
           ? <DisplayBill 
               currentBillKey={this.state.currentBillKey} 
             /> // need to pass in bill Info
           : null
-        } */}
+        }
 
 
         {/* { 
