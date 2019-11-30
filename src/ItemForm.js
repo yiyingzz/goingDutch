@@ -66,8 +66,6 @@ class ItemForm extends Component {
       })
     }
 
-    console.log(this.state.allItems); 
-
     // NOW THE ISSUE IS HOW TO PUSH ITEMS ON TO ITS OWN ARRAY?????
     // what if instead of pushing to the database, I push it onto an array on this component to list it on the page,
       // then, when user presses "I'm done adding items!", it pushes it to the database??
