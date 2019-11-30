@@ -22,7 +22,8 @@ class App extends Component {
       currentBillItem: '',  // WUT IS DIS - oh it's the whole bill object
       currentBillKey: '',
 
-      displayBill: false
+      displayBill: false,
+      listAllBills: false
 
     }
   }
@@ -96,7 +97,7 @@ class App extends Component {
     const newBillKey = newBillItem.key;
 
     this.setState({
-      currentBillItem: newBillItem,
+      currentBillItem: newBillItem, // prob don't need this
       currentBillKey: newBillKey
     })
   
@@ -107,12 +108,14 @@ class App extends Component {
 
   }
 
-  
 
 
 finishedAddingItems = () => {
   // basically just needs to take us to a page displaying what each person is paying for
 
+  this.setState({
+    displayBill: true   // making this true displays the bill info with total $$
+  })
 }
 
 
@@ -135,6 +138,11 @@ finishedAddingItems = () => {
           // [submit] button
           // send to database to create new Event object
         */}
+        
+        {/* 
+            Probably this form below can be a component
+            Use ternary to determine when it shows up for viewer
+        */}
 
         <form className="bill-name-form">
 
@@ -151,31 +159,36 @@ finishedAddingItems = () => {
 
         </form>
 
-
+        {/* 
+         */}
+        
         {
-          this.state.currentBillKey 
-            ? <ItemForm currentBillKey={this.state.currentBillKey} billName={this.state.billName} person1={this.state.person1} person2={this.state.person2} />
+          this.state.currentBillKey  // change to showItemForm
+            ? <ItemForm 
+                currentBillKey={this.state.currentBillKey} 
+                billName={this.state.billName} // ****
+                person1={this.state.person1} 
+                person2={this.state.person2} 
+              />
             : null
+
+            // **** technically can just use currentBillKey to get data from database & prob don't need the other props ??
         }
 
-        {/* {
-          // WHAT CONDITION???? (displayBill = true/false ???) - can set this after items are done being added - eg. when you click the submit form button
-          ? <DisplayBill /> // need to pass in bill Info
-
-        } */}
-
-        {/* 
-        // DISPLAY THE MONEYS
-        // calculation time!
-        // based on how items were split, calculate what each person needs to pay
-          // each person would have an array of what they need to pay for, so app just needs to add it all up and get a total amount
-          // send to database - update each person's total amount
-        // grab updated info from database
-        // print a list for each person with the items & cost, with a Total Amount to Pay at the bottom 
-        */}
+        {
+          this.state.displayBill
+          ? <DisplayBill 
+              currentBillKey={this.state.currentBillKey} 
+            /> // need to pass in bill Info
+          : null
+        }
 
 
-        {/* <ListAllBills /> */}
+        { 
+          this.state.listAllBills
+            ? <ListAllBills /> 
+            : null
+        }
 
 
       </div>

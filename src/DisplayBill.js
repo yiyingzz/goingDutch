@@ -2,18 +2,28 @@ import React, { Component } from 'react';
 import firebase from './firebase.js';
 
 class DisplayBill extends Component {
-  constructor(props) {
-    super(props)
-    this.state ={
+  constructor() {
+    super()
+    this.state = {
 
     }
   }
 
-  
+
   render() {
     return (
 
+
       <div>
+
+      {/* 
+        // DISPLAY THE MONEYS
+        
+        // grab updated info from database
+        // print a list for each person with the items & cost, with a Total Amount to Pay at the bottom 
+      */}
+
+
         <h2></h2>
           
       </div>
@@ -21,3 +31,5 @@ class DisplayBill extends Component {
     )
   }
 }
+
+export default DisplayBill;

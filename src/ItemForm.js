@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import firebase from './firebase.js';
 
 class ItemForm extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
 
       billName: this.props.billName,
@@ -137,17 +137,24 @@ class ItemForm extends Component {
 
       <div>
 
-        
-
 
         {/* 
+
           // ADDING ITEMS 
           // page shows inputs for adding items & cost for the event 
           // also shows people's names (maybe button-like element that you can click and "tag" people to the item
           // (this would determine if the item cost needs to be split between x num of people or not)
+
+          // calculation time!
+          // based on how items were split, calculate what each person needs to pay
+          // each person would have an array of what they need to pay for, so app just needs to add it all up and get a total amount
+          // send to database - update each person's total amount
+
           // send info to database
             // as items & costs are added, they show up on the page in a list
             // [submit/done] button - or some sort of indicator from user that they are done adding items
+
+
         */}
 
         <h2>{this.state.billName}</h2>
