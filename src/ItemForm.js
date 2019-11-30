@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import firebase from './firebase.js';
 import ItemsList from './ItemsList.js';
 
 class ItemForm extends Component {
@@ -18,7 +19,8 @@ class ItemForm extends Component {
 
     // set ref for current bill obj
     // const billRef = firebase.database().ref(this.props.currentBillKey);
-
+    const person1Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [0]);
+    const person2Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [1]);
 
     const itemName = document.getElementById('itemName').value;
     const itemCost = Number(document.getElementById('itemCost').value);
@@ -32,6 +34,10 @@ class ItemForm extends Component {
         itemName: `1/2 ${itemName}`,
         itemCost: costPerPerson
       }
+
+      person1Ref.child('items').push(item);
+      person2Ref.child('items').push(item);
+
       this.state.person1Items.push(item);
       this.state.person2Items.push(item);
       this.state.allItems.push({
@@ -46,6 +52,9 @@ class ItemForm extends Component {
         itemName: itemName,
         itemCost: itemCost
       }
+      person1Ref.child('items').push(item);
+
+
       this.state.person1Items.push(item);
       this.state.allItems.push({
         itemName: itemName,
@@ -58,6 +67,8 @@ class ItemForm extends Component {
         itemName: itemName,
         itemCost: itemCost
       }
+      person2Ref.child('items').push(item);
+
       this.state.person2Items.push(item);
       this.state.allItems.push({
         itemName: itemName,
@@ -66,22 +77,13 @@ class ItemForm extends Component {
       })
     }
 
-    // NOW THE ISSUE IS HOW TO PUSH ITEMS ON TO ITS OWN ARRAY?????
-    // what if instead of pushing to the database, I push it onto an array on this component to list it on the page,
-      // then, when user presses "I'm done adding items!", it pushes it to the database??
-
-      // need 2 item arrays - one for each person
-
-      // also calculate total amount per person
-
+    // I FORGOT TO CALCULATE TOTAL AMOUNT FOR EACH PERSON!!!!
 
     this.setState({
       showItemsList: true
     })
       
   }
-
-
 
   render() {
 

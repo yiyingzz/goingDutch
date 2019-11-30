@@ -21,6 +21,8 @@ class App extends Component {
 
       person1: '',
       person2: '',
+      person1ItemsKey: '',
+      person2ItemsKey: '',
       
       currentBillKey: '',
 
@@ -80,7 +82,7 @@ doneAddingItems = (event) => {
 
   this.setState({
     showItemForm: false,
-    // displayBill: true   // making this true displays the bill info with total $$
+    displayBill: true   // making this true displays the bill info with total $$
   })
 }
 
@@ -92,38 +94,6 @@ doneAddingItems = (event) => {
       <div className="App">
         <h1>Going Dutch!</h1>
 
-
-        {/* 
-        // INITIAL SETUP FOR EVENT
-        // first, input for event/thing to split & total amount
-          // add people to pay for it
-          // [submit] button
-          // send to database to create new Event object
-        */}
-        
-        {/* 
-            Probably this form below can be a component
-            Use ternary to determine when it shows up for viewer
-        */}
-
-        {/* <form className="bill-name-form">
-
-          <label htmlFor="billName">What's the bill for?/Enter a name for this bill (could be event name)</label>
-          <input type="text" id="billName" value={this.state.billName} onChange={this.inputChange}></input>
-
-          <label htmlFor="person1">Who's splitting this bill?</label>
-          <input type="text" id="person1" value={this.state.person1} onChange={this.inputChange}></input>
-
-          <label htmlFor="person2">Who else is splitting this bill?</label>
-          <input type="text" id="person2" value={this.state.person2}onChange={this.inputChange}></input>
-
-          <button type="submit" onClick={this.addNewBill}>Submit</button>
-
-        </form> */}
-
-        {/* 
-         */}
-
         {
           this.state.showNewBillForm
             ? <NewBillForm 
@@ -133,7 +103,7 @@ doneAddingItems = (event) => {
         }
         
         {
-          this.state.showItemForm  // change to showItemForm
+          this.state.showItemForm 
             ? <ItemForm 
                 currentBillKey={this.state.currentBillKey} 
                 billName={this.state.billName} // ****
