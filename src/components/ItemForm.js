@@ -27,7 +27,10 @@ class ItemForm extends Component {
     }
   }
 
+
   addItemToBill = (event) => {
+    // need to check for blank inputs
+
     event.preventDefault();
 
     // set ref for current bill obj
@@ -35,9 +38,7 @@ class ItemForm extends Component {
     const person2Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [1]);
 
     const itemName = document.getElementById('itemName').value;
-    let itemCost = Number(document.getElementById('itemCost').value);
-    itemCost = itemCost.toFixed(2);
-    itemCost = Number(itemCost);
+    const itemCost = Number(document.getElementById('itemCost').value);
     const person1 = document.getElementById('itemPerson1');
     const person2 = document.getElementById('itemPerson2');
 
@@ -46,8 +47,7 @@ class ItemForm extends Component {
 
     // check for which person is paying
     if (person1.checked === true && person2.checked === true) {
-      let costPerPerson = (itemCost / 2).toFixed(2);
-      costPerPerson = Number(costPerPerson);
+      const costPerPerson = (itemCost / 2).toFixed(2);
       const item = {
         itemName: `1/2 ${itemName}`,
         itemCost: costPerPerson

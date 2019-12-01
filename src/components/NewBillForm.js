@@ -23,28 +23,35 @@ class NewBillForm extends Component {
   addNewBill = (event) => {
     event.preventDefault();
 
-    //assign input value to new top level object in dbRef
-    const dbRef = firebase.database().ref();
-
-    // push the new bill item & save the key
-    const newBillItem = dbRef.push({
-      billName: this.state.billName,
-      people: [
-        {
-          name: this.state.person1,
-          totalAmount: 0 
-        },
-        {
-          name: this.state.person2,
-          totalAmount: 0
-        }
-      ]
-    });
-
-    const newBillKey = newBillItem.key;
+    // check for blank inputs
+    if (this.state.billName == false || this.state.person1 == false || this.state.person2 == false) {
+      alert("Make sure you fill out each part of the form!");
+    } else {
     
-    // send bill info up to App.js
-    this.props.getBillInfo(this.state.billName, this.state.person1, this.state.person2, newBillKey)
+      //assign input value to new top level object in dbRef
+      const dbRef = firebase.database().ref();
+
+      // push the new bill item & save the key
+      const newBillItem = dbRef.push({
+        billName: this.state.billName,
+        people: [
+          {
+            name: this.state.person1,
+            totalAmount: 0 
+          },
+          {
+            name: this.state.person2,
+            totalAmount: 0
+          }
+        ]
+      });
+
+      const newBillKey = newBillItem.key;
+      
+      // send bill info up to App.js
+      this.props.getBillInfo(this.state.billName, this.state.person1, this.state.person2, newBillKey)
+    
+    }
   }
 
   render() {
