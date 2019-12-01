@@ -398,7 +398,7 @@ input[type="checkbox"] {
 
 .name-label:hover,
 .name-label:focus {
-  color: #EC84A5;
+  color: crimson;
 }
 
 button.add-item {

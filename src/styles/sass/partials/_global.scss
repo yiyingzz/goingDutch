@@ -13,8 +13,8 @@ body {
 
 header {
   height: 200px;
-  background: linear-gradient(to bottom, #3B77AE 25%, #5AB6DC 25%, #5AB6DC 50%, #A0E9F3 50%, #A0E9F3 75%, #DAF7F6 75%);
-  color: #DB6172;
+  background: linear-gradient(to bottom, $primaryColor 25%, $secondaryColor 25%, $secondaryColor 50%, $tertiaryColor 50%, $tertiaryColor 75%, $fourthColor 75%);
+  color: $accentColor;
 }
 
 footer {
