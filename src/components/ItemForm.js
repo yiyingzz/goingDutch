@@ -7,11 +7,22 @@ class ItemForm extends Component {
     super();
     this.state = {
 
-      allItems: [],
+      allItems: [
+        {
+          itemName: 'potato',
+          itemCost: 13.97,
+          whosPaying: 'yiying'
+        },
+        {
+          itemName: 'tomato',
+          itemCost: 2.47,
+          whosPaying: 'yiying, pikachu'
+        },
+      ],
       person1Total: 0,
       person2Total: 0,
 
-      showItemsList: false
+      showItemsList: true
     }
   }
 
@@ -118,7 +129,7 @@ class ItemForm extends Component {
 
     return (
 
-      <div>
+      <section id="item-section">
 
         <h2>{this.props.billName}</h2>
 
@@ -128,7 +139,9 @@ class ItemForm extends Component {
               : null
           }
 
+          <h3>Let's add some items to your bill!</h3>
           <form id="item-form" className="item-form flex-container">
+
             <div className="item-inputs">
               <label htmlFor="itemName">Enter an item</label>
               <input type="text" id="itemName"></input>
@@ -145,10 +158,10 @@ class ItemForm extends Component {
               <legend>Who is paying for this item?</legend>
 
               <input type="checkbox" id="itemPerson1" name="person"></input>
-              <label htmlFor="itemPerson1" className="nameLabel">{this.props.person1}</label>
+              <label htmlFor="itemPerson1" className="name-label">{this.props.person1}</label>
 
               <input type="checkbox" id="itemPerson2" name="person"></input>
-              <label htmlFor="itemPerson2" className="nameLabel">{this.props.person2}</label>
+              <label htmlFor="itemPerson2" className="name-label">{this.props.person2}</label>
             </fieldset>
 
             <button className="add-item" onClick={this.addItemToBill}>Add Item</button>
@@ -157,7 +170,7 @@ class ItemForm extends Component {
 
           <button onClick={this.props.doneAddingItems}>I'm done adding items!</button>
 
-      </div>
+      </section>
 
     )
   }

@@ -60,6 +60,13 @@ class App extends Component {
     })
   }
 
+  listAllBills = (event) => {
+    event.preventDefault();
+    this.setState({
+      listAllBills: true
+    })
+  }
+
   render() {
 
 
@@ -69,6 +76,7 @@ class App extends Component {
         <header>
           <div className="wrapper">
             <h1>Going Dutch</h1>
+            <h2>A Bill Splitter for Two</h2>
           </div>
         </header>
 
@@ -101,6 +109,7 @@ class App extends Component {
             ? <DisplayBill 
                 currentBillKey={this.state.currentBillKey}
                 showFrontPage={this.showFrontPage}
+                listAllBills={this.listAllBills}
               />
             : null
           }
@@ -116,7 +125,7 @@ class App extends Component {
         
         <footer>
           <div className="wrapper">
-            <p>Made by <a href="https://www.yiying.ca">Yiying Zou</a></p>
+            <p>Made by <a href="https://www.yiying.ca">Yiying Zou</a> 2019</p>
           </div>
         </footer>
 

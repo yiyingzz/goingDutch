@@ -3,17 +3,18 @@ import React from 'react';
 const ItemsList = (props) => {
   return (
     
-    <div>
-      <h2>List of Items</h2>
+    <section id="items-list" className="invoice-card flex-container">
+      <h2>List of Items in Your Bill</h2>
 
       <ul>
-      
+        
       {
         props.allItems.map((item) => {
           return (
             <li>
-              <p>{item.itemName} <span>Total Cost: {item.itemCost}</span></p>
-              <p>Who's Paying? <span>{item.whosPaying}</span></p>
+              <p className="invoice-item">{item.itemName}</p> 
+              <p className="invoice-amount">${item.itemCost}</p>
+              <p className="whos-paying">Who's paying for it? {item.whosPaying}</p>
             </li>
           ) 
         })
@@ -21,7 +22,7 @@ const ItemsList = (props) => {
 
       </ul>
     
-    </div>
+    </section>
 
   )
 }

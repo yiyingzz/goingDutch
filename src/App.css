@@ -6,6 +6,9 @@ article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary
 
 .visuallyHidden:not(:focus):not(:active) { position: absolute; width: 1px; height: 1px; margin: -1px;border: 0;padding: 0;white-space: nowrap;clip-path: inset(100%);clip: rect(0 0 0 0);overflow: hidden;}
 
+
+/* GLOBAL STYLES */
+
 html {
   font-size: 62.5%;
 }
@@ -14,12 +17,13 @@ body {
   font-family: 'Lato', sans-serif;
   font-size: 2rem;
   text-align: center;
-  color: #1E527E;
+  color: #3B77AE;
 }
 
 header {
   height: 200px;
   background: linear-gradient(to bottom, #3B77AE 25%, #5AB6DC 25%, #5AB6DC 50%, #A0E9F3 50%, #A0E9F3 75%, #DAF7F6 75%);
+  color: #DB6172;
 }
 
 footer {
@@ -34,7 +38,7 @@ footer p {
 
 .wrapper {
   max-width: 1200px;
-  width: 70%;
+  width: 75%;
   margin: 0 auto;
 }
 
@@ -46,7 +50,23 @@ footer p {
 
 h1 {
   margin: 0;
-  padding: 50px;
+  padding-top: 50px;
+}
+
+header h2 {
+  margin-top: 10px;
+}
+
+ul,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+input[type="checkbox"],
+.name-label {
+  cursor: pointer;
 }
 
 label {
@@ -58,8 +78,11 @@ label {
 
 button {
   display: block;
-  background: royalblue;
+  border: 0;
+  background: #3B77AE;
+  color: #fff;
   margin: 20px auto;
+  height: 48px;
 }
 
 button:hover,
@@ -68,20 +91,20 @@ button:focus {
 }
 
 form {
-  border: 2px solid crimson;
   padding: 20px;
   margin: 20px auto;
+  width: 80%;
 }
 
 input,
 button {
   border-radius: 5px;
-  border: 2px solid grey;
   padding: 10px 15px;
 }
 
 input {
   width: 100%;
+  border: 2px solid #5AB6DC;
 }
 
 input:hover,
@@ -89,8 +112,9 @@ input:focus {
   border: 2px solid #EC84A5;
 }
 
+/* STYLES FOR ITEM FORM */
+
 .item-form {
-  border: 2px solid deepskyblue;
   position: relative;
 } 
 
@@ -130,31 +154,31 @@ input[type="checkbox"] {
   margin-left: 0;
 }
 
-.nameLabel {
-  /* border: 3px solid rebeccapurple; */
-  color: rebeccapurple;
+.name-label {
+  /* border: 3px solid #5AB6DC; */
+  color: #5AB6DC;
   background: white;
   border-radius: 5px;
   font-size: 1.8rem;
   display: inline-block;
-  margin-right: 15px;
+  margin-right: 20px;
+}
+
+.name-label:hover,
+.name-label:focus {
+  color: #EC84A5;
 }
 
 button.add-item {
   margin-right: 0;
   margin-bottom: 0;
-  height: 48px;
   position: absolute;
   right: 20px;
   bottom: 20px;
 }
 
-ul,
-li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
+
+/* STYLING FOR DISPLAYING BILL */
 
 .card-display {
   justify-content: center;
@@ -176,7 +200,6 @@ li {
 .invoice-card li {
   width: 100%;
   padding: 20px;
-  border-bottom: 2px solid royalblue;
 }
 
 .invoice-card li:nth-of-type(2n) {
@@ -190,7 +213,6 @@ li {
 .invoice-card h3 {
   width: 100%;
   text-align: center;
-  border-bottom: 2px solid royalblue;
   margin: 0;
   padding: 20px;
 }
@@ -219,4 +241,12 @@ p.invoice-amount {
 .invoice-total p {
   font-weight: bold;
 }
+
+.display-bill button {
+  display: inline-block;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+/* STYLING FOR DISPLAYING ITEMS ABOVE THE ITEM FORM */
 

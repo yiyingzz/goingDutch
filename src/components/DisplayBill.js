@@ -46,7 +46,7 @@ class DisplayBill extends Component {
   render() {
     return (
 
-      <div>      
+      <section id="display-bill" className="display-bill">      
         <h2>{this.state.billItem.billName}</h2>  
 
 
@@ -100,8 +100,10 @@ class DisplayBill extends Component {
         </div>
 
         <button onClick={(event) => this.props.showFrontPage(event)}>Split Another Bill?</button>
+
+        <button onClick={(event) => this.props.listAllBills(event)}>View Other Bills</button>
         
-      </div>
+      </section>
 
     )
   }
