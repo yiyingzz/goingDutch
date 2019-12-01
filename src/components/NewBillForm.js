@@ -55,13 +55,13 @@ class NewBillForm extends Component {
         <form>
 
           <label htmlFor="billName">What's this bill for?</label>
-          <input type="text" id="billName" value={this.state.billName} onChange={this.inputChange}></input>
+          <input type="text" id="billName" placeholder="Bill name" value={this.state.billName} onChange={this.inputChange}></input>
 
           <label htmlFor="person1">Who's splitting this bill?</label>
-          <input type="text" id="person1" value={this.state.person1} onChange={this.inputChange}></input>
+          <input type="text" id="person1" placeholder="Name" value={this.state.person1} onChange={this.inputChange}></input>
 
           <label htmlFor="person2">Who else is splitting this bill?</label>
-          <input type="text" id="person2" value={this.state.person2} onChange={this.inputChange}></input>
+          <input type="text" id="person2" placeholder="Name" value={this.state.person2} onChange={this.inputChange}></input>
 
           <button type="submit" onClick={this.addNewBill}>Submit</button>
 

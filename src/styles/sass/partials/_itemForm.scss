@@ -61,4 +61,14 @@ button.add-item {
   position: absolute;
   right: 20px;
   bottom: 20px;
+  background: $secondaryColor;
+
+  &:hover,
+  &:focus {
+    background: $accentColor;
+  }
+}
+
+button.done-adding {
+  margin-top: 50px;
 }

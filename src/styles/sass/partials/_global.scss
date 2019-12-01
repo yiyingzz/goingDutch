@@ -8,7 +8,14 @@ body {
   font-family: 'Lato', sans-serif;
   font-size: 2rem;
   text-align: center;
-  color: #3B77AE;
+  color: $primaryTextColor;
+}
+
+ul,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 header {
@@ -18,13 +25,24 @@ header {
 }
 
 footer {
-  background: #3B77AE;
-  color: #fff;
+  background: $primaryTextColor;
+  color: $secondaryTextColor;
   padding: 10px;
+
+  p {
+    margin: 0;
+  }
 }
 
-footer p {
-  margin: 0;
+a {
+  color: $secondaryColor;
+  font-weight: bold;
+  transition: 0.3s all;
+
+  &:hover,
+  &:focus {
+    color: $accentColor;
+  }
 }
 
 .wrapper {
@@ -44,15 +62,12 @@ h1 {
   padding-top: 50px;
 }
 
-header h2 {
+h2 {
   margin-top: 10px;
 }
 
-ul,
-li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+h3 {
+  margin-bottom: 0;
 }
 
 input[type="checkbox"],
@@ -74,31 +89,41 @@ button {
   color: #fff;
   margin: 20px auto;
   height: 48px;
+  padding: 10px 25px;
+  transition: 0.3s all;
+
+  &:hover,
+  &:focus {
+    background: #DB6172;
+  }
+
 }
 
-button:hover,
-button:focus {
-  background: #DB6172;
-}
 
 form {
   padding: 20px;
-  margin: 20px auto;
+  margin: 0 auto 20px auto;
   width: 80%;
 }
 
 input,
 button {
   border-radius: 5px;
-  padding: 10px 15px;
 }
 
 input {
   width: 100%;
-  border: 2px solid #5AB6DC;
-}
+  border: 2px solid $secondaryColor;
+  padding: 15px;
+  color: $primaryTextColor;
 
-input:hover,
-input:focus {
-  border: 2px solid #EC84A5;
+  &::placeholder {
+    color: $secondaryColor;
+    opacity: 0.7;
+  }
+
+  &:hover,
+  &:focus {
+    border: 2px solid $accentColor;
+  }
 }

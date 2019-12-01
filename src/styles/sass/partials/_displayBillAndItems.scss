@@ -5,54 +5,88 @@
   align-items: flex-start;
 }
 
+.items-card,
 .invoice-card {
   border-radius: 10px;
   overflow: hidden;
   border: 0;
+}
+
+.invoice-card {
   width: 350px;
   margin: 30px;
 }
 
+.items-card {
+  margin: 30px auto 50px auto;
+  width: 80%;
+  max-width: 500px;
+}
+
+.items-card ul,
 .invoice-card ul {
   width: 100%;
 }
 
+.items-card li,
 .invoice-card li {
   width: 100%;
   padding: 20px;
 }
 
+.items-card li:nth-of-type(2n),
 .invoice-card li:nth-of-type(2n) {
   background: #A0E9F3;
 }
 
+.items-card li:nth-of-type(2n + 1),
 .invoice-card li:nth-of-type(2n + 1) {
   background: #DAF7F6;
 }
 
-.invoice-card h3 {
+.items-card h3,
+.invoice-card h4 {
   width: 100%;
   text-align: center;
   margin: 0;
   padding: 20px;
 }
 
+.items-card p,
 .invoice-card p {
   display: inline-block;
   margin: 0;
 }
 
-p.invoice-item {
+p.invoice-item,
+p.whos-paying,
+p.cost-per-person {
   width: 70%;
   text-align: left;
 }
 
-p.invoice-amount {
+.items-card p.invoice-item,
+.items-card p.invoice-amount {
+  font-weight: bold;
+}
+
+p.invoice-amount,
+p.whos-paying-names,
+p.item-cost {
   width: 30%;
   text-align: right;
 }
 
-.invoice-card h3,
+p.whos-paying,
+p.whos-paying-names,
+p.cost-per-person,
+p.item-cost {
+  font-size: 1.6rem;
+  margin-top: 5px;
+}
+
+.items-card h3,
+.invoice-card h4,
 .invoice-card li:last-of-type {
   background: #3B77AE;
   color: #fff;

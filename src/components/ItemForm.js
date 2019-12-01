@@ -16,6 +16,7 @@ class ItemForm extends Component {
         {
           itemName: 'tomato',
           itemCost: 2.47,
+          costPerPerson: 1.73,
           whosPaying: 'yiying, pikachu'
         },
       ],
@@ -88,7 +89,6 @@ class ItemForm extends Component {
       this.state.allItems.push({
         itemName: itemName,
         itemCost: itemCost,
-        person1Total: person1CurrentTotal,
         whosPaying: this.props.person1 
       })
       person1Ref.child('totalAmount').set(person1CurrentTotal);
@@ -106,7 +106,6 @@ class ItemForm extends Component {
       this.state.allItems.push({
         itemName: itemName,
         itemCost: itemCost,
-        person2Total: person2CurrentTotal,
         whosPaying: this.props.person2 
       })
       person2Ref.child('totalAmount').set(person2CurrentTotal);
@@ -168,7 +167,7 @@ class ItemForm extends Component {
 
           </form>
 
-          <button onClick={this.props.doneAddingItems}>I'm done adding items!</button>
+          <button className="done-adding" onClick={this.props.doneAddingItems}>I'm done adding items!</button>
 
       </section>
 

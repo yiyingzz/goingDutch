@@ -247,6 +247,13 @@ body {
   color: #3B77AE;
 }
 
+ul,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 header {
   height: 200px;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #3B77AE), color-stop(25%, #5AB6DC), color-stop(50%, #5AB6DC), color-stop(50%, #A0E9F3), color-stop(75%, #A0E9F3), color-stop(75%, #DAF7F6));
@@ -262,6 +269,17 @@ footer {
 
 footer p {
   margin: 0;
+}
+
+a {
+  color: #5AB6DC;
+  font-weight: bold;
+  -webkit-transition: 0.3s all;
+  transition: 0.3s all;
+}
+
+a:hover, a:focus {
+  color: #DB6172;
 }
 
 .wrapper {
@@ -286,15 +304,12 @@ h1 {
   padding-top: 50px;
 }
 
-header h2 {
+h2 {
   margin-top: 10px;
 }
 
-ul,
-li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+h3 {
+  margin-bottom: 0;
 }
 
 input[type="checkbox"],
@@ -316,33 +331,55 @@ button {
   color: #fff;
   margin: 20px auto;
   height: 48px;
+  padding: 10px 25px;
+  -webkit-transition: 0.3s all;
+  transition: 0.3s all;
 }
 
-button:hover,
-button:focus {
+button:hover, button:focus {
   background: #DB6172;
 }
 
 form {
   padding: 20px;
-  margin: 20px auto;
+  margin: 0 auto 20px auto;
   width: 80%;
 }
 
 input,
 button {
   border-radius: 5px;
-  padding: 10px 15px;
 }
 
 input {
   width: 100%;
   border: 2px solid #5AB6DC;
+  padding: 15px;
+  color: #3B77AE;
 }
 
-input:hover,
-input:focus {
-  border: 2px solid #EC84A5;
+input::-webkit-input-placeholder {
+  color: #5AB6DC;
+  opacity: 0.7;
+}
+
+input:-ms-input-placeholder {
+  color: #5AB6DC;
+  opacity: 0.7;
+}
+
+input::-ms-input-placeholder {
+  color: #5AB6DC;
+  opacity: 0.7;
+}
+
+input::placeholder {
+  color: #5AB6DC;
+  opacity: 0.7;
+}
+
+input:hover, input:focus {
+  border: 2px solid #DB6172;
 }
 
 /* STYLES FOR ITEM FORM */
@@ -407,6 +444,15 @@ button.add-item {
   position: absolute;
   right: 20px;
   bottom: 20px;
+  background: #5AB6DC;
+}
+
+button.add-item:hover, button.add-item:focus {
+  background: #DB6172;
+}
+
+button.done-adding {
+  margin-top: 50px;
 }
 
 /* STYLING FOR DISPLAYING BILL */
@@ -419,54 +465,88 @@ button.add-item {
           align-items: flex-start;
 }
 
+.items-card,
 .invoice-card {
   border-radius: 10px;
   overflow: hidden;
   border: 0;
+}
+
+.invoice-card {
   width: 350px;
   margin: 30px;
 }
 
+.items-card {
+  margin: 30px auto 50px auto;
+  width: 80%;
+  max-width: 500px;
+}
+
+.items-card ul,
 .invoice-card ul {
   width: 100%;
 }
 
+.items-card li,
 .invoice-card li {
   width: 100%;
   padding: 20px;
 }
 
+.items-card li:nth-of-type(2n),
 .invoice-card li:nth-of-type(2n) {
   background: #A0E9F3;
 }
 
+.items-card li:nth-of-type(2n + 1),
 .invoice-card li:nth-of-type(2n + 1) {
   background: #DAF7F6;
 }
 
-.invoice-card h3 {
+.items-card h3,
+.invoice-card h4 {
   width: 100%;
   text-align: center;
   margin: 0;
   padding: 20px;
 }
 
+.items-card p,
 .invoice-card p {
   display: inline-block;
   margin: 0;
 }
 
-p.invoice-item {
+p.invoice-item,
+p.whos-paying,
+p.cost-per-person {
   width: 70%;
   text-align: left;
 }
 
-p.invoice-amount {
+.items-card p.invoice-item,
+.items-card p.invoice-amount {
+  font-weight: bold;
+}
+
+p.invoice-amount,
+p.whos-paying-names,
+p.item-cost {
   width: 30%;
   text-align: right;
 }
 
-.invoice-card h3,
+p.whos-paying,
+p.whos-paying-names,
+p.cost-per-person,
+p.item-cost {
+  font-size: 1.6rem;
+  margin-top: 5px;
+}
+
+.items-card h3,
+.invoice-card h4,
 .invoice-card li:last-of-type {
   background: #3B77AE;
   color: #fff;

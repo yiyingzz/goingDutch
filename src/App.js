@@ -44,7 +44,6 @@ class App extends Component {
     })
   }
 
-
   doneAddingItems = () => {
     this.setState({
       showItemForm: false,
@@ -52,16 +51,16 @@ class App extends Component {
     })
   }
 
-  showFrontPage = (event) => {
-    event.preventDefault();
+  showFrontPage = () => {
+
     this.setState({
       showNewBillForm: true,
       displayBill: false
     })
   }
 
-  listAllBills = (event) => {
-    event.preventDefault();
+  listAllBills = () => {
+
     this.setState({
       listAllBills: true
     })
@@ -117,7 +116,9 @@ class App extends Component {
 
           {/* { 
             this.state.listAllBills
-              ? <ListAllBills /> 
+              ? <ListAllBills 
+                  currentBillKey={this.state.currentBillKey}
+                /> 
               : null
           } */}
 

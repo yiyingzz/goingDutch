@@ -47,13 +47,13 @@ class DisplayBill extends Component {
     return (
 
       <section id="display-bill" className="display-bill">      
-        <h2>{this.state.billItem.billName}</h2>  
+        <h3>{this.state.billItem.billName}</h3>  
 
 
         <div className="card-display flex-container">
 
           <div className="invoice-card">
-            <h3>{this.state.person1.name}</h3>  
+            <h4>{this.state.person1.name}</h4>  
 
             <ul className="flex-container">
               {
@@ -76,7 +76,7 @@ class DisplayBill extends Component {
 
 
           <div className="invoice-card">
-            <h3>{this.state.person2.name}</h3>  
+            <h4>{this.state.person2.name}</h4>  
 
             <ul>
               {
