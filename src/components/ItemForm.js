@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import firebase from './firebase.js';
+import firebase from '../firebase.js';
 import ItemsList from './ItemsList.js';
 
 class ItemForm extends Component {
@@ -23,7 +23,9 @@ class ItemForm extends Component {
     const person2Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [1]);
 
     const itemName = document.getElementById('itemName').value;
-    const itemCost = Number(document.getElementById('itemCost').value);
+    let itemCost = Number(document.getElementById('itemCost').value);
+    itemCost = itemCost.toFixed(2);
+    itemCost = Number(itemCost);
     const person1 = document.getElementById('itemPerson1');
     const person2 = document.getElementById('itemPerson2');
 
@@ -101,7 +103,7 @@ class ItemForm extends Component {
 
 
     // clear inputs
-    document.getElementById('itemForm').reset();
+    document.getElementById('item-form').reset();
 
     this.setState({
       showItemsList: true
@@ -126,22 +128,30 @@ class ItemForm extends Component {
               : null
           }
 
-          <form id="itemForm">
-            <label htmlFor="itemName">Enter an item</label>
-            <input type="text" id="itemName"></input>
-            
-            <label htmlFor="itemCost">Cost of item</label>
-            <input type="number" min="0" step="0.01" id="itemCost" placeholder="0.00" value={this.itemCost} onChange={this.inputChange}></input>
+          <form id="item-form" className="item-form flex-container">
+            <div className="item-inputs">
+              <label htmlFor="itemName">Enter an item</label>
+              <input type="text" id="itemName"></input>
+            </div>
 
-            <legend>Who is paying for this item?</legend>
+            <div className="item-inputs">
+              <label htmlFor="itemCost" className="item-cost-label">Item cost</label>
+              <span className="dollar-sign">$ </span>
+                <input type="number" min="0" step="0.01" id="itemCost" placeholder="0.00" className="cost-input" value={this.itemCost} onChange={this.inputChange}></input>
+              
+            </div>
 
-            <input type="checkbox" id="itemPerson1" name="person"></input>
-            <label htmlFor="itemPerson1" class="nameLabel">{this.props.person1}</label>
+            <fieldset>
+              <legend>Who is paying for this item?</legend>
 
-            <input type="checkbox" id="itemPerson2" name="person"></input>
-            <label htmlFor="itemPerson2" class="nameLabel">{this.props.person2}</label>
+              <input type="checkbox" id="itemPerson1" name="person"></input>
+              <label htmlFor="itemPerson1" className="nameLabel">{this.props.person1}</label>
 
-            <button onClick={this.addItemToBill}>Add Item</button>
+              <input type="checkbox" id="itemPerson2" name="person"></input>
+              <label htmlFor="itemPerson2" className="nameLabel">{this.props.person2}</label>
+            </fieldset>
+
+            <button className="add-item" onClick={this.addItemToBill}>Add Item</button>
 
           </form>
 

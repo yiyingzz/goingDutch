@@ -6,19 +6,42 @@ article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary
 
 .visuallyHidden:not(:focus):not(:active) { position: absolute; width: 1px; height: 1px; margin: -1px;border: 0;padding: 0;white-space: nowrap;clip-path: inset(100%);clip: rect(0 0 0 0);overflow: hidden;}
 
+html {
+  font-size: 62.5%;
+}
+
 body {
-  /* text-align: center; */
+  font-family: 'Lato', sans-serif;
+  font-size: 2rem;
+  text-align: center;
+  color: #1E527E;
 }
 
 header {
   height: 200px;
-  background: paleturquoise;
+  background: linear-gradient(to bottom, #3B77AE 25%, #5AB6DC 25%, #5AB6DC 50%, #A0E9F3 50%, #A0E9F3 75%, #DAF7F6 75%);
+}
+
+footer {
+  background: #3B77AE;
+  color: #fff;
+  padding: 10px;
+}
+
+footer p {
+  margin: 0;
 }
 
 .wrapper {
-  max-width: 1600px;
-  width: 85%;
+  max-width: 1200px;
+  width: 70%;
   margin: 0 auto;
+}
+
+.flex-container {
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 h1 {
@@ -26,9 +49,28 @@ h1 {
   padding: 50px;
 }
 
+label {
+  display: block;
+  margin-top: 15px;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+button {
+  display: block;
+  background: royalblue;
+  margin: 20px auto;
+}
+
+button:hover,
+button:focus {
+  background: #DB6172;
+}
+
 form {
-  margin: 50px auto;
-  width: 80%;
+  border: 2px solid crimson;
+  padding: 20px;
+  margin: 20px auto;
 }
 
 input,
@@ -44,38 +86,67 @@ input {
 
 input:hover,
 input:focus {
-  border: 2px solid royalblue;
+  border: 2px solid #EC84A5;
 }
 
-label {
-  display: block;
-  margin-top: 15px;
+.item-form {
+  border: 2px solid deepskyblue;
+  position: relative;
+} 
+
+.item-inputs {
+  display: inline-block;
+}
+
+.item-inputs:first-of-type {
+  width: calc(70% - 20px);
+}
+
+.item-inputs:last-of-type {
+  width: 30%;
+}
+
+.item-cost-label {
+  padding-left: 20px;
+}
+
+.cost-input {
+  width: calc(100% - 22px);
+}
+
+fieldset {
+  border: 0;
+  padding: 0;
   text-align: left;
 }
 
-button[type="submit"] {
-  display: block;
-  margin: 15px auto;
-}
-
-form {
-  border: 2px solid crimson;
-  padding: 30px;
-}
-
-.itemForm {
-  border: 2px solid deepskyblue;
-  margin: 10px 0;
-} 
-
-.nameLabel {
-  border: 3px solid rebeccapurple;
-  color: rebeccapurple;
-  background: white;
-  border-radius: 15px;
+legend {
+  margin: 20px 0 0 0;
 }
 
 input[type="checkbox"] {
+  width: 15px;
+  margin-right: 5px;
+  margin-left: 0;
+}
+
+.nameLabel {
+  /* border: 3px solid rebeccapurple; */
+  color: rebeccapurple;
+  background: white;
+  border-radius: 5px;
+  font-size: 1.8rem;
+  display: inline-block;
+  margin-right: 15px;
+}
+
+button.add-item {
+  margin-right: 0;
+  margin-bottom: 0;
+  height: 48px;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
 }
 
 ul,
@@ -86,29 +157,34 @@ li {
 }
 
 .card-display {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .invoice-card {
-  background: palegoldenrod;
-  border-radius: 5px;
+  border-radius: 10px;
+  overflow: hidden;
   border: 0;
   width: 350px;
+  margin: 30px;
 }
 
 .invoice-card ul {
   width: 100%;
-  display:flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
 }
 
 .invoice-card li {
   width: 100%;
   padding: 20px;
   border-bottom: 2px solid royalblue;
+}
+
+.invoice-card li:nth-of-type(2n) {
+  background: #A0E9F3;
+}
+
+.invoice-card li:nth-of-type(2n + 1) {
+  background: #DAF7F6;
 }
 
 .invoice-card h3 {
@@ -126,6 +202,7 @@ li {
 
 p.invoice-item {
   width: 70%;
+  text-align: left;
 }
 
 p.invoice-amount {
@@ -133,6 +210,13 @@ p.invoice-amount {
   text-align: right;
 }
 
-p.invoice-total {
+.invoice-card h3,
+.invoice-card li:last-of-type {
+  background: #3B77AE;
+  color: #fff;
+}
+
+.invoice-total p {
   font-weight: bold;
 }
+

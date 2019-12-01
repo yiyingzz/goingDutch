@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import firebase from './firebase.js';
+import firebase from '../firebase.js';
 
 class DisplayBill extends Component {
   constructor() {
@@ -50,25 +50,25 @@ class DisplayBill extends Component {
         <h2>{this.state.billItem.billName}</h2>  
 
 
-        <div className="card-display">
+        <div className="card-display flex-container">
 
           <div className="invoice-card">
             <h3>{this.state.person1.name}</h3>  
 
-            <ul>
+            <ul className="flex-container">
               {
-                this.state.person1Items.map((item) => {
+                this.state.person1Items.map((item, i) => {
                   return(
-                    <li>
+                    <li key={i}>
                       <p className="invoice-item">{item.itemName}</p> 
                       <p className="invoice-amount">${item.itemCost}</p>
                     </li>
                   )
                 })
               }
-              <li>
-                <p className="invoice-item invoice-total">Total Amount Owed:</p> 
-                <p className="invoice-amount invoice-total">${this.state.person1.totalAmount}</p>
+              <li className="invoice-total">
+                <p className="invoice-item">Total Amount to Pay:</p> 
+                <p className="invoice-amount">${this.state.person1.totalAmount}</p>
               </li>
             </ul>
 
@@ -80,18 +80,18 @@ class DisplayBill extends Component {
 
             <ul>
               {
-                this.state.person2Items.map((item) => {
+                this.state.person2Items.map((item, i) => {
                   return(
-                    <li>
+                    <li key={i}>
                       <p className="invoice-item">{item.itemName}</p> 
                       <p className="invoice-amount">${item.itemCost}</p>
                     </li>
                   )
                 })
               }
-              <li>
-                <p className="invoice-item invoice-total">Total Amount Owed:</p> 
-                <p className="invoice-amount invoice-total">${this.state.person1.totalAmount}</p>
+              <li className="invoice-total">
+                <p className="invoice-item">Total Amount to Pay:</p> 
+                <p className="invoice-amount">${this.state.person2.totalAmount}</p>
               </li>
             </ul>
 

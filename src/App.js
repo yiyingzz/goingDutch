@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import firebase from './firebase.js'; // DO I NEED THIS HERE
-import NewBillForm from './NewBillForm.js';
-import ItemForm from './ItemForm.js';
-import DisplayBill from './DisplayBill.js';
+import NewBillForm from './components/NewBillForm.js';
+import ItemForm from './components/ItemForm.js';
+import DisplayBill from './components/DisplayBill.js';
 
 class App extends Component {
 
@@ -16,12 +16,12 @@ class App extends Component {
       // need to get these from NewBillForm
       billName: '',
 
-      person1: '',
-      person2: '',
+      person1: 'yiying',
+      person2: 'pikachu',
       person1ItemsKey: '',
       person2ItemsKey: '',
       
-      currentBillKey: `-LuygpOX5b-98D_LZGn0`,
+      currentBillKey: `-Lv1CJx1Nq81k5TbV3-f`,
 
       showNewBillForm: true,
       showItemForm: true,
@@ -68,7 +68,7 @@ class App extends Component {
 
         <header>
           <div className="wrapper">
-            <h1>Going Dutch!</h1>
+            <h1>Going Dutch</h1>
           </div>
         </header>
 
@@ -112,7 +112,14 @@ class App extends Component {
               : null
           } */}
 
-        </div>
+        </div> {/* --- /.wrapper ----- */}
+        
+        <footer>
+          <div className="wrapper">
+            <p>Made by <a href="https://www.yiying.ca">Yiying Zou</a></p>
+          </div>
+        </footer>
+
       </div>
     );
   }

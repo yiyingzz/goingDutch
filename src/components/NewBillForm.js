@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import firebase from './firebase.js';
+import firebase from '../firebase.js';
 
 class NewBillForm extends Component {
   constructor() {
@@ -32,7 +32,7 @@ class NewBillForm extends Component {
       people: [
         {
           name: this.state.person1,
-          totalAmount: 0 // maybe not necessary right here
+          totalAmount: 0 
         },
         {
           name: this.state.person2,
@@ -42,7 +42,8 @@ class NewBillForm extends Component {
     });
 
     const newBillKey = newBillItem.key;
-      
+    
+    // send bill info up to App.js
     this.props.getBillInfo(this.state.billName, this.state.person1, this.state.person2, newBillKey)
   }
 
@@ -51,18 +52,18 @@ class NewBillForm extends Component {
 
       <form className="newBillForm">
 
-          <label htmlFor="billName">Enter a name for this bill</label>
-          <input type="text" id="billName" value={this.state.billName} onChange={this.inputChange}></input>
+        <label htmlFor="billName">What's this bill for?</label>
+        <input type="text" id="billName" value={this.state.billName} onChange={this.inputChange}></input>
 
-          <label htmlFor="person1">Who's splitting this bill?</label>
-          <input type="text" id="person1" value={this.state.person1} onChange={this.inputChange}></input>
+        <label htmlFor="person1">Who's splitting this bill?</label>
+        <input type="text" id="person1" value={this.state.person1} onChange={this.inputChange}></input>
 
-          <label htmlFor="person2">Who else is splitting this bill?</label>
-          <input type="text" id="person2" value={this.state.person2} onChange={this.inputChange}></input>
+        <label htmlFor="person2">Who else is splitting this bill?</label>
+        <input type="text" id="person2" value={this.state.person2} onChange={this.inputChange}></input>
 
-          <button type="submit" onClick={this.addNewBill}>Submit</button>
+        <button type="submit" onClick={this.addNewBill}>Submit</button>
 
-        </form>
+      </form>
 
     )
   }
