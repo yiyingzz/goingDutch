@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './styles/style.css';
 import firebase from './firebase.js'; // DO I NEED THIS HERE
 import NewBillForm from './components/NewBillForm.js';
 import ItemForm from './components/ItemForm.js';
