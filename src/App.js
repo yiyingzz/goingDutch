@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import firebase from './firebase.js';
+import firebase from './firebase.js'; // DO I NEED THIS HERE
 import NewBillForm from './NewBillForm.js';
 import ItemForm from './ItemForm.js';
 import DisplayBill from './DisplayBill.js';
@@ -12,9 +12,6 @@ class App extends Component {
     super();
     this.state = {
 
-      // events is an array representing the database
-      bills: [], // I HAVEN'T EVEN USED THIS THOUGH
-
       // need multiple input values, one for each input
       // need to get these from NewBillForm
       billName: '',
@@ -24,42 +21,15 @@ class App extends Component {
       person1ItemsKey: '',
       person2ItemsKey: '',
       
-      currentBillKey: '',
+      currentBillKey: `-LuygpOX5b-98D_LZGn0`,
 
       showNewBillForm: true,
-      showItemForm: false,
-      displayBill: false,
+      showItemForm: true,
+      displayBill: true,
       listAllBills: false
 
     }
   }
-  
-
-  // componentDidMount() {
-  //   // connect to firebase database in componentDidMount()
-  //   const dbRef = firebase.database().ref();
-  //   console.log(dbRef);
-    
-  //   // need to listen for changes in database
-  //     // then add to this.state.bills array
-  //   dbRef.on('value', (snapshot) => {
-  //     const bills = snapshot.val();
-
-  //     const newBills = [];
-  //     for (let key in bills) {
-  //       console.log(bills[key]); // logging out all the keys (separate bills)
-  //       newBills.push(bills[key]); // push onto new array
-  //     }
-
-  //     this.setState({
-  //       bills: newBills
-  //     })
-
-  //     console.log("logging this.state.bills from componentDidMount", this.state.bills);
-  //   })
-
-  // }
-
 
   getBillInfo = (billName, person1, person2, billKey) => {
 
@@ -75,14 +45,10 @@ class App extends Component {
   }
 
 
-  doneAddingItems = (event) => {
-    event.preventDefault();
-    // basically just needs to take us to a page displaying what each person is paying for
-    console.log("doneAddingItems() running in App.js!");
-
+  doneAddingItems = () => {
     this.setState({
       showItemForm: false,
-      displayBill: true   // making this true displays the bill info with total $$
+      displayBill: true   
     })
   }
 
@@ -99,47 +65,54 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1>Going Dutch!</h1>
 
-        {
-          this.state.showNewBillForm
-            ? <NewBillForm 
-                getBillInfo={this.getBillInfo}
+        <header>
+          <div className="wrapper">
+            <h1>Going Dutch!</h1>
+          </div>
+        </header>
+
+        <div className="wrapper">
+
+          {
+            this.state.showNewBillForm
+              ? <NewBillForm 
+                  getBillInfo={this.getBillInfo}
+                />
+              : null
+          }
+          
+          {
+            this.state.showItemForm 
+              ? <ItemForm 
+                  currentBillKey={this.state.currentBillKey} 
+                  billName={this.state.billName} // ****
+                  person1={this.state.person1} 
+                  person2={this.state.person2}
+                  doneAddingItems={this.doneAddingItems}
+                />
+              : null
+
+              // **** technically can just use currentBillKey to get data from database & prob don't need the other props ??
+          }
+
+          {
+            this.state.displayBill
+            ? <DisplayBill 
+                currentBillKey={this.state.currentBillKey}
+                showFrontPage={this.showFrontPage}
               />
             : null
-        }
-        
-        {
-          this.state.showItemForm 
-            ? <ItemForm 
-                currentBillKey={this.state.currentBillKey} 
-                billName={this.state.billName} // ****
-                person1={this.state.person1} 
-                person2={this.state.person2}
-                doneAddingItems={this.doneAddingItems}
-              />
-            : null
-
-            // **** technically can just use currentBillKey to get data from database & prob don't need the other props ??
-        }
-
-        {
-          this.state.displayBill
-          ? <DisplayBill 
-              currentBillKey={this.state.currentBillKey}
-              showFrontPage={this.showFrontPage}
-            />
-          : null
-        }
+          }
 
 
-        {/* { 
-          this.state.listAllBills
-            ? <ListAllBills /> 
-            : null
-        } */}
+          {/* { 
+            this.state.listAllBills
+              ? <ListAllBills /> 
+              : null
+          } */}
 
-
+        </div>
       </div>
     );
   }

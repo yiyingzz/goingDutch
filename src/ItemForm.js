@@ -8,8 +8,6 @@ class ItemForm extends Component {
     this.state = {
 
       allItems: [],
-      person1Items: [],
-      person2Items: [],
       person1Total: 0,
       person2Total: 0,
 
@@ -21,7 +19,6 @@ class ItemForm extends Component {
     event.preventDefault();
 
     // set ref for current bill obj
-    // const billRef = firebase.database().ref(this.props.currentBillKey);
     const person1Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [0]);
     const person2Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [1]);
 
@@ -32,10 +29,6 @@ class ItemForm extends Component {
 
     let person1CurrentTotal = this.state.person1Total;
     let person2CurrentTotal = this.state.person2Total;
-    console.log("loggin person1CurerntTtoal as number");
-    console.log(person1CurrentTotal);
-    console.log("loggin itemCost");
-    console.log(itemCost);
 
     // check for which person is paying
     if (person1.checked === true && person2.checked === true) {
@@ -53,8 +46,6 @@ class ItemForm extends Component {
         person1Total: person1CurrentTotal,
         person2Total: person2CurrentTotal
       })
-      this.state.person1Items.push(item);
-      this.state.person2Items.push(item);
       this.state.allItems.push({
         itemName: itemName,
         itemCost: itemCost,
@@ -81,8 +72,6 @@ class ItemForm extends Component {
       this.setState({
         person1Total: person1CurrentTotal
       })
-
-      this.state.person1Items.push(item);
       this.state.allItems.push({
         itemName: itemName,
         itemCost: itemCost,
@@ -101,7 +90,6 @@ class ItemForm extends Component {
       this.setState({
         person2Total: person2CurrentTotal
       })
-      this.state.person2Items.push(item);
       this.state.allItems.push({
         itemName: itemName,
         itemCost: itemCost,
@@ -130,9 +118,7 @@ class ItemForm extends Component {
 
       <div>
 
-
         <h2>{this.props.billName}</h2>
-
 
           {
             this.state.showItemsList 
@@ -141,9 +127,8 @@ class ItemForm extends Component {
           }
 
           <form id="itemForm">
-            
             <label htmlFor="itemName">Enter an item</label>
-            <input type="text" id="itemName" value={this.itemName} onChange={this.inputChange}></input>
+            <input type="text" id="itemName"></input>
             
             <label htmlFor="itemCost">Cost of item</label>
             <input type="number" min="0" step="0.01" id="itemCost" placeholder="0.00" value={this.itemCost} onChange={this.inputChange}></input>
@@ -151,17 +136,16 @@ class ItemForm extends Component {
             <legend>Who is paying for this item?</legend>
 
             <input type="checkbox" id="itemPerson1" name="person"></input>
-            <label htmlFor="itemPerson1">{this.props.person1}</label>
+            <label htmlFor="itemPerson1" class="nameLabel">{this.props.person1}</label>
 
             <input type="checkbox" id="itemPerson2" name="person"></input>
-            <label htmlFor="itemPerson2">{this.props.person2}</label>
+            <label htmlFor="itemPerson2" class="nameLabel">{this.props.person2}</label>
 
             <button onClick={this.addItemToBill}>Add Item</button>
 
-            
           </form>
 
-          <button onClick={(event) => this.props.doneAddingItems(event)}>I'm done adding items!</button>
+          <button onClick={this.props.doneAddingItems}>I'm done adding items!</button>
 
       </div>
 

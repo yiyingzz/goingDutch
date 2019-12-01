@@ -15,35 +15,21 @@ class DisplayBill extends Component {
 
   componentDidMount() {
     const billRef = firebase.database().ref(this.props.currentBillKey);
-    const person1Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [0]);
-    const person2Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [1]);
 
-    const person1ItemsRef = firebase.database().ref(this.props.currentBillKey + '/people/' + [0] + '/items/');
-    const person2ItemsRef = firebase.database().ref(this.props.currentBillKey + '/people/' + [1] + '/items/');
-    
-
-    // we need to save this to state as an array
-
-    billRef.on('value', (snapshot) => {
-      console.log("logging  items snapshot value");
-      
+    billRef.on('value', (snapshot) => {      
       const items1 = snapshot.val().people[0].items;
       const items1Array = [];
 
       // because in firebase, the items are on an object, not an array, need to make them into an array to use on our page
       for (let item in items1) {
-        console.log("loggin item in items loop");
-        console.log(items1[item]);
         items1Array.push(items1[item]);
       }
 
+      // do the same for the 2nd person
       const items2 = snapshot.val().people[1].items;
       const items2Array = [];
 
-      // because in firebase, the items are on an object, not an array, need to make them into an array to use on our page
       for (let item in items2) {
-        console.log("loggin item in items loop");
-        console.log(items2[item]);
         items2Array.push(items2[item]);
       }
 
@@ -58,60 +44,60 @@ class DisplayBill extends Component {
   }
 
   render() {
-    console.log("loggin this.state.billItem");
-    console.log(this.state.billItem);
-    console.log(this.state.billItem.people);
-
-    console.log("loggin this.state.items1");
-    console.log(this.state.items1);
-
-
     return (
 
-
-      <div>
-
-      {/* 
-        // DISPLAY THE MONEYS
-        
-        // grab updated info from database 
-        // print a list for each person with the items & cost, with a Total Amount to Pay at the bottom 
-        // state needs array for each person's item list
-
-      */}
-
-      
+      <div>      
         <h2>{this.state.billItem.billName}</h2>  
 
-        <h3>{this.state.person1.name}</h3>  
 
-        {
-          this.state.person1Items.map((item) => {
-            return(
-              <div>
-                <p>{item.itemName}, {item.itemCost}</p>
-              </div>
-            )
-          })
-        }
-        <p>Total Amount Owed: <span>{this.state.person1.totalAmount}</span></p>
-     
-        <h3>{this.state.person2.name}</h3> 
+        <div className="card-display">
 
-        {
-          this.state.person2Items.map((item) => {
-            return(
-              <div>
-                <p>{item.itemName}, {item.itemCost}</p>
-              </div>
-            )
-          })
-        }
-        
-        
+          <div className="invoice-card">
+            <h3>{this.state.person1.name}</h3>  
 
-        <p>Total Amount Owed: <span>{this.state.person2.totalAmount}</span></p>
+            <ul>
+              {
+                this.state.person1Items.map((item) => {
+                  return(
+                    <li>
+                      <p className="invoice-item">{item.itemName}</p> 
+                      <p className="invoice-amount">${item.itemCost}</p>
+                    </li>
+                  )
+                })
+              }
+              <li>
+                <p className="invoice-item invoice-total">Total Amount Owed:</p> 
+                <p className="invoice-amount invoice-total">${this.state.person1.totalAmount}</p>
+              </li>
+            </ul>
 
+          </div>
+
+
+          <div className="invoice-card">
+            <h3>{this.state.person2.name}</h3>  
+
+            <ul>
+              {
+                this.state.person2Items.map((item) => {
+                  return(
+                    <li>
+                      <p className="invoice-item">{item.itemName}</p> 
+                      <p className="invoice-amount">${item.itemCost}</p>
+                    </li>
+                  )
+                })
+              }
+              <li>
+                <p className="invoice-item invoice-total">Total Amount Owed:</p> 
+                <p className="invoice-amount invoice-total">${this.state.person1.totalAmount}</p>
+              </li>
+            </ul>
+
+          </div>
+
+        </div>
 
         <button onClick={(event) => this.props.showFrontPage(event)}>Split Another Bill?</button>
         

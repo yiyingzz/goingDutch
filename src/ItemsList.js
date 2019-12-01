@@ -6,21 +6,24 @@ function ItemsList(props) {
     <div>
       <h2>List of Items</h2>
 
-    {
-      props.allItems.map((item) => {
-        return (
-          <div>
-            <p>{item.itemName} <span>Total Cost: {item.itemCost}</span></p>
-            <p>Who's Paying? <span>{item.whosPaying}</span></p>
-          </div>
-        ) 
-      })
-    }
+      <ul>
+      
+      {
+        props.allItems.map((item) => {
+          return (
+            <li>
+              <p>{item.itemName} <span>Total Cost: {item.itemCost}</span></p>
+              <p>Who's Paying? <span>{item.whosPaying}</span></p>
+            </li>
+          ) 
+        })
+      }
 
+      </ul>
+    
     </div>
 
   )
-
 }
 
 export default ItemsList;
