@@ -1,0 +1,69 @@
+/* STYLING FOR DISPLAYING BILL */
+
+.card-display {
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.invoice-card {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 0;
+  width: 350px;
+  margin: 30px;
+}
+
+.invoice-card ul {
+  width: 100%;
+}
+
+.invoice-card li {
+  width: 100%;
+  padding: 20px;
+}
+
+.invoice-card li:nth-of-type(2n) {
+  background: #A0E9F3;
+}
+
+.invoice-card li:nth-of-type(2n + 1) {
+  background: #DAF7F6;
+}
+
+.invoice-card h3 {
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+}
+
+.invoice-card p {
+  display: inline-block;
+  margin: 0;
+}
+
+p.invoice-item {
+  width: 70%;
+  text-align: left;
+}
+
+p.invoice-amount {
+  width: 30%;
+  text-align: right;
+}
+
+.invoice-card h3,
+.invoice-card li:last-of-type {
+  background: #3B77AE;
+  color: #fff;
+}
+
+.invoice-total p {
+  font-weight: bold;
+}
+
+.display-bill button {
+  display: inline-block;
+  margin-left: 15px;
+  margin-right: 15px;
+}
