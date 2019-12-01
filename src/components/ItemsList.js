@@ -9,10 +9,10 @@ const ItemsList = (props) => {
       <ul>
         
       {
-        props.allItems.map((item) => {
+        props.allItems.map((item, i) => {
           if (item.costPerPerson == null) {
             return (
-              <li>
+              <li key={i}>
                 <p className="invoice-item">{item.itemName}</p> 
                 <p className="invoice-amount">${item.itemCost}</p>
                 <p className="whos-paying">Who's paying for it?</p>
@@ -21,7 +21,7 @@ const ItemsList = (props) => {
             ) 
           } else {
             return (
-              <li>
+              <li key={i}>
                 <p className="invoice-item">{item.itemName}</p> 
                 <p className="invoice-amount">${item.itemCost}</p>
                 <p className="whos-paying">Who's paying for it?</p>

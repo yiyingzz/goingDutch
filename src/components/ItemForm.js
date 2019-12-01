@@ -22,11 +22,49 @@ class ItemForm extends Component {
       ],
       person1Total: 0,
       person2Total: 0,
+      whosPaying1: false,
+      whosPaying2: false,
+
+      itemName: '',
+      itemCost: '',
+      itemPerson1: '',
+      itemPerson2: '',
 
       showItemsList: true
     }
   }
 
+  inputChange = (event) => {
+    console.log(event.target.type);    
+
+    if (event.target.type === "checkbox") {
+      const itemInState = `this.state.${event.target.id}`
+                      // doesn't work cuz its a string !!!!!
+      console.log("loggin itemInState variable");
+      console.log(itemInState);
+      if (this.state.whosPaying1 === true) { // this needs to be the id in state but I would have to set it inidivudally
+        this.setState({
+          [event.target.id]: false
+        })
+      } else {
+        this.setState({
+          [event.target.id]: true
+        })
+      }
+    } else {
+      const inputValue = event.target.value;
+      this.setState({
+        [event.target.id]: inputValue
+      })
+    }
+
+    console.log(event.target.value);
+    // console.log(inputValue);
+
+    // this.setState({
+    //   [event.target.id]: inputValue
+    // })
+  }
 
   addItemToBill = (event) => {
     // need to check for blank inputs
@@ -37,36 +75,35 @@ class ItemForm extends Component {
     const person1Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [0]);
     const person2Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [1]);
 
-    const itemName = document.getElementById('itemName').value;
-    const itemCost = Number(document.getElementById('itemCost').value);
-    const person1 = document.getElementById('itemPerson1');
-    const person2 = document.getElementById('itemPerson2');
+    const person1 = document.getElementById('whosPaying1');
+    const person2 = document.getElementById('whosPaying2');
 
     let person1CurrentTotal = this.state.person1Total;
     let person2CurrentTotal = this.state.person2Total;
 
     // check for which person is paying
     if (person1.checked === true && person2.checked === true) {
-      const costPerPerson = (itemCost / 2).toFixed(2);
+      const costPerPerson = (this.state.itemCost / 2).toFixed(2);
       const item = {
-        itemName: `1/2 ${itemName}`,
+        itemName: `1/2 ${this.state.itemName}`,
         itemCost: costPerPerson
       }
-
-      
       person1CurrentTotal += costPerPerson;
       person2CurrentTotal += costPerPerson;
+
+      // updating state
       this.setState({
         person1Total: person1CurrentTotal,
         person2Total: person2CurrentTotal
       })
       this.state.allItems.push({
-        itemName: itemName,
-        itemCost: itemCost,
+        itemName: this.state.itemName,
+        itemCost: this.state.itemCost,
         costPerPerson: costPerPerson,
         whosPaying: `${this.props.person1}, ${this.props.person2}` 
       })
 
+      // push to database
       person1Ref.child('items').push(item);
       person2Ref.child('items').push(item);
       person1Ref.child('totalAmount').set(person1CurrentTotal);
@@ -74,40 +111,44 @@ class ItemForm extends Component {
 
     } else if (person1.checked === true) {
       const item = {
-        itemName: itemName,
-        itemCost: itemCost
+        itemName: this.state.itemName,
+        itemCost: this.state.itemCost
       }
-      person1Ref.child('items').push(item);
       
-
-      person1CurrentTotal += itemCost;
-      person1Ref.totalAmount = person1CurrentTotal;
-
+      // update state
+      person1CurrentTotal += this.state.itemCost;
       this.setState({
         person1Total: person1CurrentTotal
       })
       this.state.allItems.push({
-        itemName: itemName,
-        itemCost: itemCost,
+        itemName: this.state.itemName,
+        itemCost: this.state.itemCost,
         whosPaying: this.props.person1 
       })
+
+      // push to database
+      person1Ref.child('items').push(item);
       person1Ref.child('totalAmount').set(person1CurrentTotal);
 
     } else if (person2.checked === true) {
       const item = {
-        itemName: itemName,
-        itemCost: itemCost
+        itemName: this.state.itemName,
+        itemCost: this.state.itemCost
       }
-      person2Ref.child('items').push(item);
-      person2CurrentTotal += itemCost;
+
+      // update state
+      person2CurrentTotal += this.state.itemCost;
       this.setState({
         person2Total: person2CurrentTotal
       })
       this.state.allItems.push({
-        itemName: itemName,
-        itemCost: itemCost,
+        itemName: this.state.itemName,
+        itemCost: this.state.itemCost,
         whosPaying: this.props.person2 
       })
+
+      // push to database
+      person2Ref.child('items').push(item);
       person2Ref.child('totalAmount').set(person2CurrentTotal);
     }
 
@@ -143,24 +184,24 @@ class ItemForm extends Component {
 
             <div className="item-inputs">
               <label htmlFor="itemName">Enter an item</label>
-              <input type="text" id="itemName"></input>
+              <input type="text" id="itemName" value={this.state.itemName} onChange={this.inputChange}></input>
             </div>
 
             <div className="item-inputs">
               <label htmlFor="itemCost" className="item-cost-label">Item cost</label>
               <span className="dollar-sign">$ </span>
-                <input type="number" min="0" step="0.01" id="itemCost" placeholder="0.00" className="cost-input" value={this.itemCost} onChange={this.inputChange}></input>
+                <input type="number" min="0" step="0.01" id="itemCost" placeholder="0.00" className="cost-input" value={this.state.itemCost} onChange={this.inputChange}></input>
               
             </div>
 
             <fieldset>
               <legend>Who is paying for this item?</legend>
 
-              <input type="checkbox" id="itemPerson1" name="person"></input>
-              <label htmlFor="itemPerson1" className="name-label">{this.props.person1}</label>
+              <label htmlFor="whosPaying1" className="name-label">
+              <input type="checkbox" id="whosPaying1" name="whosPaying" checked={this.state.whosPaying1} onChange={this.inputChange}></input>{this.props.person1}</label>
 
-              <input type="checkbox" id="itemPerson2" name="person"></input>
-              <label htmlFor="itemPerson2" className="name-label">{this.props.person2}</label>
+              <label htmlFor="whosPaying2" className="name-label">
+              <input type="checkbox" id="whosPaying2" name="whosPaying" checked={this.state.whosPaying2} onChange={this.inputChange}></input>{this.props.person2}</label>
             </fieldset>
 
             <button className="add-item" onClick={this.addItemToBill}>Add Item</button>

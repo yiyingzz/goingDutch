@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './styles/style.css';
-import firebase from './firebase.js'; // DO I NEED THIS HERE
 import NewBillForm from './components/NewBillForm.js';
 import ItemForm from './components/ItemForm.js';
 import DisplayBill from './components/DisplayBill.js';
+import ListAllBills from './components/ListAllBills.js';
 
 class App extends Component {
 
@@ -26,11 +26,14 @@ class App extends Component {
       showNewBillForm: true,
       showItemForm: true,
       displayBill: true,
-      listAllBills: false
+      listAllBills: true
 
     }
   }
 
+  // refactor this to only need billKey - use info from database for everything else
+  // then use this function in ListAllBills to get info
+    // have to do something about the showFOrms part
   getBillInfo = (billName, person1, person2, billKey) => {
 
     this.setState({
@@ -39,14 +42,14 @@ class App extends Component {
       person2: person2,
       currentBillKey: billKey,
 
-      showNewBillForm: false,
+      showNewBillForm: true,
       showItemForm: true
     })
   }
 
   doneAddingItems = () => {
     this.setState({
-      showItemForm: false,
+      showItemForm: true,
       displayBill: true   
     })
   }
@@ -62,7 +65,7 @@ class App extends Component {
   listAllBills = () => {
 
     this.setState({
-      listAllBills: true
+      listAllBills: false
     })
   }
 
@@ -114,13 +117,13 @@ class App extends Component {
           }
 
 
-          {/* { 
+          { 
             this.state.listAllBills
               ? <ListAllBills 
-                  currentBillKey={this.state.currentBillKey}
+                  showFrontPage={this.showFrontPage}
                 /> 
               : null
-          } */}
+          }
 
         </div> {/* --- /.wrapper ----- */}
         
