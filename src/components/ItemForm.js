@@ -88,7 +88,7 @@ class ItemForm extends Component {
         itemName: this.state.itemName,
         itemCost: this.state.itemCost,
         costPerPerson: costPerPerson,
-        whosPaying: `${this.props.person1}, ${this.props.person2}` 
+        whosPaying: `${this.props.person1} & ${this.props.person2}` 
       })
 
       // push to database

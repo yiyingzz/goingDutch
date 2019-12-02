@@ -26,7 +26,7 @@ class ListAllBills extends Component {
           billKey: item,
           billDate: data[item].dateCreated,
           billName: data[item].billName,
-          people: `${data[item].people[0].name}, ${data[item].people[1].name}`
+          people: `${data[item].people[0].name} & ${data[item].people[1].name}`
         });
       }
 
@@ -39,23 +39,24 @@ class ListAllBills extends Component {
   render() {
     return(
       <section id="list-all-bills" className="list-all-bills">
-        <h2>LISTING ALL MY BILLS</h2>
+        <h3>All Bills</h3>
 
         <ul className="bills-list flex-container">
           {
             this.state.billData.map((item, i) => {
               return (
                 <li key={i} onClick={() => this.props.displayBill(item.billKey)}>
-                  <div className="list-left">
-
-                  </div>
-                  <div className="list-right">
-                    
-                  </div>
+                  <div className="list-top flex-container">
                   <p className="bill-name">{item.billName}</p>
                   <p className="date-created">{item.billDate}</p>
+
+                  </div>
+
+                  <div className="list-bottom flex-container">
                   <p className="whos-splitting">Who's splitting this bill?</p>
                   <p className="people-involved">{item.people}</p>
+
+                  </div>
                 </li>
               )
             })

@@ -8,29 +8,45 @@
     margin: 10px;
     cursor: pointer;
     width: calc(50% - 20px);
+
+    @media (max-width: 767px) {
+      width: 100%;
+    }
   }
 
   p {
     display: inline-block;
     margin: 0;
     padding: 15px;
+
+    @media (max-width: 480px) {
+      font-size: 1.8rem;
+    }
   }
+}
+
+.list-top {
+  background: $primaryColor;
+  color: $secondaryTextColor;
+}
+
+.list-bottom {
+  background: $fourthColor;
+  color: $primaryTextColor;
 }
 
 .bill-name,
 .whos-splitting {
-  width: 70%;
+  width: 60%;
   text-align: left;
 }
 
 .date-created,
 .people-involved {
-  width: 30%;
+  width: 40%;
   text-align: right;
 }
 
-.bill-name,
 .date-created {
-  background: $primaryColor;
-  color: $secondaryTextColor;
+  font-size: 1.8rem;
 }
