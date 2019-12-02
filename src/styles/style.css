@@ -332,6 +332,10 @@ h3 {
   font-size: 24px;
 }
 
+h4 {
+  margin: 0;
+}
+
 label {
   display: block;
   margin-top: 15px;
@@ -355,18 +359,17 @@ button:hover, button:focus {
   background: #DB6172;
 }
 
-.add-item,
-.list-bills {
+.alternate-button {
   background: #5AB6DC;
 }
 
 form {
   padding: 20px 20px 0;
   margin: 0 auto;
-  width: 70%;
+  width: 65%;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 767px) {
   form {
     width: 100%;
   }
@@ -406,10 +409,6 @@ input::placeholder {
 
 input:hover, input:focus {
   border: 2px solid #DB6172;
-}
-
-.list-bills {
-  background: #5AB6DC;
 }
 
 /* STYLES FOR ITEM FORM */
@@ -538,7 +537,7 @@ input[type="checkbox"] {
   margin-top: 50px;
 }
 
-/* STYLING FOR DISPLAYING BILL */
+/* STYLING FOR ALL BILL/ITEMS CARDS */
 .card-display {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -548,22 +547,44 @@ input[type="checkbox"] {
           align-items: flex-start;
 }
 
-.items-card,
-.invoice-card {
+.card {
   border-radius: 10px;
   overflow: hidden;
   border: 0;
 }
 
+.card ul {
+  width: 100%;
+}
+
+.card li {
+  width: 100%;
+  padding: 20px;
+}
+
 @media (max-width: 480px) {
-  .items-card p,
-  .invoice-card p {
+  .card li {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card p {
     font-size: 1.8rem;
   }
 }
 
+.card li:nth-of-type(2n) {
+  background: #A0E9F3;
+}
+
+.bill-card-bottom,
+.card li:nth-of-type(2n + 1) {
+  background: #DAF7F6;
+}
+
 .invoice-card {
-  width: 350px;
+  width: calc(50% - 40px);
   margin: 20px;
 }
 
@@ -585,147 +606,50 @@ input[type="checkbox"] {
   }
 }
 
-.items-card ul,
-.invoice-card ul {
-  width: 100%;
-}
-
-.items-card li,
-.invoice-card li {
-  width: 100%;
-  padding: 20px;
-}
-
-@media (max-width: 480px) {
-  .items-card li,
-  .invoice-card li {
-    padding: 10px;
-  }
-}
-
-.items-card li:nth-of-type(2n),
-.invoice-card li:nth-of-type(2n) {
-  background: #A0E9F3;
-}
-
-.items-card li:nth-of-type(2n + 1),
-.invoice-card li:nth-of-type(2n + 1) {
-  background: #DAF7F6;
-}
-
-.items-card h3,
-.invoice-card h4 {
-  width: 100%;
-  text-align: center;
+.card-heading {
   margin: 0;
+  width: 100%;
   padding: 20px;
+  background: #3B77AE;
+  color: #fff;
+  font-weight: bold;
 }
 
-.items-card p,
-.invoice-card p {
+.card-left,
+.card-right {
   display: inline-block;
   margin: 0;
 }
 
-p.invoice-item,
-p.whos-paying,
-p.cost-per-person {
-  width: 70%;
+.card-left {
+  width: 60%;
   text-align: left;
 }
 
-.items-card p.invoice-item,
-.items-card p.invoice-amount {
-  font-weight: bold;
-}
-
-p.invoice-amount,
-p.whos-paying-names,
-p.item-cost {
-  width: 30%;
+.card-right {
+  width: 40%;
   text-align: right;
 }
 
-p.whos-paying,
-p.whos-paying-names,
-p.cost-per-person,
-p.item-cost {
-  font-size: 1.6rem;
+.card-small {
+  font-size: 1.7rem;
   margin-top: 5px;
 }
 
-.items-card h3,
-.invoice-card h4,
-.invoice-card li:last-of-type {
-  background: #3B77AE;
-  color: #fff;
+.bill-card {
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  margin: 20px auto;
+  width: calc(50% - 40px);
+  max-width: 500px;
 }
 
-.invoice-total p {
-  font-weight: bold;
+.bill-card-bottom {
+  padding: 20px;
 }
 
 .display-bill button {
   display: inline-block;
   margin-left: 15px;
   margin-right: 15px;
-}
-
-.bills-list {
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-}
-
-.bills-list li {
-  border-radius: 5px;
-  overflow: hidden;
-  background: #DAF7F6;
-  margin: 10px;
-  cursor: pointer;
-  width: calc(50% - 20px);
-}
-
-@media (max-width: 767px) {
-  .bills-list li {
-    width: 100%;
-  }
-}
-
-.bills-list p {
-  display: inline-block;
-  margin: 0;
-  padding: 15px;
-}
-
-@media (max-width: 480px) {
-  .bills-list p {
-    font-size: 1.8rem;
-  }
-}
-
-.list-top {
-  background: #3B77AE;
-  color: #fff;
-}
-
-.list-bottom {
-  background: #DAF7F6;
-  color: #3B77AE;
-}
-
-.bill-name,
-.whos-splitting {
-  width: 60%;
-  text-align: left;
-}
-
-.date-created,
-.people-involved {
-  width: 40%;
-  text-align: right;
-}
-
-.date-created {
-  font-size: 1.8rem;
 }

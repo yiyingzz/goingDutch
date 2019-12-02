@@ -3,8 +3,8 @@ import React from 'react';
 const ItemsList = (props) => {
   return (
     
-    <section id="items-list" className="items-card flex-container">
-      <h3>Items in Your Bill</h3>
+    <section id="items-list" className="items-card card flex-container">
+      <h4 className="card-heading">Items in Your Bill</h4>
 
       <ul>
         
@@ -13,21 +13,21 @@ const ItemsList = (props) => {
           if (item.costPerPerson == null) {
             return (
               <li key={i}>
-                <p className="invoice-item">{item.itemName}</p> 
-                <p className="invoice-amount">${item.itemCost}</p>
-                <p className="whos-paying">Who's paying for it?</p>
-                <p className="whos-paying-names">{item.whosPaying}</p>
+                <p className="card-left invoice-item">{item.itemName}</p> 
+                <p className="card-right invoice-amount">${item.itemCost}</p>
+                <p className="card-left card-small">Who's paying for it?</p>
+                <p className="card-right card-small">{item.whosPaying}</p>
               </li>
             ) 
           } else {
             return (
               <li key={i}>
-                <p className="invoice-item">{item.itemName}</p> 
-                <p className="invoice-amount">${item.itemCost}</p>
-                <p className="whos-paying">Who's paying for it?</p>
-                <p className="whos-paying-names">{item.whosPaying}</p>
-                <p className="cost-per-person">Cost per person:</p>
-                <p className="item-cost">${item.costPerPerson}</p>
+                <p className="card-left invoice-item">{item.itemName}</p> 
+                <p className="card-right invoice-amount">${item.itemCost}</p>
+                <p className="card-left card-small">Who's paying for it?</p>
+                <p className="card-right card-small">{item.whosPaying}</p>
+                <p className="card-left card-small">Cost per person:</p>
+                <p className="card-right card-small">${item.costPerPerson}</p>
               </li>
             ) 
           }

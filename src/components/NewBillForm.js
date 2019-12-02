@@ -95,7 +95,7 @@ class NewBillForm extends Component {
 
         </form>
 
-        <button className="list-bills" onClick={this.props.listAllBills}>See Previous Bills</button>
+        <button className="alternate-button" onClick={this.props.listAllBills}>See Previous Bills</button>
       </section>
 
     )

@@ -10,7 +10,21 @@ class ItemForm extends Component {
       formValid: true,
       checkboxes: true,
 
-      allItems: [],
+      allItems: [
+        {
+          itemName: 'pizza',
+          itemCost: 40.32,
+          whosPaying: 'yiying'
+        },
+        {
+          itemName: 'avocado',
+          itemCost: 12.43,
+          whosPaying: 'pikachu'
+        }
+      ],
+
+
+      // allItems: [],
       person1Total: 0,
       person2Total: 0,
       
@@ -19,7 +33,7 @@ class ItemForm extends Component {
       whosPaying1: false,
       whosPaying2: false,
 
-      showItemsList: false
+      showItemsList: true
     }
   }
 
@@ -195,7 +209,7 @@ class ItemForm extends Component {
               <input type="checkbox" id="whosPaying2" name="whosPaying" checked={this.state.whosPaying2} onChange={this.inputChange}></input>{this.props.person2}</label>
             </fieldset>
 
-            <button className="add-item" onClick={(event) => this.validateInputs(event, this.state.itemName, this.state.itemCost)}>Add Item</button>
+            <button className="alternate-button" onClick={(event) => this.validateInputs(event, this.state.itemName, this.state.itemCost)}>Add Item</button>
 
           </form>
 

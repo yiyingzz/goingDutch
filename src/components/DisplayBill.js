@@ -55,55 +55,49 @@ class DisplayBill extends Component {
 
         <div className="card-display flex-container">
 
-          <div className="invoice-card">
-            <h4>{this.state.person1.name}</h4>  
-
+          <div className="invoice-card card">
+            <h4 className="card-heading">{this.state.person1.name}</h4>  
             <ul className="flex-container">
               {
                 this.state.person1Items.map((item, i) => {
                   return(
                     <li key={i}>
-                      <p className="invoice-item">{item.itemName}</p> 
-                      <p className="invoice-amount">${item.itemCost}</p>
+                      <p className="card-left invoice-item">{item.itemName}</p> 
+                      <p className="card-right invoice-amount">${item.itemCost}</p>
                     </li>
                   )
                 })
               }
-              <li className="invoice-total">
-                <p className="invoice-item">Total Amount to Pay:</p> 
-                <p className="invoice-amount">${this.state.person1Total}</p>
-              </li>
             </ul>
-
+            <div className="invoice-total card-heading">
+              <p className="card-left invoice-item">Total Amount to Pay:</p> 
+              <p className="card-right invoice-amount">${this.state.person1Total}</p>
+            </div>
           </div>
 
-
-          <div className="invoice-card">
-            <h4>{this.state.person2.name}</h4>  
-
-            <ul>
+          <div className="invoice-card card">
+            <h4 className="card-heading">{this.state.person2.name}</h4>  
+            <ul className="flex-container">
               {
                 this.state.person2Items.map((item, i) => {
                   return(
                     <li key={i}>
-                      <p className="invoice-item">{item.itemName}</p> 
-                      <p className="invoice-amount">${item.itemCost}</p>
+                      <p className="card-left invoice-item">{item.itemName}</p> 
+                      <p className="card-right invoice-amount">${item.itemCost}</p>
                     </li>
                   )
                 })
               }
-              <li className="invoice-total">
-                <p className="invoice-item">Total Amount to Pay:</p> 
-                <p className="invoice-amount">${this.state.person2Total}</p>
-              </li>
             </ul>
-
+            <div className="invoice-total card-heading">
+              <p className="card-left invoice-item">Total Amount to Pay:</p> 
+              <p className="card-right invoice-amount">${this.state.person2Total}</p>
+            </div>
           </div>
 
-        </div>
+        </div> {/*---/.card-display */}
 
-        <button onClick={this.props.showFrontPage}>Split Another Bill?</button>
-
+        <button onClick={this.props.showFrontPage}>Split Another Bill</button>
         <button onClick={this.props.listAllBills}>View Other Bills</button>
         
       </section>

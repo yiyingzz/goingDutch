@@ -16,17 +16,17 @@ class App extends Component {
       // need to get these from NewBillForm
       billName: '',
 
-      person1: '',
-      person2: '',
+      person1: 'yiying',
+      person2: 'yiying\'s alter ego',
       person1ItemsKey: '',
       person2ItemsKey: '',
       
-      currentBillKey: '',
+      currentBillKey: '-Lv71-rIzEUI5zMX17vX',
 
       showNewBillForm: true,
-      showItemForm: false,
-      displayBill: false,
-      listAllBills: false
+      showItemForm: true,
+      displayBill: true,
+      listAllBills: true
 
     }
   }
