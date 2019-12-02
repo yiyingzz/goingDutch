@@ -16,12 +16,12 @@ class App extends Component {
       // need to get these from NewBillForm
       billName: '',
 
-      person1: 'yiying',
-      person2: 'pikachu',
+      person1: '',
+      person2: '',
       person1ItemsKey: '',
       person2ItemsKey: '',
       
-      currentBillKey: `-Lv1CJx1Nq81k5TbV3-f`,
+      currentBillKey: '',
 
       showNewBillForm: true,
       showItemForm: false,
@@ -42,7 +42,7 @@ class App extends Component {
       person2: person2,
       currentBillKey: billKey,
 
-      showNewBillForm: false,
+      // showNewBillForm: false,\
       showItemForm: true
     })
   }
@@ -74,7 +74,6 @@ class App extends Component {
   }
 
   render() {
-
 
     return (
       <div className="App">

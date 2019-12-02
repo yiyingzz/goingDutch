@@ -86,18 +86,12 @@ input[type="checkbox"] {
   }
 }
 
-button.add-item {
+.add-item {
   margin-right: 0;
   margin-bottom: 0;
   position: absolute;
   right: 20px;
   bottom: 20px;
-  background: $secondaryColor;
-
-  &:hover,
-  &:focus {
-    background: $accentColor;
-  }
 
   @media (max-width: 767px) {
     position: static;
@@ -105,6 +99,6 @@ button.add-item {
   }
 }
 
-button.done-adding {
+.done-adding {
   margin-top: 50px;
 }

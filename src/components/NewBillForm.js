@@ -8,6 +8,7 @@ class NewBillForm extends Component {
       billName: '',
       person1: '',
       person2: '',
+      formValid: true,
     }
   }
   
@@ -17,47 +18,72 @@ class NewBillForm extends Component {
     this.setState({
       [event.target.id]: inputValue
     })
+
+    console.log(inputValue);
+  }
+
+  validateInputs = (event, ...inputs) => {
+    event.preventDefault();
+
+    // input is in state so check if state is blank
+    inputs.forEach((input) => {
+      if (this.state.formValid) {
+        if (input.trim() !== '' && input.trim().length > 0) {
+          return input;
+        } else {
+          alert("Make sure you fill out the form!");
+          this.setState({
+            formValid: false
+          })
+        }
+      }
+    })
+
+    // I used a setTimeout here b/c it seems like state isn't updating fast enough above
+    setTimeout(() => {
+      if (this.state.formValid) {
+        this.createNewBill();
+      } else {
+        // reset state so the user can input again
+        this.setState({
+          formValid: true
+        })
+      }
+    }, 500)
   }
 
   // this submits the first form that gets bill name & people names
-  addNewBill = (event) => {
-    event.preventDefault();
+  createNewBill = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const day = today.getDate() + 1;
+    const dateCreated = `${year}-${month}-${day}`;
 
-    // check for blank inputs
-    if (this.state.billName == false || this.state.person1 == false || this.state.person2 == false) {
-      alert("Make sure you fill out each part of the form!");
-    } else {
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = today.getMonth() + 1;
-      const day = today.getDate() + 1;
-      const dateCreated = `${year}-${month}-${day}`;
+    //assign input value to new top level object in dbRef
+    const dbRef = firebase.database().ref();
+
+    // push the new bill item & save the key
+    const newBillItem = dbRef.push({
+      billName: this.state.billName,
+      dateCreated: dateCreated,
+      people: [
+        {
+          name: this.state.person1,
+          totalAmount: 0 
+        },
+        {
+          name: this.state.person2,
+          totalAmount: 0
+        }
+      ]
+    });
+
+    const newBillKey = newBillItem.key;
     
-      //assign input value to new top level object in dbRef
-      const dbRef = firebase.database().ref();
+    // send bill info up to App.js & takes user to item form
+    this.props.getBillInfo(this.state.billName, this.state.person1, this.state.person2, newBillKey);
 
-      // push the new bill item & save the key
-      const newBillItem = dbRef.push({
-        billName: this.state.billName,
-        dateCreated: dateCreated,
-        people: [
-          {
-            name: this.state.person1,
-            totalAmount: 0 
-          },
-          {
-            name: this.state.person2,
-            totalAmount: 0
-          }
-        ]
-      });
-
-      const newBillKey = newBillItem.key;
-      
-      // send bill info up to App.js
-      this.props.getBillInfo(this.state.billName, this.state.person1, this.state.person2, newBillKey)
-    
-    }
   }
 
   render() {
@@ -76,11 +102,11 @@ class NewBillForm extends Component {
           <label htmlFor="person2">Who else is splitting this bill?</label>
           <input type="text" id="person2" placeholder="Name" value={this.state.person2} onChange={this.inputChange}></input>
 
-          <button type="submit" onClick={this.addNewBill}>Submit</button>
+          <button type="submit" onClick={(event) => this.validateInputs(event, this.state.billName, this.state.person1, this.state.person2)}>Submit</button>
 
         </form>
 
-        <button onClick={this.props.listAllBills}>See Previous Bills</button>
+        <button className="list-bills" onClick={this.props.listAllBills}>See Previous Bills</button>
       </section>
 
     )

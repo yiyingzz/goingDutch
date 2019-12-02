@@ -7,73 +7,85 @@ class ItemForm extends Component {
     super();
     this.state = {
 
+      formValid: true,
+      checkboxes: true,
+
       allItems: [],
       person1Total: 0,
       person2Total: 0,
-      whosPaying1: false,
-      whosPaying2: false,
-
+      
       itemName: '',
       itemCost: '',
+      whosPaying1: false,
+      whosPaying2: false,
 
       showItemsList: false
     }
   }
 
   inputChange = (event) => {
-    console.log(event.target.type); 
-    const inputValue = event.target.value;   
-
-
-    // if (event.target.type === "checkbox") {
-    //   const itemInState = `this.state.${event.target.id}`
-    //                   // doesn't work cuz its a string !!!!!
-    //   console.log("loggin itemInState variable");
-    //   console.log(itemInState);
-    //   if (this.state.whosPaying1 === true) { // this needs to be the id in state but I would have to set it inidivudally
-    //     this.setState({
-    //       [event.target.id]: false
-    //     })
-    //   } else {
-    //     this.setState({
-    //       [event.target.id]: true
-    //     })
-    //   }
-    // } else {
-    //   const inputValue = event.target.value;
-    //   this.setState({
-    //     [event.target.id]: inputValue
-    //   })
-    // }
-
-    console.log(event.target.value);
-    // console.log(inputValue);
-
-
-    this.setState({
-      [event.target.id]: inputValue
-    })
-
-
+    if (event.target.type === "checkbox") {
+      this.setState({
+        [event.target.id]: event.target.checked
+      })
+    } else {
+      this.setState({
+        [event.target.id]: event.target.value
+      })
+    }
   }
 
-  addItemToBill = (event) => {
-    // need to check for blank inputs
-
+  validateInputs = (event, ...inputs) => {
     event.preventDefault();
+
+    // input is in state so check if state is blank
+    inputs.forEach((input) => {
+      if (this.state.formValid) {
+        if (input.trim() !== '' && input.trim().length > 0) {
+          return input;
+        } else {
+          alert("Make sure you fill out the form!");
+          this.setState({
+            formValid: false
+          })
+        }
+      }
+    })
+
+    // I used a setTimeout here b/c it seems like state isn't updating fast enough above
+    setTimeout(() => {
+      if (this.state.formValid) {
+        this.validateCheckboxes();
+      } else {
+        // reset state so the user can input again
+        this.setState({
+          formValid: true
+        })
+      }
+    }, 500)
+  }
+
+  validateCheckboxes = () => {
+    // check if at least one checkbox is checked
+    if (this.state.whosPaying1 === false && this.state.whosPaying2 === false) {
+      alert("Please make sure you've selected who will be paying for this item!");
+    } else {
+      // A OK! GO TO NEXT STEP
+      this.addItemToBill();
+    }
+  }
+
+  addItemToBill = () => {
 
     // set ref for current bill obj
     const person1Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [0]);
     const person2Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [1]);
 
-    const person1 = document.getElementById('whosPaying1');
-    const person2 = document.getElementById('whosPaying2');
-
     let person1CurrentTotal = Number(this.state.person1Total);
     let person2CurrentTotal = Number(this.state.person2Total);
 
     // check for which person is paying
-    if (person1.checked === true && person2.checked === true) {
+    if (this.state.whosPaying1 === true && this.state.whosPaying2 === true) {
       let costPerPerson = (this.state.itemCost / 2).toFixed(2);
       
       costPerPerson = Number(costPerPerson);
@@ -102,7 +114,7 @@ class ItemForm extends Component {
       person1Ref.child('totalAmount').set(person1CurrentTotal);
       person2Ref.child('totalAmount').set(person2CurrentTotal);
 
-    } else if (person1.checked === true) {
+    } else if (this.state.whosPaying1 === true) {
       
       // update state
       person1CurrentTotal += Number(this.state.itemCost);
@@ -123,7 +135,7 @@ class ItemForm extends Component {
       person1Ref.child('items').push(item);
       person1Ref.child('totalAmount').set(person1CurrentTotal);
 
-    } else if (person2.checked === true) {
+    } else if (this.state.whosPaying2 === true) {
       // update state
       person2CurrentTotal += Number(this.state.itemCost);
       this.setState({
@@ -144,19 +156,14 @@ class ItemForm extends Component {
       person2Ref.child('totalAmount').set(person2CurrentTotal);
     }
 
-
-    // clear inputs & show item list
-    document.getElementById('item-form').reset();
-      // this is for the checkboxes
-
+    // reset inputs & show items list
     this.setState({
       itemName: '',
       itemCost: '',
       whosPaying1: false,
       whosPaying2: false,
       showItemsList: true
-    })
-      
+    }) 
   }
 
   render() {
@@ -195,13 +202,13 @@ class ItemForm extends Component {
               <legend>Who is paying for this item?</legend>
 
               <label htmlFor="whosPaying1" className="name-label">
-              <input type="checkbox" id="whosPaying1" name="whosPaying" onChange={this.inputChange}></input>{this.props.person1}</label>
+              <input type="checkbox" id="whosPaying1" name="whosPaying" checked={this.state.whosPaying1} onChange={this.inputChange}></input>{this.props.person1}</label>
 
               <label htmlFor="whosPaying2" className="name-label">
-              <input type="checkbox" id="whosPaying2" name="whosPaying" onChange={this.inputChange}></input>{this.props.person2}</label>
+              <input type="checkbox" id="whosPaying2" name="whosPaying" checked={this.state.whosPaying2} onChange={this.inputChange}></input>{this.props.person2}</label>
             </fieldset>
 
-            <button className="add-item" onClick={this.addItemToBill}>Add Item</button>
+            <button className="add-item" onClick={(event) => this.validateInputs(event, this.state.itemName, this.state.itemCost)}>Add Item</button>
 
           </form>
 

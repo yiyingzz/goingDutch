@@ -18,6 +18,13 @@ li {
   padding: 0;
 }
 
+/* prob need to align footer to bottom somehow?? */
+.App {
+  min-height: 100vh;
+  background: palegoldenrod;
+  // position: relative;
+}
+
 header {
   height: 200px;
   background: linear-gradient(to bottom, $primaryColor 25%, $secondaryColor 25%, $secondaryColor 50%, $tertiaryColor 50%, $tertiaryColor 75%, $fourthColor 75%);
@@ -28,6 +35,10 @@ footer {
   background: $primaryTextColor;
   color: $secondaryTextColor;
   padding: 10px;
+  // position: absolute;
+  // bottom: 0;
+  // left: 0;
+  // right: 0;
 
   p {
     margin: 0;
@@ -48,7 +59,7 @@ a {
 
 .wrapper {
   max-width: 1200px;
-  width: 75%;
+  width: 85%;
   margin: 0 auto;
 
   @media (max-width: 650px) {
@@ -96,7 +107,11 @@ button {
   &:focus {
     background: #DB6172;
   }
+}
 
+.add-item,
+.list-bills {
+  background: $secondaryColor;
 }
 
 
@@ -130,4 +145,8 @@ input {
   &:focus {
     border: 2px solid $accentColor;
   }
+}
+
+button.see-all-bills {
+  background: $secondaryColor;
 }

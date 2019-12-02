@@ -254,6 +254,12 @@ li {
   padding: 0;
 }
 
+/* prob need to align footer to bottom somehow?? */
+.App {
+  min-height: 100vh;
+  background: palegoldenrod;
+}
+
 header {
   height: 200px;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #3B77AE), color-stop(25%, #5AB6DC), color-stop(50%, #5AB6DC), color-stop(50%, #A0E9F3), color-stop(75%, #A0E9F3), color-stop(75%, #DAF7F6));
@@ -285,7 +291,7 @@ a:hover, a:focus {
 
 .wrapper {
   max-width: 1200px;
-  width: 75%;
+  width: 85%;
   margin: 0 auto;
 }
 
@@ -342,6 +348,11 @@ button:hover, button:focus {
   background: #DB6172;
 }
 
+.add-item,
+.list-bills {
+  background: #5AB6DC;
+}
+
 form {
   padding: 20px;
   margin: 0 auto 20px auto;
@@ -388,6 +399,10 @@ input::placeholder {
 
 input:hover, input:focus {
   border: 2px solid #DB6172;
+}
+
+button.see-all-bills {
+  background: #5AB6DC;
 }
 
 /* STYLES FOR ITEM FORM */
@@ -487,27 +502,22 @@ input[type="checkbox"] {
   }
 }
 
-button.add-item {
+.add-item {
   margin-right: 0;
   margin-bottom: 0;
   position: absolute;
   right: 20px;
   bottom: 20px;
-  background: #5AB6DC;
-}
-
-button.add-item:hover, button.add-item:focus {
-  background: #DB6172;
 }
 
 @media (max-width: 767px) {
-  button.add-item {
+  .add-item {
     position: static;
     margin: 20px auto;
   }
 }
 
-button.done-adding {
+.done-adding {
   margin-top: 50px;
 }
 
