@@ -38,7 +38,7 @@ class DisplayBill extends Component {
         person1: snapshot.val().people[0],
         person2: snapshot.val().people[1],
         person1Total: snapshot.val().people[0].totalAmount.toFixed(2),
-        person1Total: snapshot.val().people[1].totalAmount.toFixed(2),
+        person2Total: snapshot.val().people[1].totalAmount.toFixed(2),
         person1Items: items1Array,
         person2Items: items2Array,
       })

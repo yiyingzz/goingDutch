@@ -15,8 +15,6 @@ class ListAllBills extends Component {
   }
 
   componentDidMount() {
-    // needs to grab all bills from firebase
-
     const dbRef = firebase.database().ref();
 
     dbRef.on('value', (snapshot) => {   
@@ -30,13 +28,7 @@ class ListAllBills extends Component {
           billName: data[item].billName,
           people: `${data[item].people[0].name}, ${data[item].people[1].name}`
         });
-        console.log(item);
-        console.log(data[item]);
-        console.log(data[item].billName);
-        console.log(data[item].people[0].name);
-        console.log(data[item].people[1].name);
       }
-
 
       this.setState({
         billData: billData
@@ -45,9 +37,6 @@ class ListAllBills extends Component {
   }
 
   render() {
-
-    console.log(this.state.billData);
-
     return(
       <section id="list-all-bills" className="list-all-bills">
         <h2>LISTING ALL MY BILLS</h2>

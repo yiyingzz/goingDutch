@@ -25,7 +25,6 @@ class ItemForm extends Component {
     const inputValue = event.target.value;   
 
 
-
     // if (event.target.type === "checkbox") {
     //   const itemInState = `this.state.${event.target.id}`
     //                   // doesn't work cuz its a string !!!!!
@@ -104,10 +103,6 @@ class ItemForm extends Component {
       person2Ref.child('totalAmount').set(person2CurrentTotal);
 
     } else if (person1.checked === true) {
-      const item = {
-        itemName: this.state.itemName,
-        itemCost: this.state.itemCost
-      }
       
       // update state
       person1CurrentTotal += Number(this.state.itemCost);
@@ -119,17 +114,16 @@ class ItemForm extends Component {
         itemCost: this.state.itemCost,
         whosPaying: this.props.person1 
       })
-
+      
       // push to database
-      person1Ref.child('items').push(item);
-      person1Ref.child('totalAmount').set(person1CurrentTotal);
-
-    } else if (person2.checked === true) {
       const item = {
         itemName: this.state.itemName,
         itemCost: this.state.itemCost
       }
+      person1Ref.child('items').push(item);
+      person1Ref.child('totalAmount').set(person1CurrentTotal);
 
+    } else if (person2.checked === true) {
       // update state
       person2CurrentTotal += Number(this.state.itemCost);
       this.setState({
@@ -142,15 +136,24 @@ class ItemForm extends Component {
       })
 
       // push to database
+      const item = {
+        itemName: this.state.itemName,
+        itemCost: this.state.itemCost
+      }
       person2Ref.child('items').push(item);
       person2Ref.child('totalAmount').set(person2CurrentTotal);
     }
 
 
-    // clear inputs
+    // clear inputs & show item list
     document.getElementById('item-form').reset();
+      // this is for the checkboxes
 
     this.setState({
+      itemName: '',
+      itemCost: '',
+      whosPaying1: false,
+      whosPaying2: false,
       showItemsList: true
     })
       
