@@ -8,6 +8,7 @@ body {
   font-family: 'Lato', sans-serif;
   font-size: 2rem;
   text-align: center;
+  background: #fff;
   color: $primaryTextColor;
 }
 
@@ -21,7 +22,7 @@ li {
 /* prob need to align footer to bottom somehow?? */
 .App {
   min-height: 100vh;
-  background: palegoldenrod;
+  // background: palegoldenrod;
   // position: relative;
 }
 

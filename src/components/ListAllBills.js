@@ -41,14 +41,21 @@ class ListAllBills extends Component {
       <section id="list-all-bills" className="list-all-bills">
         <h2>LISTING ALL MY BILLS</h2>
 
-        <ul className="bills-list">
+        <ul className="bills-list flex-container">
           {
             this.state.billData.map((item, i) => {
               return (
                 <li key={i} onClick={() => this.props.displayBill(item.billKey)}>
-                  <p>{item.billName}</p>
-                  <p>Created on: {item.billDate}</p>
-                  <p>Who's splitting this bill? {item.people}</p>
+                  <div className="list-left">
+
+                  </div>
+                  <div className="list-right">
+                    
+                  </div>
+                  <p className="bill-name">{item.billName}</p>
+                  <p className="date-created">{item.billDate}</p>
+                  <p className="whos-splitting">Who's splitting this bill?</p>
+                  <p className="people-involved">{item.people}</p>
                 </li>
               )
             })

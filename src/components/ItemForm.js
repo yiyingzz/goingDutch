@@ -38,31 +38,19 @@ class ItemForm extends Component {
   validateInputs = (event, ...inputs) => {
     event.preventDefault();
 
-    // input is in state so check if state is blank
+    let formChecker = true;
     inputs.forEach((input) => {
-      if (this.state.formValid) {
-        if (input.trim() !== '' && input.trim().length > 0) {
-          return input;
-        } else {
-          alert("Make sure you fill out the form!");
-          this.setState({
-            formValid: false
-          })
-        }
+      if (!(this.state.formValid && input.trim() !== '' && input.trim().length > 0)) {
+        formChecker = false;
       }
     })
-
-    // I used a setTimeout here b/c it seems like state isn't updating fast enough above
-    setTimeout(() => {
-      if (this.state.formValid) {
-        this.validateCheckboxes();
-      } else {
-        // reset state so the user can input again
-        this.setState({
-          formValid: true
-        })
-      }
-    }, 500)
+    if (formChecker === false) {
+      this.setState({
+        formValid: false
+      })
+    } else {
+      this.validateCheckboxes();
+    }
   }
 
   validateCheckboxes = () => {
@@ -70,7 +58,6 @@ class ItemForm extends Component {
     if (this.state.whosPaying1 === false && this.state.whosPaying2 === false) {
       alert("Please make sure you've selected who will be paying for this item!");
     } else {
-      // A OK! GO TO NEXT STEP
       this.addItemToBill();
     }
   }
@@ -192,7 +179,7 @@ class ItemForm extends Component {
             </div>
 
             <div className="item-inputs">
-              <label htmlFor="itemCost" className="item-cost-label">Item cost</label>
+              <label htmlFor="itemCost" className="item-cost-label">Item cost <span className="label-dollar-sign">($)</span></label>
               <span className="dollar-sign">$ </span>
                 <input type="number" min="0" step="0.01" id="itemCost" placeholder="0.00" className="cost-input" value={this.state.itemCost} onChange={this.inputChange}></input>
               

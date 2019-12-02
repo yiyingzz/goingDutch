@@ -42,7 +42,7 @@ class App extends Component {
       person2: person2,
       currentBillKey: billKey,
 
-      // showNewBillForm: false,\
+      // showNewBillForm: false,
       showItemForm: true
     })
   }
@@ -68,7 +68,7 @@ class App extends Component {
       currentBillKey: billKey,
       showNewBillForm: false,
       showItemForm: false,
-      listAllBill: false,
+      listAllBills: false,
       displayBill: true
     })
   }

@@ -16,7 +16,8 @@ class NewBillForm extends Component {
     const inputValue = event.target.value;
 
     this.setState({
-      [event.target.id]: inputValue
+      [event.target.id]: inputValue,
+      formValid: true
     })
 
     console.log(inputValue);
@@ -25,31 +26,19 @@ class NewBillForm extends Component {
   validateInputs = (event, ...inputs) => {
     event.preventDefault();
 
-    // input is in state so check if state is blank
+    let formChecker = true;
     inputs.forEach((input) => {
-      if (this.state.formValid) {
-        if (input.trim() !== '' && input.trim().length > 0) {
-          return input;
-        } else {
-          alert("Make sure you fill out the form!");
-          this.setState({
-            formValid: false
-          })
-        }
+      if (!(this.state.formValid && input.trim() !== '' && input.trim().length > 0)) {
+        formChecker = false;
       }
     })
-
-    // I used a setTimeout here b/c it seems like state isn't updating fast enough above
-    setTimeout(() => {
-      if (this.state.formValid) {
-        this.createNewBill();
-      } else {
-        // reset state so the user can input again
-        this.setState({
-          formValid: true
-        })
-      }
-    }, 500)
+    if (formChecker === false) {
+      this.setState({
+        formValid: false
+      })
+    } else {
+      this.createNewBill();
+    }
   }
 
   // this submits the first form that gets bill name & people names
