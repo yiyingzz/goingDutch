@@ -27,6 +27,11 @@ class NewBillForm extends Component {
     if (this.state.billName == false || this.state.person1 == false || this.state.person2 == false) {
       alert("Make sure you fill out each part of the form!");
     } else {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth() + 1;
+      const day = today.getDate() + 1;
+      const dateCreated = `${year}-${month}-${day}`;
     
       //assign input value to new top level object in dbRef
       const dbRef = firebase.database().ref();
@@ -34,6 +39,7 @@ class NewBillForm extends Component {
       // push the new bill item & save the key
       const newBillItem = dbRef.push({
         billName: this.state.billName,
+        dateCreated: dateCreated,
         people: [
           {
             name: this.state.person1,
@@ -73,6 +79,8 @@ class NewBillForm extends Component {
           <button type="submit" onClick={this.addNewBill}>Submit</button>
 
         </form>
+
+        <button onClick={this.props.listAllBills}>See Previous Bills</button>
       </section>
 
     )

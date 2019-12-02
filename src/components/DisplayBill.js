@@ -37,6 +37,8 @@ class DisplayBill extends Component {
         billItem: snapshot.val(),
         person1: snapshot.val().people[0],
         person2: snapshot.val().people[1],
+        person1Total: snapshot.val().people[0].totalAmount.toFixed(2),
+        person1Total: snapshot.val().people[1].totalAmount.toFixed(2),
         person1Items: items1Array,
         person2Items: items2Array,
       })
@@ -48,6 +50,7 @@ class DisplayBill extends Component {
 
       <section id="display-bill" className="display-bill">      
         <h3>{this.state.billItem.billName}</h3>  
+        <p>Created on: {this.state.billItem.dateCreated}</p>
 
 
         <div className="card-display flex-container">
@@ -68,7 +71,7 @@ class DisplayBill extends Component {
               }
               <li className="invoice-total">
                 <p className="invoice-item">Total Amount to Pay:</p> 
-                <p className="invoice-amount">${this.state.person1.totalAmount}</p>
+                <p className="invoice-amount">${this.state.person1Total}</p>
               </li>
             </ul>
 
@@ -91,7 +94,7 @@ class DisplayBill extends Component {
               }
               <li className="invoice-total">
                 <p className="invoice-item">Total Amount to Pay:</p> 
-                <p className="invoice-amount">${this.state.person2.totalAmount}</p>
+                <p className="invoice-amount">${this.state.person2Total}</p>
               </li>
             </ul>
 
@@ -99,9 +102,9 @@ class DisplayBill extends Component {
 
         </div>
 
-        <button onClick={(event) => this.props.showFrontPage(event)}>Split Another Bill?</button>
+        <button onClick={this.props.showFrontPage}>Split Another Bill?</button>
 
-        <button onClick={(event) => this.props.listAllBills(event)}>View Other Bills</button>
+        <button onClick={this.props.listAllBills}>View Other Bills</button>
         
       </section>
 

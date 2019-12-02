@@ -269,6 +269,7 @@ footer {
 
 footer p {
   margin: 0;
+  font-size: 1.6rem;
 }
 
 a {
@@ -525,6 +526,13 @@ button.done-adding {
   border-radius: 10px;
   overflow: hidden;
   border: 0;
+}
+
+@media (max-width: 480px) {
+  .items-card p,
+  .invoice-card p {
+    font-size: 1.8rem;
+  }
 }
 
 .invoice-card {

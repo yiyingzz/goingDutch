@@ -24,9 +24,9 @@ class App extends Component {
       currentBillKey: `-Lv1CJx1Nq81k5TbV3-f`,
 
       showNewBillForm: true,
-      showItemForm: true,
-      displayBill: true,
-      listAllBills: true
+      showItemForm: false,
+      displayBill: false,
+      listAllBills: false
 
     }
   }
@@ -42,30 +42,34 @@ class App extends Component {
       person2: person2,
       currentBillKey: billKey,
 
-      showNewBillForm: true,
+      showNewBillForm: false,
       showItemForm: true
     })
   }
 
-  doneAddingItems = () => {
-    this.setState({
-      showItemForm: true,
-      displayBill: true   
-    })
-  }
-
   showFrontPage = () => {
-
     this.setState({
       showNewBillForm: true,
-      displayBill: false
+      displayBill: false,
+      listAllBills: false
     })
   }
 
   listAllBills = () => {
-
     this.setState({
-      listAllBills: false
+      showNewBillForm: false,
+      displayBill: false,
+      listAllBills: true
+    })
+  }
+
+  displayBill = (billKey) => {
+    this.setState({
+      currentBillKey: billKey,
+      showNewBillForm: false,
+      showItemForm: false,
+      listAllBill: false,
+      displayBill: true
     })
   }
 
@@ -88,6 +92,7 @@ class App extends Component {
             this.state.showNewBillForm
               ? <NewBillForm 
                   getBillInfo={this.getBillInfo}
+                  listAllBills={this.listAllBills}
                 />
               : null
           }
@@ -99,7 +104,7 @@ class App extends Component {
                   billName={this.state.billName} // ****
                   person1={this.state.person1} 
                   person2={this.state.person2}
-                  doneAddingItems={this.doneAddingItems}
+                  displayBill={this.displayBill}
                 />
               : null
 
@@ -121,6 +126,7 @@ class App extends Component {
             this.state.listAllBills
               ? <ListAllBills 
                   showFrontPage={this.showFrontPage}
+                  displayBill={this.displayBill}
                 /> 
               : null
           }

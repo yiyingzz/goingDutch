@@ -19,13 +19,14 @@ class ListAllBills extends Component {
 
     const dbRef = firebase.database().ref();
 
-    dbRef.on('value', (snapshot) => {      
+    dbRef.on('value', (snapshot) => {   
       const data = snapshot.val();
 
       const billData = []
       for (let item in data) {
         billData.push({
           billKey: item,
+          billDate: data[item].dateCreated,
           billName: data[item].billName,
           people: `${data[item].people[0].name}, ${data[item].people[1].name}`
         });
@@ -51,20 +52,21 @@ class ListAllBills extends Component {
       <section id="list-all-bills" className="list-all-bills">
         <h2>LISTING ALL MY BILLS</h2>
 
-        <ul>
+        <ul className="bills-list">
           {
             this.state.billData.map((item, i) => {
               return (
-                <li key={i} onClick={item.billKey}>
+                <li key={i} onClick={() => this.props.displayBill(item.billKey)}>
                   <p>{item.billName}</p>
-                  <p>Who's on this bill? {item.people}</p>
+                  <p>Created on: {item.billDate}</p>
+                  <p>Who's splitting this bill? {item.people}</p>
                 </li>
               )
             })
           }
         </ul>
 
-        <button onClick={() => this.props.showFrontPage()}>Home</button>
+        <button onClick={this.props.showFrontPage}>Home</button>
 
       </section>
     )

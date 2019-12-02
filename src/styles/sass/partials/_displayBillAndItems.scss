@@ -10,6 +10,12 @@
   border-radius: 10px;
   overflow: hidden;
   border: 0;
+
+  p {
+    @media (max-width: 480px) {
+      font-size: 1.8rem;
+    }
+  }
 }
 
 .invoice-card {
