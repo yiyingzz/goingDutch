@@ -98,7 +98,7 @@ class DisplayBill extends Component {
         </div> {/*---/.card-display */}
 
         <button onClick={this.props.showFrontPage}>Split Another Bill</button>
-        <button onClick={this.props.listAllBills}>View Other Bills</button>
+        <button onClick={this.props.listAllBills} className="alternate-button">View Other Bills</button>
         
       </section>
 

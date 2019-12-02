@@ -14,12 +14,19 @@ class ItemForm extends Component {
         {
           itemName: 'pizza',
           itemCost: 40.32,
+          costperPerson: null,
           whosPaying: 'yiying'
         },
         {
           itemName: 'avocado',
           itemCost: 12.43,
           whosPaying: 'pikachu'
+        },
+        {
+          itemName: 'potato',
+          itemCost: 34.20,
+          costperPerson: 17.10,
+          whosPaying: 'yiying & pikachu'
         }
       ],
 
@@ -35,6 +42,10 @@ class ItemForm extends Component {
 
       showItemsList: true
     }
+  }
+
+  componentDidMount() {
+    
   }
 
   inputChange = (event) => {
@@ -209,7 +220,7 @@ class ItemForm extends Component {
               <input type="checkbox" id="whosPaying2" name="whosPaying" checked={this.state.whosPaying2} onChange={this.inputChange}></input>{this.props.person2}</label>
             </fieldset>
 
-            <button className="alternate-button" onClick={(event) => this.validateInputs(event, this.state.itemName, this.state.itemCost)}>Add Item</button>
+            <button className="alternate-button add-item" onClick={(event) => this.validateInputs(event, this.state.itemName, this.state.itemCost)}>Add Item</button>
 
           </form>
 

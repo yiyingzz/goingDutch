@@ -301,7 +301,7 @@ a:hover, a:focus {
   margin: 0 auto;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 700px) {
   .wrapper {
     width: 95%;
   }
@@ -414,6 +414,13 @@ input:hover, input:focus {
 /* STYLES FOR ITEM FORM */
 .item-form {
   position: relative;
+  margin-bottom: 50px;
+}
+
+@media (max-width: 767px) {
+  .item-form {
+    margin-bottom: 20px;
+  }
 }
 
 .item-inputs {
@@ -488,9 +495,8 @@ input[type="checkbox"] {
 }
 
 .name-label {
-  /* border: 3px solid #5AB6DC; */
-  color: #5AB6DC;
-  background: white;
+  color: #A0E9F3;
+  background: #fff;
   border-radius: 5px;
   font-size: 1.8rem;
   display: inline-block;
@@ -499,7 +505,7 @@ input[type="checkbox"] {
 
 .name-label:hover,
 .name-label:focus {
-  color: crimson;
+  color: #DB6172;
 }
 
 @media (max-width: 767px) {
@@ -523,7 +529,7 @@ input[type="checkbox"] {
   margin-bottom: 0;
   position: absolute;
   right: 20px;
-  bottom: 20px;
+  bottom: 0;
 }
 
 @media (max-width: 767px) {
@@ -531,10 +537,6 @@ input[type="checkbox"] {
     position: static;
     margin: 20px auto;
   }
-}
-
-.done-adding {
-  margin-top: 50px;
 }
 
 /* STYLING FOR ALL BILL/ITEMS CARDS */
@@ -585,10 +587,11 @@ input[type="checkbox"] {
 
 .invoice-card {
   width: calc(50% - 40px);
+  max-width: 500px;
   margin: 20px;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 700px) {
   .invoice-card {
     width: 100%;
   }
@@ -600,7 +603,7 @@ input[type="checkbox"] {
   max-width: 500px;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 700px) {
   .items-card {
     width: calc(100% - 40px);
   }
@@ -631,12 +634,17 @@ input[type="checkbox"] {
   text-align: right;
 }
 
+.card-strong {
+  font-weight: bold;
+}
+
 .card-small {
   font-size: 1.7rem;
   margin-top: 5px;
 }
 
 .bill-card {
+  cursor: pointer;
   -ms-flex-item-align: start;
       align-self: flex-start;
   margin: 20px auto;
@@ -644,12 +652,17 @@ input[type="checkbox"] {
   max-width: 500px;
 }
 
-.bill-card-bottom {
-  padding: 20px;
+@media (max-width: 700px) {
+  .bill-card {
+    width: 100%;
+  }
 }
 
-.display-bill button {
-  display: inline-block;
-  margin-left: 15px;
-  margin-right: 15px;
+.bill-card:hover .card-heading,
+.bill-card:focus .card-heading {
+  background: #DB6172;
+}
+
+.bill-card-bottom {
+  padding: 20px;
 }

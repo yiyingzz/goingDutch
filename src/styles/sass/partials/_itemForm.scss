@@ -2,6 +2,11 @@
 
 .item-form {
   position: relative;
+  margin-bottom: 50px;
+
+  @media (max-width: 767px) {
+    margin-bottom: 20px;
+  }
 } 
 
 .item-inputs {
@@ -66,9 +71,8 @@ input[type="checkbox"] {
 }
 
 .name-label {
-  /* border: 3px solid #5AB6DC; */
-  color: #5AB6DC;
-  background: white;
+  color: $tertiaryColor;
+  background: $secondaryTextColor;
   border-radius: 5px;
   font-size: 1.8rem;
   display: inline-block;
@@ -77,7 +81,7 @@ input[type="checkbox"] {
 
 .name-label:hover,
 .name-label:focus {
-  color: crimson; 
+  color: $accentColor; 
 }
 
 .dollar-sign {
@@ -94,19 +98,16 @@ input[type="checkbox"] {
   }
 }
 
+// add item button
 .add-item {
   margin-right: 0;
   margin-bottom: 0;
   position: absolute;
   right: 20px;
-  bottom: 20px;
+  bottom: 0;
 
   @media (max-width: 767px) {
     position: static;
     margin: 20px auto;
   }
-}
-
-.done-adding {
-  margin-top: 50px;
 }

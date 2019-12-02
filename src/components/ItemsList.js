@@ -13,8 +13,8 @@ const ItemsList = (props) => {
           if (item.costPerPerson == null) {
             return (
               <li key={i}>
-                <p className="card-left invoice-item">{item.itemName}</p> 
-                <p className="card-right invoice-amount">${item.itemCost}</p>
+                <p className="card-left card-strong">{item.itemName}</p> 
+                <p className="card-right card-strong">${item.itemCost}</p>
                 <p className="card-left card-small">Who's paying for it?</p>
                 <p className="card-right card-small">{item.whosPaying}</p>
               </li>
