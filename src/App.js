@@ -26,9 +26,6 @@ class App extends Component {
     }
   }
 
-  // refactor this to only need billKey - use info from database for everything else
-  // then use this function in ListAllBills to get info
-    // have to do something about the showFOrms part
   getBillInfo = (billName, person1, person2, billKey) => {
 
     this.setState({
@@ -94,14 +91,13 @@ class App extends Component {
             this.state.showItemForm 
               ? <ItemForm 
                   currentBillKey={this.state.currentBillKey} 
-                  billName={this.state.billName} // ****
+                  billName={this.state.billName}
                   person1={this.state.person1} 
                   person2={this.state.person2}
                   displayBill={this.displayBill}
                 />
               : null
 
-              // **** technically can just use currentBillKey to get data from database & prob don't need the other props ??
           }
 
           {

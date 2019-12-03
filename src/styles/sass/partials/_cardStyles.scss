@@ -40,26 +40,6 @@
   background: $fourthColor;
 }
 
-.invoice-card {
-  width: calc(50% - 40px);
-  max-width: 500px;
-  margin: 20px;
-
-  @include mqBigPhone {
-    width: 100%;
-  }
-}
-
-.items-card {
-  margin: 30px auto 50px auto;
-  width: 80%;
-  max-width: 500px;
-
-  @include mqBigPhone {
-    width: calc(100% - 40px);
-  }
-}
-
 .card-heading {
   margin: 0;
   width: 100%;
@@ -94,16 +74,34 @@
   margin-top: 5px;
 }
 
+.invoice-card,
+.items-card,
 .bill-card {
-  cursor: pointer;
-  align-self: flex-start;
+  max-width: 500px;
+}
+
+.invoice-card,
+.bill-card {
   margin: 20px auto;
   width: calc(50% - 40px);
-  max-width: 500px;
 
   @include mqBigPhone {
     width: 100%;
   }
+}
+
+.items-card {
+  margin: 30px auto 50px auto;
+  width: 80%;
+
+  @include mqBigPhone {
+    width: calc(100% - 40px);
+  }
+}
+
+.bill-card {
+  cursor: pointer;
+  align-self: flex-start;
 }
 
 .bill-card {

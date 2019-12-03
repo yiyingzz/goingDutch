@@ -17,10 +17,10 @@ class DisplayBill extends Component {
     const billRef = firebase.database().ref(this.props.currentBillKey);
 
     billRef.on('value', (snapshot) => {      
+      // grab items for 1st person & put on an array to use on the page
       const items1 = snapshot.val().people[0].items;
       const items1Array = [];
 
-      // because in firebase, the items are on an object, not an array, need to make them into an array to use on our page
       for (let item in items1) {
         items1Array.push(items1[item]);
       }
@@ -48,7 +48,7 @@ class DisplayBill extends Component {
   render() {
     return (
 
-      <section id="display-bill" className="display-bill">      
+      <section id="display-bill-section" className="display-bill">      
         <h3>{this.state.billItem.billName}</h3>  
         <p>Created on: {this.state.billItem.dateCreated}</p>
 

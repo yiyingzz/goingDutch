@@ -54,6 +54,7 @@ class ItemForm extends Component {
     }
   }
 
+  // check if all inputs were filled out
   validateInputs = (event, ...inputs) => {
     event.preventDefault();
 
@@ -86,7 +87,7 @@ class ItemForm extends Component {
 
   addItemToBill = () => {
 
-    // set ref for current bill obj
+    // set ref for current bill
     const billRef = firebase.database().ref(this.props.currentBillKey);
     const person1Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [0]);
     const person2Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [1]);
@@ -174,7 +175,7 @@ class ItemForm extends Component {
   render() {
     return (
 
-      <section id="item-section">
+      <section id="item-form-section">
         <h2 className="item-form-bill-title">{this.props.billName}</h2>
 
           {

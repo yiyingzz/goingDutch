@@ -23,6 +23,7 @@ class NewBillForm extends Component {
     console.log(inputValue);
   }
 
+  // check it inputs were filled out properly
   validateInputs = (event, ...inputs) => {
     event.preventDefault();
 
@@ -43,13 +44,14 @@ class NewBillForm extends Component {
 
   // this submits the first form that gets bill name & people names
   createNewBill = () => {
+    // getting the date 
     const today = new Date();
     const year = today.getFullYear();
     const month = today.getMonth() + 1;
     const day = today.getDate() + 1;
     const dateCreated = `${year}-${month}-${day}`;
 
-    //assign input value to new top level object in dbRef
+    // database reference
     const dbRef = firebase.database().ref();
 
     // push the new bill item & save the key
@@ -72,13 +74,12 @@ class NewBillForm extends Component {
     
     // send bill info up to App.js & takes user to item form
     this.props.getBillInfo(this.state.billName, this.state.person1, this.state.person2, newBillKey);
-
   }
 
   render() {
     return (
 
-      <section id="new-bill">
+      <section id="bill-form-section">
         <h3>Create a New Bill</h3>
 
         {

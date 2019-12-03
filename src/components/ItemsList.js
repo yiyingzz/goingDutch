@@ -1,5 +1,6 @@
 import React from 'react';
 
+// functional component for displaying items in new bill
 const ItemsList = (props) => {
   return (
     

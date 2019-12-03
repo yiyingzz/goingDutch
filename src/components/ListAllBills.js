@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import firebase from '../firebase.js';
 
-// this one is for displaying every bill
-// probably should just list bills by name & people
-  // then clicking on them takes them to DisplayBills page
-  // do this by hooking up bill keys in props
-
+// component to display all bills in database
 class ListAllBills extends Component {
   constructor() {
     super();
@@ -15,7 +11,7 @@ class ListAllBills extends Component {
   }
 
   componentDidMount() {
-    const dbRef = firebase.database().ref();
+    const dbRef = firebase.database().ref(); // database reference
 
     dbRef.on('value', (snapshot) => {   
       const data = snapshot.val();
@@ -38,7 +34,7 @@ class ListAllBills extends Component {
 
   render() {
     return(
-      <section id="bills-cards">
+      <section id="bill-cards-section">
         <h3>All Bills</h3>
 
         <ul className="flex-container">
@@ -60,7 +56,7 @@ class ListAllBills extends Component {
           }
         </ul>
 
-        <button onClick={this.props.showFrontPage}>Home</button>
+        <button onClick={this.props.showFrontPage}>Split Another Bill</button>
 
       </section>
     )

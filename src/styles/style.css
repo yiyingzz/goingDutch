@@ -499,7 +499,7 @@ fieldset {
 }
 
 legend {
-  margin: 20px 0 0 0;
+  padding: 20px 0 0 0;
 }
 
 input[type="checkbox"],
@@ -603,30 +603,6 @@ input[type="checkbox"] {
   background: #D5F0F2;
 }
 
-.invoice-card {
-  width: calc(50% - 40px);
-  max-width: 500px;
-  margin: 20px;
-}
-
-@media (max-width: 700px) {
-  .invoice-card {
-    width: 100%;
-  }
-}
-
-.items-card {
-  margin: 30px auto 50px auto;
-  width: 80%;
-  max-width: 500px;
-}
-
-@media (max-width: 700px) {
-  .items-card {
-    width: calc(100% - 40px);
-  }
-}
-
 .card-heading {
   margin: 0;
   width: 100%;
@@ -661,19 +637,40 @@ input[type="checkbox"] {
   margin-top: 5px;
 }
 
+.invoice-card,
+.items-card,
+.bill-card {
+  max-width: 500px;
+}
+
+.invoice-card,
+.bill-card {
+  margin: 20px auto;
+  width: calc(50% - 40px);
+}
+
+@media (max-width: 700px) {
+  .invoice-card,
+  .bill-card {
+    width: 100%;
+  }
+}
+
+.items-card {
+  margin: 30px auto 50px auto;
+  width: 80%;
+}
+
+@media (max-width: 700px) {
+  .items-card {
+    width: calc(100% - 40px);
+  }
+}
+
 .bill-card {
   cursor: pointer;
   -ms-flex-item-align: start;
       align-self: flex-start;
-  margin: 20px auto;
-  width: calc(50% - 40px);
-  max-width: 500px;
-}
-
-@media (max-width: 700px) {
-  .bill-card {
-    width: 100%;
-  }
 }
 
 .bill-card:hover .card-heading,
