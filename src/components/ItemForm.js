@@ -44,7 +44,7 @@ class ItemForm extends Component {
     if (event.target.type === "checkbox") {
       this.setState({
         [event.target.id]: event.target.checked,
-        checkboxValid: !this.state.checkboxValid
+        checkboxValid: true
       })
     } else {
       this.setState({
@@ -191,7 +191,7 @@ class ItemForm extends Component {
           }
 
           {
-            this.state.checkboxValid == false
+            this.state.checkboxValid === false
               ? <p className="form-error">Please select who will pay for the item!</p>
               : null
           }

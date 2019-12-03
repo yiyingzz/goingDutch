@@ -29,7 +29,6 @@ li {
 header {
   height: 200px;
   background: linear-gradient(to bottom, $primaryColor 25%, $secondaryColor 25%, $secondaryColor 50%, $tertiaryColor 50%, $tertiaryColor 75%, $fourthColor 75%);
-  color: $accentColor;
 }
 
 footer {
@@ -77,15 +76,31 @@ a {
 h1 {
   margin: 0;
   padding-top: 50px;
+  color: $secondaryTextColor;
 }
 
 h2 {
   margin-top: 10px;
+  color: $accentColor;
 }
 
 h3 {
   margin-bottom: 0;
   font-size: 24px;
+  display: inline-block;
+  position: relative;
+}
+
+h3::after{
+  content: '';
+  background: $accentColor;
+  display: inline-block;
+  height: 8px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 3px;
+  z-index: -1;
 }
 
 h4 {

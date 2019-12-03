@@ -266,7 +266,6 @@ header {
   height: 200px;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #3B77AE), color-stop(25%, #5AB6DC), color-stop(50%, #5AB6DC), color-stop(50%, #A0E9F3), color-stop(75%, #A0E9F3), color-stop(75%, #DAF7F6));
   background: linear-gradient(to bottom, #3B77AE 25%, #5AB6DC 25%, #5AB6DC 50%, #A0E9F3 50%, #A0E9F3 75%, #DAF7F6 75%);
-  color: #DB6172;
 }
 
 footer {
@@ -321,15 +320,31 @@ a:hover, a:focus {
 h1 {
   margin: 0;
   padding-top: 50px;
+  color: #fff;
 }
 
 h2 {
   margin-top: 10px;
+  color: #DB6172;
 }
 
 h3 {
   margin-bottom: 0;
   font-size: 24px;
+  display: inline-block;
+  position: relative;
+}
+
+h3::after {
+  content: '';
+  background: #DB6172;
+  display: inline-block;
+  height: 8px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 3px;
+  z-index: -1;
 }
 
 h4 {

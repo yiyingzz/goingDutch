@@ -37,7 +37,7 @@ class App extends Component {
       person2: person2,
       currentBillKey: billKey,
 
-      // showNewBillForm: false,
+      showNewBillForm: false,
       showItemForm: true
     })
   }
