@@ -93,11 +93,12 @@ class ItemForm extends Component {
 
     let person1CurrentTotal = Number(this.state.person1Total);
     let person2CurrentTotal = Number(this.state.person2Total);
+    let itemCostNumber = Number(this.state.itemCost);
 
     // check for which person is paying
     if (this.state.whosPaying1 === true && this.state.whosPaying2 === true) {
-      let costPerPerson = (this.state.itemCost / 2).toFixed(2);
-      costPerPerson = Number(costPerPerson);
+      let costPerPerson = itemCostNumber / 2;
+      costPerPerson = costPerPerson;
       person1CurrentTotal += costPerPerson;
       person2CurrentTotal += costPerPerson;
 
@@ -174,7 +175,7 @@ class ItemForm extends Component {
     return (
 
       <section id="item-section">
-        <h2>{this.props.billName}</h2>
+        <h2 className="item-form-bill-title">{this.props.billName}</h2>
 
           {
             this.state.showItemsList 

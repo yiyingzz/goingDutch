@@ -320,12 +320,16 @@ a:hover, a:focus {
 
 h1 {
   margin: 0;
+  font-size: 4rem;
+  letter-spacing: 2px;
   padding-top: 50px;
   color: #FFF;
   text-shadow: 2px 2px #CE587D;
 }
 
 h2 {
+  font-size: 3rem;
+  letter-spacing: 2px;
   margin-top: 10px;
   color: #CE587D;
   text-shadow: 2px 2px #FFF;
@@ -434,6 +438,10 @@ input:hover, input:focus {
   }
 }
 
+.item-form-bill-title {
+  margin: 24px auto 0;
+}
+
 .item-inputs {
   display: inline-block;
 }
@@ -506,8 +514,7 @@ input[type="checkbox"] {
 }
 
 .name-label {
-  color: #AADFEC;
-  background: #FFF;
+  color: #4694BE;
   border-radius: 5px;
   font-size: 1.8rem;
   display: inline-block;
