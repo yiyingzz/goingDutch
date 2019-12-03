@@ -11,23 +11,18 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-
-      // need multiple input values, one for each input
-      // need to get these from NewBillForm
       billName: '',
 
-      person1: 'yiying',
-      person2: 'yiying\'s alter ego',
+      person1: '',
+      person2: '',
       person1ItemsKey: '',
       person2ItemsKey: '',
-      
-      currentBillKey: '-Lv71-rIzEUI5zMX17vX',
+      currentBillKey: '',
 
       showNewBillForm: true,
-      showItemForm: true,
-      displayBill: true,
-      listAllBills: true
-
+      showItemForm: false,
+      displayBill: false,
+      listAllBills: false
     }
   }
 
@@ -66,7 +61,6 @@ class App extends Component {
   displayBill = (billKey) => {
     this.setState({
       currentBillKey: billKey,
-      showNewBillForm: false,
       showItemForm: false,
       listAllBills: false,
       displayBill: true

@@ -79,9 +79,15 @@ class NewBillForm extends Component {
     return (
 
       <section id="new-bill">
-        <h3>Create a new bill</h3>
-        <form>
+        <h3>Create a New Bill</h3>
 
+        {
+          this.state.formValid === false
+            ? <p className="form-error">Please fill out all sections of the form!</p>
+            : null
+        }
+
+        <form>
           <label htmlFor="billName">What's this bill for?</label>
           <input type="text" id="billName" placeholder="Bill name" value={this.state.billName} onChange={this.inputChange}></input>
 
@@ -92,10 +98,10 @@ class NewBillForm extends Component {
           <input type="text" id="person2" placeholder="Name" value={this.state.person2} onChange={this.inputChange}></input>
 
           <button type="submit" onClick={(event) => this.validateInputs(event, this.state.billName, this.state.person1, this.state.person2)}>Submit</button>
-
         </form>
 
         <button className="alternate-button" onClick={this.props.listAllBills}>See Previous Bills</button>
+
       </section>
 
     )

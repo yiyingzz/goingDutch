@@ -8,30 +8,11 @@ class ItemForm extends Component {
     this.state = {
 
       formValid: true,
+      checkboxValid: true,
       checkboxes: true,
+      showItemsList: false,
 
-      allItems: [
-        {
-          itemName: 'pizza',
-          itemCost: 40.32,
-          costperPerson: null,
-          whosPaying: 'yiying'
-        },
-        {
-          itemName: 'avocado',
-          itemCost: 12.43,
-          whosPaying: 'pikachu'
-        },
-        {
-          itemName: 'potato',
-          itemCost: 34.20,
-          costperPerson: 17.10,
-          whosPaying: 'yiying & pikachu'
-        }
-      ],
-
-
-      // allItems: [],
+      allItems: [],
       person1Total: 0,
       person2Total: 0,
       
@@ -40,22 +21,35 @@ class ItemForm extends Component {
       whosPaying1: false,
       whosPaying2: false,
 
-      showItemsList: true
     }
   }
 
   componentDidMount() {
-    
+    const billRef = firebase.database().ref(this.props.currentBillKey);
+
+    billRef.on('value', (snapshot) => {      
+      const items = snapshot.val().allItems;
+      const itemsList = [];
+      for (let item in items) {
+        itemsList.push(items[item]);
+      }
+
+      this.setState({
+        allItems: itemsList
+      })
+    })
   }
 
   inputChange = (event) => {
     if (event.target.type === "checkbox") {
       this.setState({
-        [event.target.id]: event.target.checked
+        [event.target.id]: event.target.checked,
+        checkboxValid: !this.state.checkboxValid
       })
     } else {
       this.setState({
-        [event.target.id]: event.target.value
+        [event.target.id]: event.target.value,
+        formValid: true
       })
     }
   }
@@ -69,6 +63,7 @@ class ItemForm extends Component {
         formChecker = false;
       }
     })
+
     if (formChecker === false) {
       this.setState({
         formValid: false
@@ -81,7 +76,9 @@ class ItemForm extends Component {
   validateCheckboxes = () => {
     // check if at least one checkbox is checked
     if (this.state.whosPaying1 === false && this.state.whosPaying2 === false) {
-      alert("Please make sure you've selected who will be paying for this item!");
+      this.setState({
+        checkboxValid: false
+      })
     } else {
       this.addItemToBill();
     }
@@ -90,6 +87,7 @@ class ItemForm extends Component {
   addItemToBill = () => {
 
     // set ref for current bill obj
+    const billRef = firebase.database().ref(this.props.currentBillKey);
     const person1Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [0]);
     const person2Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [1]);
 
@@ -99,51 +97,48 @@ class ItemForm extends Component {
     // check for which person is paying
     if (this.state.whosPaying1 === true && this.state.whosPaying2 === true) {
       let costPerPerson = (this.state.itemCost / 2).toFixed(2);
-      
       costPerPerson = Number(costPerPerson);
       person1CurrentTotal += costPerPerson;
       person2CurrentTotal += costPerPerson;
 
-      // updating state
+      // update state
       this.setState({
         person1Total: person1CurrentTotal,
         person2Total: person2CurrentTotal
       })
-      this.state.allItems.push({
-        itemName: this.state.itemName,
-        itemCost: this.state.itemCost,
-        costPerPerson: costPerPerson,
-        whosPaying: `${this.props.person1} & ${this.props.person2}` 
-      })
 
       // push to database
       const item = {
-        itemName: `1/2 ${this.state.itemName}`,
-        itemCost: costPerPerson
+        itemName: this.state.itemName,
+        itemCost: this.state.itemCost,
+        costPerPerson: costPerPerson,
+        whosPaying: `${this.props.person1} & ${this.props.person2}`
       }
-      person1Ref.child('items').push(item);
-      person2Ref.child('items').push(item);
+      const splitItem = {
+        itemName: `1/2 ${this.state.itemName}`,
+        itemCost: costPerPerson,
+        whosPaying: `${this.props.person1} & ${this.props.person2}`
+      }
+      billRef.child('allItems').push(item);
+      person1Ref.child('items').push(splitItem);
+      person2Ref.child('items').push(splitItem);
       person1Ref.child('totalAmount').set(person1CurrentTotal);
       person2Ref.child('totalAmount').set(person2CurrentTotal);
 
     } else if (this.state.whosPaying1 === true) {
-      
       // update state
       person1CurrentTotal += Number(this.state.itemCost);
       this.setState({
         person1Total: person1CurrentTotal
       })
-      this.state.allItems.push({
-        itemName: this.state.itemName,
-        itemCost: this.state.itemCost,
-        whosPaying: this.props.person1 
-      })
       
       // push to database
       const item = {
         itemName: this.state.itemName,
-        itemCost: this.state.itemCost
+        itemCost: this.state.itemCost,
+        whosPaying: this.props.person1 
       }
+      billRef.child('allItems').push(item);
       person1Ref.child('items').push(item);
       person1Ref.child('totalAmount').set(person1CurrentTotal);
 
@@ -153,17 +148,14 @@ class ItemForm extends Component {
       this.setState({
         person2Total: person2CurrentTotal
       })
-      this.state.allItems.push({
-        itemName: this.state.itemName,
-        itemCost: this.state.itemCost,
-        whosPaying: this.props.person2 
-      })
 
       // push to database
       const item = {
         itemName: this.state.itemName,
-        itemCost: this.state.itemCost
+        itemCost: this.state.itemCost,
+        whosPaying: this.props.person2
       }
+      billRef.child('allItems').push(item);
       person2Ref.child('items').push(item);
       person2Ref.child('totalAmount').set(person2CurrentTotal);
     }
@@ -179,14 +171,9 @@ class ItemForm extends Component {
   }
 
   render() {
-
-    console.log("this.state.allItems");
-    console.log(this.state.allItems);
-
     return (
 
       <section id="item-section">
-
         <h2>{this.props.billName}</h2>
 
           {
@@ -196,6 +183,19 @@ class ItemForm extends Component {
           }
 
           <h3>Add Items to Your Bill</h3>
+
+          {
+            this.state.formValid === false
+              ? <p className="form-error">Please fill out all sections of the form!</p>
+              : null
+          }
+
+          {
+            this.state.checkboxValid == false
+              ? <p className="form-error">Please select who will pay for the item!</p>
+              : null
+          }
+
           <form id="item-form" className="item-form flex-container">
 
             <div className="item-inputs">
@@ -206,8 +206,7 @@ class ItemForm extends Component {
             <div className="item-inputs">
               <label htmlFor="itemCost" className="item-cost-label">Item cost <span className="label-dollar-sign">($)</span></label>
               <span className="dollar-sign">$ </span>
-                <input type="number" min="0" step="0.01" id="itemCost" placeholder="0.00" className="cost-input" value={this.state.itemCost} onChange={this.inputChange}></input>
-              
+              <input type="number" min="0" step="0.01" id="itemCost" placeholder="0.00" className="cost-input" value={this.state.itemCost} onChange={this.inputChange}></input>
             </div>
 
             <fieldset>
@@ -220,11 +219,17 @@ class ItemForm extends Component {
               <input type="checkbox" id="whosPaying2" name="whosPaying" checked={this.state.whosPaying2} onChange={this.inputChange}></input>{this.props.person2}</label>
             </fieldset>
 
-            <button className="alternate-button add-item" onClick={(event) => this.validateInputs(event, this.state.itemName, this.state.itemCost)}>Add Item</button>
+            <button 
+              className="alternate-button add-item" 
+              onClick={(event) => this.validateInputs(event, this.state.itemName, this.state.itemCost)}
+            >Add Item</button>
 
           </form>
 
-          <button className="done-adding" onClick={() => this.props.displayBill(this.props.currentBillKey)}>I'm done adding items!</button>
+          <button 
+            className="done-adding" 
+            onClick={() => this.props.displayBill(this.props.currentBillKey)}
+          >I'm done adding items!</button>
 
       </section>
 

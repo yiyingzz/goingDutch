@@ -411,6 +411,11 @@ input:hover, input:focus {
   border: 2px solid #DB6172;
 }
 
+.form-error {
+  margin-bottom: 0;
+  color: #DB6172;
+}
+
 /* STYLES FOR ITEM FORM */
 .item-form {
   position: relative;

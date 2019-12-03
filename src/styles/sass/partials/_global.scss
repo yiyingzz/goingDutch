@@ -150,3 +150,8 @@ input {
     border: 2px solid $accentColor;
   }
 }
+
+.form-error {
+  margin-bottom: 0;
+  color: $accentColor;
+}
