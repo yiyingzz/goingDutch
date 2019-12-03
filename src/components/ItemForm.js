@@ -94,12 +94,11 @@ class ItemForm extends Component {
 
     let person1CurrentTotal = Number(this.state.person1Total);
     let person2CurrentTotal = Number(this.state.person2Total);
-    let itemCostNumber = Number(this.state.itemCost);
 
     // check for which person is paying
     if (this.state.whosPaying1 === true && this.state.whosPaying2 === true) {
-      let costPerPerson = itemCostNumber / 2;
-      costPerPerson = costPerPerson;
+      let costPerPerson = (this.state.itemCost / 2).toFixed(2);
+      costPerPerson = Number(costPerPerson);
       person1CurrentTotal += costPerPerson;
       person2CurrentTotal += costPerPerson;
 
