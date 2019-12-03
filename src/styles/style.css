@@ -283,14 +283,16 @@ footer p {
 }
 
 a {
-  color: #AADFEC;
+  color: #FFF;
+  border-bottom: 2px solid #ce587d;
+  text-decoration: none;
   font-weight: bold;
   -webkit-transition: 0.3s all;
   transition: 0.3s all;
 }
 
 a:hover, a:focus {
-  color: #ce587d;
+  color: #AADFEC;
 }
 
 .wrapper {
@@ -622,8 +624,8 @@ input[type="checkbox"] {
   margin: 0;
   width: 100%;
   padding: 20px;
-  background: #3B77AE;
-  color: #fff;
+  background: #2b6499;
+  color: #FFF;
   font-weight: bold;
 }
 

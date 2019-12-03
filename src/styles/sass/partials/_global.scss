@@ -46,13 +46,15 @@ footer {
 }
 
 a {
-  color: $tertiaryColor;
+  color: $secondaryTextColor;
+  border-bottom: 2px solid $accentColor;
+  text-decoration: none;
   font-weight: bold;
   transition: 0.3s all;
 
   &:hover,
   &:focus {
-    color: $accentColor;
+    color: $tertiaryColor;
   }
 }
 
