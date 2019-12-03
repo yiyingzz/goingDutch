@@ -130,7 +130,7 @@ form {
   margin: 0 auto;
   width: 65%;
 
-  @media (max-width: 767px) {
+  @include mqTablet {
     width: 100%;
   }
 }

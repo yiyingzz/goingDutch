@@ -4,7 +4,7 @@
   position: relative;
   margin-bottom: 50px;
 
-  @media (max-width: 767px) {
+  @include mqTablet {
     margin-bottom: 20px;
   }
 } 
@@ -16,7 +16,7 @@
 .item-inputs:first-of-type {
   width: calc(70% - 20px);
 
-  @media (max-width: 767px) {
+  @include mqTablet {
     width: 100%;
   }
 }
@@ -24,7 +24,7 @@
 .item-inputs:last-of-type {
   width: 30%;
 
-  @media (max-width: 767px) {
+  @include mqTablet {
     width: 100%;
   }
 }
@@ -32,7 +32,7 @@
 .item-cost-label {
 padding-left: 20px;
 
-  @media (max-width: 767px) {
+@include mqTablet {
     padding-left: 0;
   }
 }
@@ -40,7 +40,7 @@ padding-left: 20px;
 .cost-input {
   width: calc(100% - 22px);
 
-  @media (max-width: 767px) {
+  @include mqTablet {
     width: 100%;
   }
 }
@@ -50,7 +50,7 @@ fieldset {
   padding: 0;
   text-align: left;
 
-  @media (max-width: 767px) {
+  @include mqTablet {
     width: 100%;
   }
 }
@@ -85,7 +85,7 @@ input[type="checkbox"] {
 }
 
 .dollar-sign {
-  @media (max-width: 767px) {
+  @include mqTablet {
     display: none;
   }
 }
@@ -93,7 +93,7 @@ input[type="checkbox"] {
 .label-dollar-sign {
   display: none;
 
-  @media (max-width: 767px) {
+  @include mqTablet {
     display: inline;
   }
 }
@@ -106,7 +106,7 @@ input[type="checkbox"] {
   right: 20px;
   bottom: 0;
 
-  @media (max-width: 767px) {
+  @include mqTablet {
     position: static;
     margin: 20px auto;
   }

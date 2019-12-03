@@ -18,14 +18,14 @@
     width: 100%;
     padding: 20px;
   
-    @media (max-width: 480px) {
+    @include mqSmallPhone {
       padding: 15px;
     }
   }
 
   
   p {
-    @media (max-width: 480px) {
+    @include mqSmallPhone {
       font-size: 1.8rem;
     }
   }
@@ -45,7 +45,7 @@
   max-width: 500px;
   margin: 20px;
 
-  @media (max-width: 700px) {
+  @include mqBigPhone {
     width: 100%;
   }
 }
@@ -55,7 +55,7 @@
   width: 80%;
   max-width: 500px;
 
-  @media (max-width: 700px) {
+  @include mqBigPhone {
     width: calc(100% - 40px);
   }
 }
@@ -101,7 +101,7 @@
   width: calc(50% - 40px);
   max-width: 500px;
 
-  @media (max-width: 700px) {
+  @include mqBigPhone {
     width: 100%;
   }
 }
