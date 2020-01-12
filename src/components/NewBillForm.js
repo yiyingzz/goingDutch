@@ -1,113 +1,184 @@
-import React, { Component } from 'react';
-import firebase from '../firebase.js';
+import React, { useState } from "react";
+import firebase from "../firebase.js";
 
-class NewBillForm extends Component {
-  constructor() {
-    super();
-    this.state = {
-      billName: '',
-      person1: '',
-      person2: '',
-      formValid: true,
-    }
-  }
-  
-  inputChange = (event) => {
-    const inputValue = event.target.value;
-
-    this.setState({
-      [event.target.id]: inputValue,
-      formValid: true
-    })
-
-    console.log(inputValue);
-  }
+const NewBillForm = props => {
+  // getBillInfo & listAllBills functions
 
   // check it inputs were filled out properly
-  validateInputs = (event, ...inputs) => {
+  const validateInputs = (event, ...inputs) => {
     event.preventDefault();
 
     let formChecker = true;
-    inputs.forEach((input) => {
-      if (!(this.state.formValid && input.trim() !== '' && input.trim().length > 0)) {
+    inputs.forEach(input => {
+      if (
+        !(
+          this.state.formValid &&
+          input.trim() !== "" &&
+          input.trim().length > 0
+        )
+      ) {
         formChecker = false;
       }
-    })
+    });
     if (formChecker === false) {
       this.setState({
         formValid: false
-      })
+      });
     } else {
       this.createNewBill();
     }
-  }
+  };
 
   // this submits the first form that gets bill name & people names
-  createNewBill = () => {
-    // getting the date 
+  const createNewBill = () => {
+    // getting the date
     const today = new Date();
     const year = today.getFullYear();
     const month = today.getMonth() + 1;
     const day = today.getDate() + 1;
     const dateCreated = `${year}-${month}-${day}`;
 
-    // database reference
-    const dbRef = firebase.database().ref();
+    console.log(dateCreated);
+    console.log(peopleState);
+    // need to get rid of blank persons - validate it somehow
 
-    // push the new bill item & save the key
-    const newBillItem = dbRef.push({
-      billName: this.state.billName,
+    // setting bill info
+    setBillState({
+      ...billState,
       dateCreated: dateCreated,
-      people: [
-        {
-          name: this.state.person1,
-          totalAmount: 0 
-        },
-        {
-          name: this.state.person2,
-          totalAmount: 0
-        }
-      ]
+      people: peopleState
     });
 
-    const newBillKey = newBillItem.key;
-    
+    // database reference
+    // const dbRef = firebase.database().ref();
+
+    // // push the new bill item & save the key
+    // const newBillItem = dbRef.push({
+    //   billName: this.state.billName,
+    //   dateCreated: dateCreated,
+    //   people: [
+    //     {
+    //       name: this.state.person1,
+    //       totalAmount: 0
+    //     },
+    //     {
+    //       name: this.state.person2,
+    //       totalAmount: 0
+    //     }
+    //   ]
+    // });
+
+    // const newBillKey = newBillItem.key;
+
     // send bill info up to App.js & takes user to item form
-    this.props.getBillInfo(this.state.billName, this.state.person1, this.state.person2, newBillKey);
-  }
+    // this.props.getBillInfo(this.state.billName, this.state.person1, this.state.person2, newBillKey);
+  };
 
-  render() {
-    return (
+  // bill name
+  const [billState, setBillState] = useState({ billName: "" });
 
-      <section id="bill-form-section">
-        <h3>Create a New Bill</h3>
+  const handleBillNameChange = e => {
+    setBillState({
+      billName: e.target.value
+    });
+  };
 
-        {
-          this.state.formValid === false
-            ? <p className="form-error">Please fill out all sections of the form!</p>
-            : null
-        }
+  // people
+  const blankPerson = { name: "", items: [], totalAmount: 0 };
+  const [peopleState, setPeopleState] = useState([blankPerson]);
+  console.log(peopleState);
 
-        <form>
-          <label htmlFor="billName">What's this bill for?</label>
-          <input type="text" id="billName" placeholder="Bill name" value={this.state.billName} onChange={this.inputChange}></input>
+  // add another input
+  const addPersonInput = e => {
+    e.preventDefault();
+    setPeopleState([...peopleState, blankPerson]);
+  };
 
-          <label htmlFor="person1">Who's splitting this bill?</label>
-          <input type="text" id="person1" placeholder="Name" value={this.state.person1} onChange={this.inputChange}></input>
+  const handlePersonChange = e => {
+    // first, clone the current peopleState
+    const updatedPeople = [...peopleState];
 
-          <label htmlFor="person2">Who else is splitting this bill?</label>
-          <input type="text" id="person2" placeholder="Name" value={this.state.person2} onChange={this.inputChange}></input>
+    const inputCheck = new RegExp(/\w/);
+    console.log(inputCheck.test(e.target.value));
 
-          <button type="submit" onClick={(event) => this.validateInputs(event, this.state.billName, this.state.person1, this.state.person2)}>Submit</button>
-        </form>
+    if (inputCheck.test(e.target.value)) {
+      updatedPeople[e.target.dataset.index].name = e.target.value;
+      // ^^ putting this here prevents people from typing spaces entirely since it won't set the value in the input
+      // but no way get rid of spaces at the end, might need .trim() or something else???
 
-        <button className="alternate-button" onClick={this.props.listAllBills}>See Previous Bills</button>
+      // set new peopleState to the updated one with new info
+      setPeopleState(updatedPeople);
+    }
+  };
+  console.log("billState");
+  console.log(billState);
 
-      </section>
+  return (
+    <section id="bill-form-section">
+      <h3>Create a New Bill</h3>
 
-    )
-  }
+      {/* {this.state.formValid === false ? (
+        <p className="form-error">Please fill out all sections of the form!</p>
+      ) : null} */}
 
-}
+      <form>
+        <label htmlFor="billName">What's this bill for?</label>
+        <input
+          type="text"
+          id="billName"
+          placeholder="Bill name"
+          // value={billState.billName}
+          onChange={handleBillNameChange}
+        ></input>
+
+        <span>Who's splitting this bill?</span>
+        {peopleState.map((val, i) => {
+          const personId = `person${i}`;
+          return (
+            <div key={personId}>
+              <label htmlFor={personId} className="visuallyHidden">
+                Name
+              </label>
+              <input
+                type="text"
+                id={personId}
+                data-index={i}
+                placeholder="Name"
+                value={peopleState[i].name}
+                onChange={handlePersonChange}
+              ></input>
+            </div>
+          );
+        })}
+
+        <button
+          onClick={e => {
+            addPersonInput(e);
+          }}
+        >
+          + Add another person
+        </button>
+
+        <button
+          type="submit"
+          onClick={e =>
+            validateInputs(
+              e
+              // this.state.billName,
+              // this.state.person1,
+              // this.state.person2
+            )
+          }
+        >
+          Submit
+        </button>
+      </form>
+
+      {/* <button className="alternate-button" onClick={this.props.listAllBills}>
+        See Previous Bills
+      </button> */}
+    </section>
+  );
+};
 
 export default NewBillForm;
