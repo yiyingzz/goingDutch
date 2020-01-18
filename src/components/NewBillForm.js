@@ -50,7 +50,7 @@ const NewBillForm = props => {
       people: peopleState
     });
     console.log(billState);
-    // this doesn't seem to update quick enough (maybe page hasn't refreshed yet???) - because of preventdefault???
+    // this doesn't seem to update quick enough (maybe page hasn't refreshed yet???) - because of preventdefault??? - don't need it here
 
     // database reference
     const dbRef = firebase.database().ref();
@@ -65,7 +65,7 @@ const NewBillForm = props => {
     const newBillKey = newBillItem.key;
 
     // send bill info up to App.js & takes user to item form
-    // props.getBillInfo(billState, newBillKey);
+    props.getBillInfo(billState, dateCreated, peopleState, newBillKey);
     console.log(billState, dateCreated, peopleState, newBillKey);
   };
 
@@ -79,7 +79,7 @@ const NewBillForm = props => {
   };
 
   // people
-  const blankPerson = { name: "", items: [], totalAmount: 0 };
+  const blankPerson = { name: "", items: [], checked: false, totalAmount: 0 };
   const [peopleState, setPeopleState] = useState([blankPerson]);
   console.log(peopleState);
 

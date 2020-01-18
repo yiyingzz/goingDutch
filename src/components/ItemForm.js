@@ -32,15 +32,27 @@ class ItemForm extends Component {
       }
 
       this.setState({
-        allItems: itemsList
+        allItems: itemsList,
+        people: this.props.people
       });
     });
   }
 
   inputChange = event => {
+    const updatedPeople = [...this.state.people];
+    console.log(updatedPeople);
+    // creating a new array from state
+    let currentPerson = updatedPeople[event.target.dataset.idx];
+    // grabbing current person
+    currentPerson = { ...currentPerson, checked: true };
+    // using spread this way replaces the property
+    console.log(currentPerson);
+    updatedPeople[event.target.dataset.idx].checked = true;
+    console.log(updatedPeople);
+
     if (event.target.type === "checkbox") {
       this.setState({
-        [event.target.id]: event.target.checked,
+        people: updatedPeople,
         checkboxValid: true
       });
     } else {
@@ -174,7 +186,7 @@ class ItemForm extends Component {
   render() {
     return (
       <section id="item-form-section">
-        <h2 className="item-form-bill-title">{this.props.billName}</h2>
+        <h2 className="item-form-bill-title">{this.props.billName.billName}</h2>
 
         {this.state.showItemsList ? (
           <ItemsList allItems={this.state.allItems} />
@@ -223,18 +235,18 @@ class ItemForm extends Component {
           <fieldset>
             <legend>Who is paying for this item?</legend>
 
-            {this.props.people.map((val, i) => {
+            {this.props.people.map((person, i) => {
               const personId = `person${i}`;
               return (
-                <label htmlFor={personId} className="name-label">
+                <label htmlFor={personId} key={personId} className="name-label">
                   <input
                     type="checkbox"
                     id={personId}
-                    data-index={i}
-                    // checked={this.state.whosPaying1}
+                    data-idx={i}
+                    checked={person.checked}
                     onChange={this.inputChange}
                   ></input>
-                  {val.name}
+                  {person.name}
                 </label>
               );
             })}
