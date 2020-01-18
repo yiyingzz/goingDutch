@@ -25,7 +25,8 @@ const NewBillForm = props => {
         formValid: false
       });
     } else {
-      this.createNewBill();
+      createNewBill();
+      // alert(`you submitted the form!`);
     }
   };
 
@@ -48,30 +49,24 @@ const NewBillForm = props => {
       dateCreated: dateCreated,
       people: peopleState
     });
+    console.log(billState);
+    // this doesn't seem to update quick enough (maybe page hasn't refreshed yet???) - because of preventdefault???
 
     // database reference
-    // const dbRef = firebase.database().ref();
+    const dbRef = firebase.database().ref();
 
     // // push the new bill item & save the key
-    // const newBillItem = dbRef.push({
-    //   billName: this.state.billName,
-    //   dateCreated: dateCreated,
-    //   people: [
-    //     {
-    //       name: this.state.person1,
-    //       totalAmount: 0
-    //     },
-    //     {
-    //       name: this.state.person2,
-    //       totalAmount: 0
-    //     }
-    //   ]
-    // });
+    const newBillItem = dbRef.push({
+      ...billState,
+      dateCreated: dateCreated,
+      people: peopleState
+    });
 
-    // const newBillKey = newBillItem.key;
+    const newBillKey = newBillItem.key;
 
     // send bill info up to App.js & takes user to item form
-    // this.props.getBillInfo(this.state.billName, this.state.person1, this.state.person2, newBillKey);
+    // props.getBillInfo(billState, newBillKey);
+    console.log(billState, dateCreated, peopleState, newBillKey);
   };
 
   // bill name
@@ -98,17 +93,17 @@ const NewBillForm = props => {
     // first, clone the current peopleState
     const updatedPeople = [...peopleState];
 
-    const inputCheck = new RegExp(/\w/);
-    console.log(inputCheck.test(e.target.value));
+    // const inputCheck = new RegExp(/\w/);
+    // console.log(inputCheck.test(e.target.value));
 
-    if (inputCheck.test(e.target.value)) {
-      updatedPeople[e.target.dataset.index].name = e.target.value;
-      // ^^ putting this here prevents people from typing spaces entirely since it won't set the value in the input
-      // but no way get rid of spaces at the end, might need .trim() or something else???
+    // if (inputCheck.test(e.target.value)) {
+    updatedPeople[e.target.dataset.index].name = e.target.value;
+    // ^^ putting this here prevents people from typing spaces entirely since it won't set the value in the input
+    // but no way get rid of spaces at the end, might need .trim() or something else???
 
-      // set new peopleState to the updated one with new info
-      setPeopleState(updatedPeople);
-    }
+    // set new peopleState to the updated one with new info
+    setPeopleState(updatedPeople);
+    // }
   };
   console.log("billState");
   console.log(billState);
@@ -131,7 +126,7 @@ const NewBillForm = props => {
           onChange={handleBillNameChange}
         ></input>
 
-        <span>Who's splitting this bill?</span>
+        <legend>Who's splitting this bill?</legend>
         {peopleState.map((val, i) => {
           const personId = `person${i}`;
           return (
@@ -141,6 +136,7 @@ const NewBillForm = props => {
               </label>
               <input
                 type="text"
+                className="name-input"
                 id={personId}
                 data-index={i}
                 placeholder="Name"
