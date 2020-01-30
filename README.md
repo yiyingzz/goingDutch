@@ -16,7 +16,7 @@ Users are able to:
 
 Next Steps:
 
-- Be able to add additional people to the bill
+- Be able to add additional people to the bill - currently working on this!
 - Be able to add tax & tip
 - Edit and/or delete items during bill creation
 
