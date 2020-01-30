@@ -80,7 +80,11 @@ const NewBillForm = props => {
 
   // people
   const blankPerson = { name: "", items: [], checked: false, totalAmount: 0 };
-  const [peopleState, setPeopleState] = useState([blankPerson]);
+  const [peopleState, setPeopleState] = useState([
+    { ...blankPerson },
+    { ...blankPerson }
+  ]);
+  // how come spreading it works? because we're no longer copying it? what about below when I just add blankPerson to the array without spreading?
   console.log(peopleState);
 
   // add another input

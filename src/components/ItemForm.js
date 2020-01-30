@@ -12,12 +12,17 @@ class ItemForm extends Component {
       showItemsList: false,
 
       allItems: [],
-      people: [],
+      people: [], // people objects on the array
+      // {
+      // name: "yiying",
+      // checked: false,
+      // totalAmount: 0;
+      // items: [] // empty array
+      // }
 
       itemName: "",
       itemCost: "",
-      whosPaying1: false,
-      whosPaying2: false
+      whosPaying: [] // array of people's names
     };
   }
 
@@ -30,6 +35,9 @@ class ItemForm extends Component {
       for (let item in items) {
         itemsList.push(items[item]);
       }
+      console.log(items); // starts off undefined cuz it doesn't exist yet
+      console.log("this.props.people");
+      console.log(this.props.people);
 
       this.setState({
         allItems: itemsList,
@@ -39,18 +47,20 @@ class ItemForm extends Component {
   }
 
   inputChange = event => {
-    const updatedPeople = [...this.state.people];
-    console.log(updatedPeople);
-    // creating a new array from state
-    let currentPerson = updatedPeople[event.target.dataset.idx];
-    // grabbing current person
-    currentPerson = { ...currentPerson, checked: true };
-    // using spread this way replaces the property
-    console.log(currentPerson);
-    updatedPeople[event.target.dataset.idx].checked = true;
-    console.log(updatedPeople);
-
     if (event.target.type === "checkbox") {
+      const updatedPeople = [...this.state.people];
+      console.log(updatedPeople);
+      // creating a new array from state
+      let currentPerson = updatedPeople[event.target.dataset.idx];
+      // grabbing current person
+      currentPerson = { ...currentPerson };
+      // using spread this way replaces the property
+      console.log(currentPerson);
+      // toggles the checkbox
+      const checked = updatedPeople[event.target.dataset.idx].checked;
+      updatedPeople[event.target.dataset.idx].checked = !checked;
+      console.log(updatedPeople);
+
       this.setState({
         people: updatedPeople,
         checkboxValid: true
@@ -91,13 +101,67 @@ class ItemForm extends Component {
 
   validateCheckboxes = () => {
     // check if at least one checkbox is checked
-    if (this.state.whosPaying1 === false && this.state.whosPaying2 === false) {
-      this.setState({
-        checkboxValid: false
-      });
-    } else {
-      this.addItemToBill();
-    }
+    // do this by looping through people.checked & look for true
+    // counter
+    let checkedCounter = 0;
+    this.state.people.forEach(person => {
+      if (person.checked === true) {
+        console.log(person.checked);
+        this.addItemToBill();
+        return;
+      } else {
+        checkedCounter++;
+        // if all people are checked "false"
+        if (checkedCounter === this.state.people.length) {
+          this.setState({
+            checkboxValid: false
+          });
+        }
+      }
+    });
+    // if (this.state.whosPaying1 === false && this.state.whosPaying2 === false) {
+    //   this.setState({
+    //     checkboxValid: false
+    //   });
+    // } else {
+    //   this.addItemToBill();
+    // }
+  };
+
+  addItemToBill = () => {
+    // set ref for current bill
+    const billRef = firebase.database().ref(this.props.currentBillKey);
+
+    console.log(billRef);
+    console.log("loggin people array", this.state.people);
+    console.log("logging items array", this.state.allItems);
+
+    // get item info & push to database
+
+    // get who pays
+    const whosPaying = [];
+    // counter for how many people pay - we'll use this number for math calculations later
+    let whosPayingCounter = 0;
+    this.state.people.forEach(person => {
+      if (person.checked === true) {
+        whosPaying.push(person.name);
+        whosPayingCounter++;
+      }
+    });
+
+    const item = {
+      itemName: this.state.itemName,
+      itemCost: this.state.itemCost,
+      whosPaying: whosPaying
+    };
+    //  push to database
+    billRef.child("allItems").push(item);
+
+    // calculate price per person
+    const costPerPerson = Number(this.state.itemCost) / whosPayingCounter;
+    billRef.child("people"); // this is an array of people
+    // need to push costPerPerson to the items array on people
+    // need to calculate total amount and push onto the right person
   };
 
   // addItemToBill = () => {
@@ -196,7 +260,7 @@ class ItemForm extends Component {
 
         {this.state.formValid === false ? (
           <p className="form-error">
-            Please fill out all sections of the form!
+            Please fill out all sections of the form properly!
           </p>
         ) : null}
 
