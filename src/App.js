@@ -12,10 +12,11 @@ class App extends Component {
     this.state = {
       billName: "",
 
-      person1: "",
-      person2: "",
-      person1ItemsKey: "",
-      person2ItemsKey: "",
+      people: [],
+      // person1: "",
+      // person2: "",
+      // person1ItemsKey: "",
+      // person2ItemsKey: "",
       currentBillKey: "",
 
       showNewBillForm: true,

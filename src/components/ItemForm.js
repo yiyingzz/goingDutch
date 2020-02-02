@@ -49,13 +49,11 @@ class ItemForm extends Component {
   inputChange = event => {
     if (event.target.type === "checkbox") {
       const updatedPeople = [...this.state.people];
-      console.log(updatedPeople);
       // creating a new array from state
       let currentPerson = updatedPeople[event.target.dataset.idx];
       // grabbing current person
       currentPerson = { ...currentPerson };
       // using spread this way replaces the property
-      console.log(currentPerson);
       // toggles the checkbox
       const checked = updatedPeople[event.target.dataset.idx].checked;
       updatedPeople[event.target.dataset.idx].checked = !checked;
@@ -119,13 +117,6 @@ class ItemForm extends Component {
         }
       }
     });
-    // if (this.state.whosPaying1 === false && this.state.whosPaying2 === false) {
-    //   this.setState({
-    //     checkboxValid: false
-    //   });
-    // } else {
-    //   this.addItemToBill();
-    // }
   };
 
   addItemToBill = () => {
@@ -133,35 +124,100 @@ class ItemForm extends Component {
     const billRef = firebase.database().ref(this.props.currentBillKey);
 
     console.log(billRef);
-    console.log("loggin people array", this.state.people);
-    console.log("logging items array", this.state.allItems);
+    console.log("logging items array in state", this.state.allItems);
 
     // get item info & push to database
 
     // get who pays
-    const whosPaying = [];
     // counter for how many people pay - we'll use this number for math calculations later
     let whosPayingCounter = 0;
-    this.state.people.forEach(person => {
-      if (person.checked === true) {
-        whosPaying.push(person.name);
-        whosPayingCounter++;
-      }
-    });
+    const whosPaying = this.state.people
+      .map((person, i) => {
+        // add index number to each person object so we can push to the right person in the database
+        if (person.checked === true) {
+          // use counter to get the # of people to split the item by
+          whosPayingCounter++;
+        }
+        const updatedPerson = {
+          name: person.name,
+          index: i,
+          checked: person.checked
+        };
+        return updatedPerson;
+      })
+      .filter(
+        person =>
+          //user filter to get whos actually paying
+          person.checked === true
+      );
+    console.log(whosPaying);
+
+    // calculate price per person
+    const costPerPerson = Number(this.state.itemCost) / whosPayingCounter;
+
+    // set up reference to database people array
+    const peopleRef = billRef.child("people"); // this is an array of people
 
     const item = {
       itemName: this.state.itemName,
       itemCost: this.state.itemCost,
+      costPerPerson: costPerPerson.toFixed(2),
       whosPaying: whosPaying
     };
-    //  push to database
-    billRef.child("allItems").push(item);
 
-    // calculate price per person
-    const costPerPerson = Number(this.state.itemCost) / whosPayingCounter;
-    billRef.child("people"); // this is an array of people
+    //  push to database
+    billRef.child("allItems").push(item); //why does this do it twice??
+
+    // create split item for each person who's paying
+    const splitItem = {
+      itemName: `1/${whosPayingCounter} ${this.state.itemName}`,
+      itemCost: costPerPerson.toFixed(2)
+    };
+
+    const updatedPeople = [...this.state.people];
+    // console.log(updatedPeople);
+
+    updatedPeople.forEach(person => {
+      if (person.checked === true) {
+        person.items.push(splitItem);
+        // set total amount for each person
+        let totalAmount = person.totalAmount;
+        totalAmount += Number(costPerPerson);
+        person.totalAmount = totalAmount;
+        console.log(totalAmount);
+      }
+    });
+
+    // update state
+    this.setState({
+      people: updatedPeople
+    });
+
+    // state is getting updated weirdly!!!
+
     // need to push costPerPerson to the items array on people
-    // need to calculate total amount and push onto the right person
+    // check who's paying for it - loop through who's paying
+    // match names
+    // push item onto person's own array
+    whosPaying.forEach(person => {
+      // each person has a name & index
+      console.log(person.name);
+      console.log(person.index);
+      peopleRef
+        .child(person.index)
+        .child("items")
+        .push(splitItem);
+    });
+
+    // reset inputs & show items list
+    this.setState({
+      itemName: "",
+      itemCost: ""
+
+      // showItemsList: true
+
+      // need to reset checkbox inputs!!!!
+    });
   };
 
   // addItemToBill = () => {
@@ -274,6 +330,7 @@ class ItemForm extends Component {
             <input
               type="text"
               id="itemName"
+              placeholder="Item Name"
               value={this.state.itemName}
               onChange={this.inputChange}
             ></input>

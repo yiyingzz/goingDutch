@@ -84,8 +84,6 @@ const NewBillForm = props => {
     { ...blankPerson },
     { ...blankPerson }
   ]);
-  // how come spreading it works? because we're no longer copying it? what about below when I just add blankPerson to the array without spreading?
-  console.log(peopleState);
 
   // add another input
   const addPersonInput = e => {
@@ -109,8 +107,6 @@ const NewBillForm = props => {
     setPeopleState(updatedPeople);
     // }
   };
-  console.log("billState");
-  console.log(billState);
 
   return (
     <section id="bill-form-section">
