@@ -66,7 +66,6 @@ const NewBillForm = props => {
 
     // send bill info up to App.js & takes user to item form
     props.getBillInfo(billState, dateCreated, peopleState, newBillKey);
-    console.log(billState, dateCreated, peopleState, newBillKey);
   };
 
   // bill name
@@ -81,14 +80,17 @@ const NewBillForm = props => {
   // people
   const blankPerson = { name: "", items: [], checked: false, totalAmount: 0 };
   const [peopleState, setPeopleState] = useState([
-    { ...blankPerson },
-    { ...blankPerson }
+    blankPerson,
+    { ...blankPerson, items: [] }
+    // spread is only a shallow copy, so items: [] still refer to same thing
+    // so I spread blankPerson, then re-added a new items array
   ]);
 
   // add another input
   const addPersonInput = e => {
     e.preventDefault();
     setPeopleState([...peopleState, blankPerson]);
+    // how come here when I add blankPerson, it doesn't copy the original (first input)????
   };
 
   const handlePersonChange = e => {

@@ -7,8 +7,7 @@ class ItemForm extends Component {
     super();
     this.state = {
       formValid: true,
-      checkboxValid: true,
-      checkboxes: true,
+      checkboxValid: false,
       showItemsList: false,
 
       allItems: [],
@@ -46,29 +45,33 @@ class ItemForm extends Component {
     });
   }
 
-  inputChange = event => {
-    if (event.target.type === "checkbox") {
-      const updatedPeople = [...this.state.people];
-      // creating a new array from state
-      let currentPerson = updatedPeople[event.target.dataset.idx];
-      // grabbing current person
-      currentPerson = { ...currentPerson };
-      // using spread this way replaces the property
-      // toggles the checkbox
-      const checked = updatedPeople[event.target.dataset.idx].checked;
-      updatedPeople[event.target.dataset.idx].checked = !checked;
-      console.log(updatedPeople);
+  checkboxChange = event => {
+    const updatedPeople = [...this.state.people];
+    // creating a new array from state
 
-      this.setState({
-        people: updatedPeople,
-        checkboxValid: true
-      });
-    } else {
-      this.setState({
-        [event.target.id]: event.target.value,
-        formValid: true
-      });
-    }
+    let currentPerson = updatedPeople[event.target.dataset.idx];
+    // grabbing current person
+
+    currentPerson = { ...currentPerson };
+    // using spread this way replaces the property
+
+    // toggles the checkbox
+    const checked = updatedPeople[event.target.dataset.idx].checked;
+    updatedPeople[event.target.dataset.idx].checked = !checked;
+    console.log(updatedPeople);
+    console.log(updatedPeople[event.target.dataset.idx].checked);
+
+    this.setState({
+      people: updatedPeople,
+      checkboxValid: true
+    });
+  };
+
+  inputChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value,
+      formValid: true
+    });
   };
 
   // check if all inputs were filled out
@@ -101,23 +104,30 @@ class ItemForm extends Component {
     // check if at least one checkbox is checked
     // do this by looping through people.checked & look for true
     // counter
-    let checkedCounter = 0;
+    let uncheckedCounter = 0;
     this.state.people.forEach(person => {
-      if (person.checked === true) {
-        console.log(person.checked);
-        this.addItemToBill();
-        return;
-      } else {
-        checkedCounter++;
-        // if all people are checked "false"
-        if (checkedCounter === this.state.people.length) {
+      if (person.checked !== true) {
+        uncheckedCounter++;
+        // if all people are unchecked/"false"
+        if (uncheckedCounter === this.state.people.length) {
           this.setState({
             checkboxValid: false
           });
         }
+      } else {
+        return;
       }
     });
+
+    if (this.state.checkboxValid) {
+      this.addItemToBill(); // here we are running it once per person
+      console.log("running addItemToBill()");
+      return;
+    }
   };
+
+  // It's SAVING IMPROPERLY IN STATE but pushing to the databse ok.
+  // so somewhere I set state multiple times for the same item
 
   addItemToBill = () => {
     // set ref for current bill
@@ -130,30 +140,47 @@ class ItemForm extends Component {
 
     // get who pays
     // counter for how many people pay - we'll use this number for math calculations later
-    let whosPayingCounter = 0;
+    // let whosPayingCounter = 0;
+    // const whosPaying = this.state.people
+    //   .map((person, i) => {
+    //     // add index number to each person object so we can push to the right person in the database
+    //     if (person.checked === true) {
+    //       // use counter to get the # of people to split the item by
+    //       whosPayingCounter++;
+    //     }
+    //     const updatedPerson = {
+    //       ...person,
+    //       index: i
+    //     };
+    //     return updatedPerson;
+    //   })
+    //   .filter(
+    //     person =>
+    //       //user filter to get whos actually paying
+    //       person.checked === true
+    //   );
+    // console.log(whosPaying);
+
     const whosPaying = this.state.people
-      .map((person, i) => {
-        // add index number to each person object so we can push to the right person in the database
-        if (person.checked === true) {
-          // use counter to get the # of people to split the item by
-          whosPayingCounter++;
-        }
-        const updatedPerson = {
-          name: person.name,
-          index: i,
-          checked: person.checked
-        };
-        return updatedPerson;
-      })
-      .filter(
-        person =>
-          //user filter to get whos actually paying
-          person.checked === true
-      );
+      .filter(person => person.checked)
+      .map(person => {
+        return person.name;
+      });
+
+    //     const updatedPerson = {
+    //     name: person.name,
+    //     checked: person.checked
+    //   };
+    //   return updatedPerson;
+    // })
+    // .filter(person => person.checked)
+    // .map(person => {
+    //   return person.name;
+    // });
     console.log(whosPaying);
 
     // calculate price per person
-    const costPerPerson = Number(this.state.itemCost) / whosPayingCounter;
+    const costPerPerson = Number(this.state.itemCost) / whosPaying.length;
 
     // set up reference to database people array
     const peopleRef = billRef.child("people"); // this is an array of people
@@ -166,12 +193,12 @@ class ItemForm extends Component {
     };
 
     //  push to database
-    billRef.child("allItems").push(item); //why does this do it twice??
+    billRef.child("allItems").push(item);
 
     // create split item for each person who's paying
     const splitItem = {
-      itemName: `1/${whosPayingCounter} ${this.state.itemName}`,
-      itemCost: costPerPerson.toFixed(2)
+      itemName: `1/${whosPaying.length} ${this.state.itemName}`,
+      costPerPerson: costPerPerson.toFixed(2)
     };
 
     const updatedPeople = [...this.state.people];
@@ -179,40 +206,39 @@ class ItemForm extends Component {
 
     updatedPeople.forEach(person => {
       if (person.checked === true) {
-        person.items.push(splitItem);
+        person.items.push(splitItem); // I think here it's getting added multiple times????
         // set total amount for each person
         let totalAmount = person.totalAmount;
         totalAmount += Number(costPerPerson);
-        person.totalAmount = totalAmount;
+        person.totalAmount = Number(totalAmount).toFixed(2);
         console.log(totalAmount);
       }
     });
 
-    // update state
-    this.setState({
-      people: updatedPeople
-    });
-
-    // state is getting updated weirdly!!!
+    // HAVE NOT PUSHED totalAmount to Database!!!!
 
     // need to push costPerPerson to the items array on people
     // check who's paying for it - loop through who's paying
     // match names
     // push item onto person's own array
-    whosPaying.forEach(person => {
-      // each person has a name & index
-      console.log(person.name);
-      console.log(person.index);
-      peopleRef
-        .child(person.index)
-        .child("items")
-        .push(splitItem);
+    this.state.people.forEach((person, i) => {
+      if (person.checked) {
+        // each person has a name & index
+        console.log(person.name);
+        console.log(i);
+        peopleRef
+          .child(i)
+          .child("items")
+          .push(splitItem);
+        person.checked = false; // reset
+      }
     });
 
     // reset inputs & show items list
     this.setState({
       itemName: "",
-      itemCost: ""
+      itemCost: "",
+      people: updatedPeople
 
       // showItemsList: true
 
@@ -365,7 +391,7 @@ class ItemForm extends Component {
                     id={personId}
                     data-idx={i}
                     checked={person.checked}
-                    onChange={this.inputChange}
+                    onChange={this.checkboxChange}
                   ></input>
                   {person.name}
                 </label>
