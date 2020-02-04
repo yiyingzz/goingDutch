@@ -156,8 +156,8 @@ class ItemForm extends Component {
       this.setState({
         itemName: "",
         itemCost: "",
-        people: updatedPeople
-        // showItemsList: true
+        people: updatedPeople,
+        showItemsList: true
       });
     }
   };

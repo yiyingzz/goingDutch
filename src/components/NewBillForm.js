@@ -11,7 +11,6 @@ const NewBillForm = props => {
   // check it inputs were filled out properly
   const validateInputs = (event, billInput, peopleInput) => {
     event.preventDefault();
-    console.log("you pressed submit!");
 
     let formChecker = true;
     // loop through peopleInput to get names and put them on an array with billInput
