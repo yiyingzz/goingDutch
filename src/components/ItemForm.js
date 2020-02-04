@@ -7,7 +7,7 @@ class ItemForm extends Component {
     super();
     this.state = {
       formValid: true,
-      checkboxValid: false,
+      checkboxValid: true,
       showItemsList: false,
 
       allItems: [],
@@ -34,9 +34,6 @@ class ItemForm extends Component {
       for (let item in items) {
         itemsList.push(items[item]);
       }
-      console.log(items); // starts off undefined cuz it doesn't exist yet
-      console.log("this.props.people");
-      console.log(this.props.people);
 
       this.setState({
         allItems: itemsList,
@@ -58,8 +55,6 @@ class ItemForm extends Component {
     // toggles the checkbox
     const checked = updatedPeople[event.target.dataset.idx].checked;
     updatedPeople[event.target.dataset.idx].checked = !checked;
-    console.log(updatedPeople);
-    console.log(updatedPeople[event.target.dataset.idx].checked);
 
     this.setState({
       people: updatedPeople,
@@ -132,9 +127,6 @@ class ItemForm extends Component {
   addItemToBill = () => {
     // set ref for current bill
     const billRef = firebase.database().ref(this.props.currentBillKey);
-
-    console.log(billRef);
-    console.log("logging items array in state", this.state.allItems);
 
     // get item info & push to database
 
@@ -332,7 +324,7 @@ class ItemForm extends Component {
   render() {
     return (
       <section id="item-form-section">
-        <h2 className="item-form-bill-title">{this.props.billName.billName}</h2>
+        <h2 className="item-form-bill-title">{this.props.billName}</h2>
 
         {this.state.showItemsList ? (
           <ItemsList allItems={this.state.allItems} />
