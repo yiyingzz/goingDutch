@@ -9,7 +9,7 @@ const NewBillForm = props => {
   });
 
   // check it inputs were filled out properly
-  const checkInputs = (event, billInput, peopleInput) => {
+  const validateInputs = (event, billInput, peopleInput) => {
     event.preventDefault();
     console.log("you pressed submit!");
 
@@ -84,8 +84,8 @@ const NewBillForm = props => {
   ]);
 
   // add another input
-  const addPersonInput = e => {
-    e.preventDefault();
+  const addPersonInput = event => {
+    event.preventDefault();
     setPeopleState([...peopleState, blankPerson]);
   };
 
@@ -148,7 +148,7 @@ const NewBillForm = props => {
 
         <button
           type="submit"
-          onClick={e => checkInputs(e, billState.billName, peopleState)}
+          onClick={e => validateInputs(e, billState.billName, peopleState)}
         >
           Submit
         </button>
