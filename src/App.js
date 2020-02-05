@@ -98,12 +98,20 @@ class App extends Component {
               displayBill={this.displayBill}
             />
           ) : null}
-        </div>{" "}
+        </div>
         {/* --- /.wrapper ----- */}
         <footer>
           <div className="wrapper">
             <p>
-              Made by <a href="https://www.yiying.ca">Yiying Zou</a> 2019
+              Made by{" "}
+              <a
+                href="https://www.yiying.ca"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Yiying Zou
+              </a>{" "}
+              2020
             </p>
           </div>
         </footer>

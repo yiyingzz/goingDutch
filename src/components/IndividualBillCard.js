@@ -1,7 +1,7 @@
 import React from "react";
 import CardItem from "./CardItem";
 
-const PersonCard = props => {
+const IndividualBillCard = props => {
   const { name, totalAmount, items } = props;
 
   let totalPrice = totalAmount;
@@ -36,4 +36,4 @@ const PersonCard = props => {
   );
 };
 
-export default PersonCard;
+export default IndividualBillCard;
