@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import firebase from "../firebase.js";
 
 const NewBillForm = props => {
-  // getBillInfo & listAllBills functions
+  const { getBillInfo, listAllBills } = props;
 
   const [formState, setFormState] = useState({
     isValid: true
@@ -63,7 +63,7 @@ const NewBillForm = props => {
     const newBillKey = newBillItem.key;
 
     // send bill info up to App.js & takes user to item form
-    props.getBillInfo(billState.billName, dateCreated, peopleState, newBillKey);
+    getBillInfo(billState.billName, dateCreated, peopleState, newBillKey);
   };
 
   // bill name
@@ -153,9 +153,9 @@ const NewBillForm = props => {
         </button>
       </form>
 
-      {/* <button className="alternate-button" onClick={this.props.listAllBills}>
+      <button className="alternate-button" onClick={listAllBills}>
         See Previous Bills
-      </button> */}
+      </button>
     </section>
   );
 };

@@ -124,11 +124,11 @@ class ItemForm extends Component {
       const splitItem = {};
       if (whosPaying.length === 1) {
         splitItem.itemName = this.state.itemName;
-        splitItem.costPerPerson = this.state.itemCost;
+        splitItem.itemCost = this.state.itemCost;
       } else {
         // create split item for each person who's paying
         splitItem.itemName = `1/${whosPaying.length} ${this.state.itemName}`;
-        splitItem.costPerPerson = costPerPerson.toFixed(2);
+        splitItem.itemCost = costPerPerson.toFixed(2);
       }
 
       const updatedPeople = [...this.state.people];

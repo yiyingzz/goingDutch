@@ -6,17 +6,12 @@ import DisplayBill from "./components/DisplayBill.js";
 import ListAllBills from "./components/ListAllBills.js";
 
 class App extends Component {
-  // need to put data into this.state
   constructor() {
     super();
     this.state = {
       billName: "",
 
       people: [],
-      // person1: "",
-      // person2: "",
-      // person1ItemsKey: "",
-      // person2ItemsKey: "",
       currentBillKey: "",
 
       showNewBillForm: true,
