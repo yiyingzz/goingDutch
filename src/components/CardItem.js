@@ -6,7 +6,10 @@ const CardItem = props => {
   let itemPrice = itemCost;
   if (typeof itemCost === "number") {
     itemPrice = itemCost.toFixed(2);
+  } else {
+    itemPrice = Number(itemCost).toFixed(2);
   }
+
   return (
     <li>
       <p className="card-left invoice-item">{itemName}</p>

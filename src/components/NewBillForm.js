@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import firebase from "../firebase.js";
-import PeopleInput from "./PeopleInput.js";
+import PersonInput from "./PersonInput.js";
 
 const NewBillForm = props => {
   const { getBillInfo, listAllBills } = props;
@@ -39,8 +39,14 @@ const NewBillForm = props => {
     // getting the date
     const today = new Date();
     const year = today.getFullYear();
-    const month = today.getMonth() + 1;
-    const day = today.getDate() + 1;
+    let month = today.getMonth() + 1;
+    if (month.toString().length === 1) {
+      month = `0${month}`;
+    }
+    let day = today.getDate() + 1;
+    if (day.toString().length === 1) {
+      day = `0${day}`;
+    }
     const dateCreated = `${year}-${month}-${day}`;
 
     // setting bill info
@@ -111,7 +117,7 @@ const NewBillForm = props => {
     <section id="bill-form-section">
       <h3>Create a New Bill</h3>
 
-      {formState.isValid === false ? (
+      {!formState.isValid ? (
         <p className="form-error">Please fill out all sections of the form!</p>
       ) : null}
 
@@ -146,7 +152,7 @@ const NewBillForm = props => {
             );
           } else {
             return (
-              <PeopleInput
+              <PersonInput
                 key={`person${i}`}
                 i={i}
                 personName={person.name}

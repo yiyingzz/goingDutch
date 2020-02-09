@@ -3,12 +3,14 @@ import SingleItem from "./SingleItem";
 
 // functional component for displaying items in new bill
 const ItemsList = props => {
+  const { allItems } = props;
+
   return (
     <section id="items-list" className="items-card card flex-container">
       <h4 className="card-heading">Items in Your Bill</h4>
 
       <ul>
-        {props.allItems.map((item, i) => {
+        {allItems.map((item, i) => {
           if (item.whosPaying.length === 1) {
             return (
               <SingleItem

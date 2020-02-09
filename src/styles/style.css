@@ -363,6 +363,7 @@ button {
   padding: 10px 25px;
   -webkit-transition: 0.3s all;
   transition: 0.3s all;
+  cursor: pointer;
 }
 
 button:hover, button:focus {

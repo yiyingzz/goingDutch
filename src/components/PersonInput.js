@@ -1,6 +1,6 @@
 import React from "react";
 
-const PeopleInput = props => {
+const PersonInput = props => {
   const { i, handlePersonChange, personName, removePersonInput } = props;
 
   return (
@@ -24,4 +24,4 @@ const PeopleInput = props => {
   );
 };
 
-export default PeopleInput;
+export default PersonInput;

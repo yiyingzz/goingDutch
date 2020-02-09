@@ -32,7 +32,6 @@ class DisplayBill extends Component {
             return (
               <IndividualBillCard
                 key={i}
-                index={i}
                 name={person.name}
                 totalAmount={person.totalAmount}
                 items={person.items}

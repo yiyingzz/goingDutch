@@ -9,6 +9,7 @@ class ItemForm extends Component {
       formValid: true,
       checkboxValid: true,
       showItemsList: false,
+      isItemsListBlank: false,
 
       allItems: [],
       people: [], // people objects on the array
@@ -93,6 +94,17 @@ class ItemForm extends Component {
     }
   };
 
+  checkForItems = () => {
+    if (this.state.allItems.length === 0) {
+      this.setState({
+        isItemListBlank: true
+      });
+    } else {
+      // display the bill
+      this.props.displayBill(this.props.currentBillKey);
+    }
+  };
+
   addItemToBill = () => {
     // set ref for current bill
     const billRef = firebase.database().ref(this.props.currentBillKey);
@@ -173,13 +185,19 @@ class ItemForm extends Component {
 
         <h3>Add Items to Your Bill</h3>
 
-        {this.state.formValid === false ? (
+        {this.state.isItemListBlank ? (
+          <p className="form-error">
+            It looks like you need to add some items to your bill!
+          </p>
+        ) : null}
+
+        {!this.state.formValid ? (
           <p className="form-error">
             Please fill out all sections of the form properly!
           </p>
         ) : null}
 
-        {this.state.checkboxValid === false ? (
+        {!this.state.checkboxValid ? (
           <p className="form-error">Please select who will pay for the item!</p>
         ) : null}
 
@@ -246,10 +264,7 @@ class ItemForm extends Component {
           </button>
         </form>
 
-        <button
-          className="done-adding"
-          onClick={() => this.props.displayBill(this.props.currentBillKey)}
-        >
+        <button className="done-adding" onClick={() => this.checkForItems()}>
           I'm done adding items!
         </button>
       </section>
