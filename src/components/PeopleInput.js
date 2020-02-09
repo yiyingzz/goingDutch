@@ -1,7 +1,8 @@
 import React from "react";
 
 const PeopleInput = props => {
-  const { i, handlePersonChange, personName } = props;
+  const { i, handlePersonChange, personName, removePersonInput } = props;
+
   return (
     <div>
       <label htmlFor={`person${i}`} className="visuallyHidden">
@@ -16,7 +17,9 @@ const PeopleInput = props => {
         value={personName}
         onChange={handlePersonChange}
       ></input>
-      <button>Remove [x]</button>
+      {2 <= i ? (
+        <button onClick={e => removePersonInput(e, i)}>Remove [x]</button>
+      ) : null}
     </div>
   );
 };

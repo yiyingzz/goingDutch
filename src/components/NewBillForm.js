@@ -99,6 +99,14 @@ const NewBillForm = props => {
     setFormState({ isValid: true });
   };
 
+  const removePersonInput = (e, i) => {
+    e.preventDefault();
+    const updatedPeople = [...peopleState];
+    updatedPeople.splice(i, 1);
+    setPeopleState(updatedPeople);
+    setFormState({ isValid: true });
+  };
+
   return (
     <section id="bill-form-section">
       <h3>Create a New Bill</h3>
@@ -141,8 +149,9 @@ const NewBillForm = props => {
               <PeopleInput
                 key={`person${i}`}
                 i={i}
-                handlePersonChange={handlePersonChange}
                 personName={person.name}
+                handlePersonChange={handlePersonChange}
+                removePersonInput={removePersonInput}
               />
             );
           }
