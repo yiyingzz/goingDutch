@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import firebase from "../firebase.js";
+import PeopleInput from "./PeopleInput.js";
 
 const NewBillForm = props => {
   const { getBillInfo, listAllBills } = props;
@@ -117,24 +118,34 @@ const NewBillForm = props => {
         ></input>
 
         <legend>Who's splitting this bill?</legend>
-        {peopleState.map((val, i) => {
-          const personId = `person${i}`;
-          return (
-            <div key={personId}>
-              <label htmlFor={personId} className="visuallyHidden">
-                Name
-              </label>
-              <input
-                type="text"
-                className="name-input"
-                id={personId}
-                data-index={i}
-                placeholder="Name"
-                value={peopleState[i].name}
-                onChange={handlePersonChange}
-              ></input>
-            </div>
-          );
+        {peopleState.map((person, i) => {
+          if (i < 2) {
+            return (
+              <div key={`person${i}`}>
+                <label htmlFor={`person${i}`} className="visuallyHidden">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  className="name-input"
+                  id={`person${i}`}
+                  data-index={i}
+                  placeholder="Name"
+                  value={person.name}
+                  onChange={handlePersonChange}
+                ></input>
+              </div>
+            );
+          } else {
+            return (
+              <PeopleInput
+                key={`person${i}`}
+                i={i}
+                handlePersonChange={handlePersonChange}
+                personName={person.name}
+              />
+            );
+          }
         })}
 
         <button
