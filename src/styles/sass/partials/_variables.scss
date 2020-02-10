@@ -1,11 +1,23 @@
 // COLOURS
 
-$primaryColor: #2b6499;
-$secondaryColor: #4694BE; 
-$tertiaryColor: #AADFEC; 
-$fourthColor: #D5F0F2;
+// $darkestBlue: #2b6499;
+// $mediumBlue: #4694be;
+$darkestBlue: #255683;
+$mediumBlue: #397da2;
+// $lightBlue: #aadfec;
+$lightBlue: #8fd4e5;
+$lightestBlue: #d5f0f2;
 
-$primaryTextColor: #3B77AE;
-$secondaryTextColor: #FFF;
+$primaryColor: $darkestBlue;
+$secondaryColor: $mediumBlue;
+$tertiaryColor: $lightBlue;
+$fourthColor: $lightestBlue;
 
-$accentColor: #CE587D; 
+$primaryTextColor: $darkestBlue;
+// $primaryTextColor: #3b77ae; // another medium blue
+$secondaryTextColor: #fff;
+
+$accentColor: #ce587d; // red
+// $darkerAccentColor: #b2345c;
+$darkerAccentColor: #c23864; // darker red
+$bgColor: #fff;

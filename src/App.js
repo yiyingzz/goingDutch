@@ -64,7 +64,7 @@ class App extends Component {
         <header>
           <div className="wrapper">
             <h1>Going Dutch</h1>
-            <h2>A Bill Splitter for Two</h2>
+            <h2>A Bill Splitter</h2>
           </div>
         </header>
         <div className="wrapper">

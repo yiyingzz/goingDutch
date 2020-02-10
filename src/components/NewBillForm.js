@@ -164,6 +164,7 @@ const NewBillForm = props => {
         })}
 
         <button
+          className="input-button input-button__add"
           onClick={e => {
             addPersonInput(e);
           }}

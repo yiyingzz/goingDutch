@@ -202,7 +202,7 @@ class ItemForm extends Component {
         ) : null}
 
         <form id="item-form" className="item-form flex-container">
-          <div className="item-inputs">
+          <div className="item-inputs item-inputs__name">
             <label htmlFor="itemName">Enter an item</label>
             <input
               type="text"
@@ -213,7 +213,7 @@ class ItemForm extends Component {
             ></input>
           </div>
 
-          <div className="item-inputs">
+          <div className="item-inputs item-inputs__cost">
             <label htmlFor="itemCost" className="item-cost-label">
               Item cost <span className="label-dollar-sign">($)</span>
             </label>
@@ -230,38 +230,44 @@ class ItemForm extends Component {
             ></input>
           </div>
 
-          <fieldset>
-            <legend>Who is paying for this item?</legend>
+          <div className="item-form-bottom">
+            <fieldset>
+              <legend>Who is paying for this item?</legend>
 
-            {this.props.people.map((person, i) => {
-              const personId = `person${i}`;
-              return (
-                <label htmlFor={personId} key={personId} className="name-label">
-                  <input
-                    type="checkbox"
-                    id={personId}
-                    data-idx={i}
-                    checked={person.checked}
-                    onChange={this.checkboxChange}
-                  ></input>
-                  {person.name}
-                </label>
-              );
-            })}
-          </fieldset>
+              {this.props.people.map((person, i) => {
+                const personId = `person${i}`;
+                return (
+                  <label
+                    htmlFor={personId}
+                    key={personId}
+                    className="name-label"
+                  >
+                    <input
+                      type="checkbox"
+                      id={personId}
+                      data-idx={i}
+                      checked={person.checked}
+                      onChange={this.checkboxChange}
+                    ></input>
+                    {person.name}
+                  </label>
+                );
+              })}
+            </fieldset>
 
-          <button
-            className="alternate-button add-item"
-            onClick={event =>
-              this.validateInputs(
-                event,
-                this.state.itemName,
-                this.state.itemCost
-              )
-            }
-          >
-            Add Item
-          </button>
+            <button
+              className="alternate-button add-item-button"
+              onClick={event =>
+                this.validateInputs(
+                  event,
+                  this.state.itemName,
+                  this.state.itemCost
+                )
+              }
+            >
+              Add Item
+            </button>
+          </div>
         </form>
 
         <button className="done-adding" onClick={() => this.checkForItems()}>

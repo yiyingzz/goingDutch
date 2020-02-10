@@ -244,8 +244,8 @@ body {
   font-family: "Lato", sans-serif;
   font-size: 2rem;
   text-align: center;
-  background: #FFF;
-  color: #3B77AE;
+  background: #fff;
+  color: #255683;
 }
 
 ul,
@@ -263,13 +263,13 @@ li {
 
 header {
   height: 200px;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #2b6499), color-stop(25%, #4694BE), color-stop(50%, #4694BE), color-stop(50%, #AADFEC), color-stop(75%, #AADFEC), color-stop(75%, #D5F0F2));
-  background: linear-gradient(to bottom, #2b6499 25%, #4694BE 25%, #4694BE 50%, #AADFEC 50%, #AADFEC 75%, #D5F0F2 75%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #255683), color-stop(25%, #397da2), color-stop(50%, #397da2), color-stop(50%, #8fd4e5), color-stop(75%, #8fd4e5), color-stop(75%, #d5f0f2));
+  background: linear-gradient(to bottom, #255683 25%, #397da2 25%, #397da2 50%, #8fd4e5 50%, #8fd4e5 75%, #d5f0f2 75%);
 }
 
 footer {
-  background: #2b6499;
-  color: #FFF;
+  background: #255683;
+  color: #fff;
   padding: 10px;
   position: absolute;
   bottom: 0;
@@ -283,8 +283,8 @@ footer p {
 }
 
 a {
-  color: #FFF;
-  border-bottom: 2px solid #CE587D;
+  color: #fff;
+  border-bottom: 2px solid #ce587d;
   text-decoration: none;
   font-weight: bold;
   -webkit-transition: 0.3s all;
@@ -292,7 +292,7 @@ a {
 }
 
 a:hover, a:focus {
-  color: #AADFEC;
+  color: #8fd4e5;
 }
 
 .wrapper {
@@ -323,23 +323,23 @@ h1 {
   font-size: 4rem;
   letter-spacing: 2px;
   padding-top: 50px;
-  color: #FFF;
-  text-shadow: 2px 2px #CE587D;
+  color: #fff;
+  text-shadow: 2px 2px #ce587d;
 }
 
 h2 {
   font-size: 3rem;
   letter-spacing: 2px;
   margin-top: 10px;
-  color: #CE587D;
-  text-shadow: 2px 2px #FFF;
+  color: #c23864;
+  text-shadow: 2px 2px #fff;
 }
 
 h3 {
   margin-bottom: 0;
   font-size: 24px;
   display: inline-block;
-  border-bottom: 3px solid #CE587D;
+  border-bottom: 3px solid #ce587d;
 }
 
 h4 {
@@ -356,8 +356,8 @@ label {
 button {
   display: block;
   border: 0;
-  background: #2b6499;
-  color: #FFF;
+  background: #255683;
+  color: #fff;
   margin: 20px auto;
   height: 48px;
   padding: 10px 25px;
@@ -367,11 +367,41 @@ button {
 }
 
 button:hover, button:focus {
-  background: #CE587D;
+  background: #ce587d;
 }
 
 .alternate-button {
-  background: #4694BE;
+  background: #397da2;
+}
+
+.input-button {
+  font-size: smaller;
+  background: #fff;
+  border: 1px solid #fff;
+  color: #c23864;
+  margin: 0 auto;
+}
+
+.input-button:hover, .input-button:focus {
+  background: #fff;
+  border: 1px solid #c23864;
+  color: #c23864;
+}
+
+.input-button__add {
+  margin-top: 5px;
+}
+
+.input-button__remove {
+  margin-left: 10px;
+  height: 100%;
+  padding: 17px 25px;
+}
+
+@media (max-width: 480px) {
+  .input-button__remove {
+    padding: 17px 15px;
+  }
 }
 
 form {
@@ -393,42 +423,60 @@ button {
 
 input {
   width: 100%;
-  border: 2px solid #4694BE;
+  border: 2px solid #397da2;
   padding: 15px;
-  color: #3B77AE;
+  color: #255683;
 }
 
 input::-webkit-input-placeholder {
-  color: #4694BE;
+  color: #397da2;
   opacity: 0.7;
 }
 
 input:-ms-input-placeholder {
-  color: #4694BE;
+  color: #397da2;
   opacity: 0.7;
 }
 
 input::-ms-input-placeholder {
-  color: #4694BE;
+  color: #397da2;
   opacity: 0.7;
 }
 
 input::placeholder {
-  color: #4694BE;
+  color: #397da2;
   opacity: 0.7;
 }
 
 input:hover, input:focus {
-  border: 2px solid #CE587D;
+  border: 2px solid #ce587d;
 }
 
 .name-input {
-  margin: 5px 0 5px;
+  margin: 5px 0;
+}
+
+.person-component {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (max-width: 480px) {
+  .person-component-input {
+    width: calc(100% - 104px);
+  }
 }
 
 .form-error {
   margin-bottom: 0;
-  color: #CE587D;
+  color: #ce587d;
 }
 
 /* STYLES FOR ITEM FORM */
@@ -451,22 +499,22 @@ input:hover, input:focus {
   display: inline-block;
 }
 
-.item-inputs:first-of-type {
+.item-inputs__name {
   width: calc(70% - 20px);
 }
 
 @media (max-width: 769px) {
-  .item-inputs:first-of-type {
+  .item-inputs__name {
     width: 100%;
   }
 }
 
-.item-inputs:last-of-type {
+.item-inputs__cost {
   width: 30%;
 }
 
 @media (max-width: 769px) {
-  .item-inputs:last-of-type {
+  .item-inputs__cost {
     width: 100%;
   }
 }
@@ -492,6 +540,7 @@ input:hover, input:focus {
 }
 
 fieldset {
+  width: calc(100% - 140px);
   border: 0;
   padding: 0;
   text-align: left;
@@ -519,7 +568,7 @@ input[type="checkbox"] {
 }
 
 .name-label {
-  color: #4694BE;
+  color: #397da2;
   border-radius: 5px;
   font-size: 1.8rem;
   display: inline-block;
@@ -528,7 +577,7 @@ input[type="checkbox"] {
 
 .name-label:hover,
 .name-label:focus {
-  color: #CE587D;
+  color: #ce587d;
 }
 
 @media (max-width: 769px) {
@@ -547,17 +596,28 @@ input[type="checkbox"] {
   }
 }
 
-.add-item {
+.item-form-bottom {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.add-item-button {
   margin-right: 0;
   margin-bottom: 0;
-  position: absolute;
-  right: 20px;
-  bottom: 0;
 }
 
 @media (max-width: 769px) {
-  .add-item {
-    position: static;
+  .add-item-button {
     margin: 20px auto;
   }
 }
@@ -600,20 +660,20 @@ input[type="checkbox"] {
 }
 
 .card li:nth-of-type(2n) {
-  background: #AADFEC;
+  background: #8fd4e5;
 }
 
 .bill-card-bottom,
 .card li:nth-of-type(2n + 1) {
-  background: #D5F0F2;
+  background: #d5f0f2;
 }
 
 .card-heading {
   margin: 0;
   width: 100%;
   padding: 20px;
-  background: #2b6499;
-  color: #FFF;
+  background: #255683;
+  color: #fff;
   font-weight: bold;
 }
 
@@ -680,7 +740,7 @@ input[type="checkbox"] {
 
 .bill-card:hover .card-heading,
 .bill-card:focus .card-heading {
-  background: #CE587D;
+  background: #ce587d;
 }
 
 .bill-card-bottom {

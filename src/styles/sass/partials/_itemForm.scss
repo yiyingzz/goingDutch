@@ -7,7 +7,7 @@
   @include mqTablet {
     margin-bottom: 20px;
   }
-} 
+}
 
 .item-form-bill-title {
   margin: 24px auto 0;
@@ -15,28 +15,28 @@
 
 .item-inputs {
   display: inline-block;
-}
 
-.item-inputs:first-of-type {
-  width: calc(70% - 20px);
+  &__name {
+    width: calc(70% - 20px);
 
-  @include mqTablet {
-    width: 100%;
+    @include mqTablet {
+      width: 100%;
+    }
   }
-}
 
-.item-inputs:last-of-type {
-  width: 30%;
+  &__cost {
+    width: 30%;
 
-  @include mqTablet {
-    width: 100%;
+    @include mqTablet {
+      width: 100%;
+    }
   }
 }
 
 .item-cost-label {
-padding-left: 20px;
+  padding-left: 20px;
 
-@include mqTablet {
+  @include mqTablet {
     padding-left: 0;
   }
 }
@@ -50,6 +50,7 @@ padding-left: 20px;
 }
 
 fieldset {
+  width: calc(100% - 140px);
   border: 0;
   padding: 0;
   text-align: left;
@@ -84,7 +85,7 @@ input[type="checkbox"] {
 
 .name-label:hover,
 .name-label:focus {
-  color: $accentColor; 
+  color: $accentColor;
 }
 
 .dollar-sign {
@@ -101,16 +102,19 @@ input[type="checkbox"] {
   }
 }
 
-// add item button
-.add-item {
+.item-form-bottom {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.add-item-button {
   margin-right: 0;
   margin-bottom: 0;
-  position: absolute;
-  right: 20px;
-  bottom: 0;
 
   @include mqTablet {
-    position: static;
     margin: 20px auto;
   }
 }
