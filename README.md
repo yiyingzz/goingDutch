@@ -1,10 +1,10 @@
 # Going Dutch
 
-![Screenshot of Going Dutch's desktop website](https://i.imgur.com/X2wwLLe.jpg)
+![Screenshot of Going Dutch's desktop website](https://i.imgur.com/WLcrQlQ.jpg)
 
-A bill-splitter web app built with React with data stored in Firebase.
+A bill splitter web app built with React with data stored in Firebase.
 
-View the live site at https://yiyingzz.github.io/goingDutch
+View the live site at https://yiying.ca/split
 
 ## Functionality
 

@@ -169,7 +169,8 @@ class ItemForm extends Component {
         itemName: "",
         itemCost: "",
         people: updatedPeople,
-        showItemsList: true
+        showItemsList: true,
+        isItemListBlank: false
       });
     }
   };
