@@ -1,33 +1,29 @@
-import React, { Component } from 'react';
-import firebase from '../firebase.js';
-import ItemsList from './ItemsList.js';
+import React, { Component } from "react";
+import firebase from "../firebase.js";
+import ItemsList from "./ItemsList.js";
 
 class ItemForm extends Component {
   constructor() {
     super();
     this.state = {
-
       formValid: true,
       checkboxValid: true,
-      checkboxes: true,
       showItemsList: false,
+      isItemsListBlank: false,
 
       allItems: [],
-      person1Total: 0,
-      person2Total: 0,
-      
-      itemName: '',
-      itemCost: '',
-      whosPaying1: false,
-      whosPaying2: false,
+      people: [], // people objects on the array
 
-    }
+      itemName: "",
+      itemCost: "",
+      whosPaying: [] // array of people's names
+    };
   }
 
   componentDidMount() {
     const billRef = firebase.database().ref(this.props.currentBillKey);
 
-    billRef.on('value', (snapshot) => {      
+    billRef.on("value", snapshot => {
       const items = snapshot.val().allItems;
       const itemsList = [];
       for (let item in items) {
@@ -35,206 +31,251 @@ class ItemForm extends Component {
       }
 
       this.setState({
-        allItems: itemsList
-      })
-    })
+        allItems: itemsList,
+        people: this.props.people
+      });
+    });
   }
 
-  inputChange = (event) => {
-    if (event.target.type === "checkbox") {
-      this.setState({
-        [event.target.id]: event.target.checked,
-        checkboxValid: true
-      })
-    } else {
-      this.setState({
-        [event.target.id]: event.target.value,
-        formValid: true
-      })
-    }
-  }
+  checkboxChange = event => {
+    // create a new array from state
+    const updatedPeople = [...this.state.people];
+
+    // toggles the checkbox
+    const checked = updatedPeople[event.target.dataset.idx].checked;
+    updatedPeople[event.target.dataset.idx].checked = !checked;
+
+    this.setState({
+      people: updatedPeople,
+      checkboxValid: true
+    });
+  };
+
+  inputChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value,
+      formValid: true
+    });
+  };
 
   // check if all inputs were filled out
-  validateInputs = (event, ...inputs) => {
+  validateInputs = (event, itemNameInput, itemCostInput) => {
     event.preventDefault();
 
-    let formChecker = true;
-    inputs.forEach((input) => {
-      if (!(this.state.formValid && input.trim() !== '' && input.trim().length > 0)) {
-        formChecker = false;
-      }
-    })
-
-    if (formChecker === false) {
+    if (
+      Number(itemCostInput) !== 0 &&
+      itemNameInput.trim() !== "" &&
+      0 < itemNameInput.trim().length &&
+      this.state.formValid
+    ) {
+      this.validateCheckboxes();
+    } else {
       this.setState({
         formValid: false
-      })
-    } else {
-      this.validateCheckboxes();
+      });
     }
-  }
+  };
 
   validateCheckboxes = () => {
-    // check if at least one checkbox is checked
-    if (this.state.whosPaying1 === false && this.state.whosPaying2 === false) {
-      this.setState({
-        checkboxValid: false
-      })
-    } else {
+    let uncheckedCounter = 0;
+    this.state.people.forEach(person => {
+      if (person.checked !== true) {
+        uncheckedCounter++;
+        // if all people are unchecked
+        if (uncheckedCounter === this.state.people.length) {
+          this.setState({
+            checkboxValid: false
+          });
+        }
+      }
+    });
+    if (this.state.checkboxValid) {
       this.addItemToBill();
     }
-  }
+  };
+
+  checkForItems = () => {
+    if (this.state.allItems.length === 0) {
+      this.setState({
+        isItemListBlank: true
+      });
+    } else {
+      // display the bill
+      this.props.displayBill(this.props.currentBillKey);
+    }
+  };
 
   addItemToBill = () => {
-
     // set ref for current bill
     const billRef = firebase.database().ref(this.props.currentBillKey);
-    const person1Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [0]);
-    const person2Ref = firebase.database().ref(this.props.currentBillKey + '/people/' + [1]);
 
-    let person1CurrentTotal = Number(this.state.person1Total);
-    let person2CurrentTotal = Number(this.state.person2Total);
+    // get who's paying for the current item
+    const whosPaying = this.state.people
+      .filter(person => person.checked)
+      .map(person => {
+        return person.name;
+      });
 
-    // check for which person is paying
-    if (this.state.whosPaying1 === true && this.state.whosPaying2 === true) {
-      let costPerPerson = (this.state.itemCost / 2).toFixed(2);
-      costPerPerson = Number(costPerPerson);
-      person1CurrentTotal += costPerPerson;
-      person2CurrentTotal += costPerPerson;
+    if (0 < whosPaying.length) {
+      // calculate price per person
+      const costPerPerson = Number(this.state.itemCost) / whosPaying.length;
 
-      // update state
-      this.setState({
-        person1Total: person1CurrentTotal,
-        person2Total: person2CurrentTotal
-      })
+      // set up reference to database people array
+      const peopleRef = billRef.child("people");
 
-      // push to database
       const item = {
         itemName: this.state.itemName,
         itemCost: this.state.itemCost,
-        costPerPerson: costPerPerson,
-        whosPaying: `${this.props.person1} & ${this.props.person2}`
-      }
-      const splitItem = {
-        itemName: `1/2 ${this.state.itemName}`,
-        itemCost: costPerPerson,
-        whosPaying: `${this.props.person1} & ${this.props.person2}`
-      }
-      billRef.child('allItems').push(item);
-      person1Ref.child('items').push(splitItem);
-      person2Ref.child('items').push(splitItem);
-      person1Ref.child('totalAmount').set(person1CurrentTotal);
-      person2Ref.child('totalAmount').set(person2CurrentTotal);
+        costPerPerson: costPerPerson.toFixed(2),
+        whosPaying: whosPaying
+      };
 
-    } else if (this.state.whosPaying1 === true) {
-      // update state
-      person1CurrentTotal += Number(this.state.itemCost);
+      //  push to database to allItems list
+      billRef.child("allItems").push(item);
+
+      const splitItem = {};
+      if (whosPaying.length === 1) {
+        splitItem.itemName = this.state.itemName;
+        splitItem.itemCost = this.state.itemCost;
+      } else {
+        // create split item for each person who's paying
+        splitItem.itemName = `1/${whosPaying.length} ${this.state.itemName}`;
+        splitItem.itemCost = costPerPerson.toFixed(2);
+      }
+
+      const updatedPeople = [...this.state.people];
+      updatedPeople.forEach(person => {
+        if (person.checked === true) {
+          person.items.push(splitItem);
+          // set total amount for each person
+          let totalAmount = Number(person.totalAmount);
+          totalAmount += Number(costPerPerson);
+          person.totalAmount = Number(totalAmount).toFixed(2);
+        }
+      });
+
+      // pushing item to database for each individual person
+      this.state.people.forEach((person, i) => {
+        if (person.checked) {
+          const personRef = peopleRef.child(i);
+          personRef.child("items").push(splitItem);
+          personRef.child("totalAmount").set(person.totalAmount);
+          person.checked = false; // reset
+        }
+      });
+
+      // update people state, reset inputs & show items list
       this.setState({
-        person1Total: person1CurrentTotal
-      })
-      
-      // push to database
-      const item = {
-        itemName: this.state.itemName,
-        itemCost: this.state.itemCost,
-        whosPaying: this.props.person1 
-      }
-      billRef.child('allItems').push(item);
-      person1Ref.child('items').push(item);
-      person1Ref.child('totalAmount').set(person1CurrentTotal);
-
-    } else if (this.state.whosPaying2 === true) {
-      // update state
-      person2CurrentTotal += Number(this.state.itemCost);
-      this.setState({
-        person2Total: person2CurrentTotal
-      })
-
-      // push to database
-      const item = {
-        itemName: this.state.itemName,
-        itemCost: this.state.itemCost,
-        whosPaying: this.props.person2
-      }
-      billRef.child('allItems').push(item);
-      person2Ref.child('items').push(item);
-      person2Ref.child('totalAmount').set(person2CurrentTotal);
+        itemName: "",
+        itemCost: "",
+        people: updatedPeople,
+        showItemsList: true,
+        isItemListBlank: false
+      });
     }
-
-    // reset inputs & show items list
-    this.setState({
-      itemName: '',
-      itemCost: '',
-      whosPaying1: false,
-      whosPaying2: false,
-      showItemsList: true
-    }) 
-  }
+  };
 
   render() {
     return (
-
       <section id="item-form-section">
         <h2 className="item-form-bill-title">{this.props.billName}</h2>
 
-          {
-            this.state.showItemsList 
-              ? <ItemsList allItems={this.state.allItems} />
-              : null
-          }
+        {this.state.showItemsList ? (
+          <ItemsList allItems={this.state.allItems} />
+        ) : null}
 
-          <h3>Add Items to Your Bill</h3>
+        <h3>Add Items to Your Bill</h3>
 
-          {
-            this.state.formValid === false
-              ? <p className="form-error">Please fill out all sections of the form!</p>
-              : null
-          }
+        {this.state.isItemListBlank ? (
+          <p className="form-error">
+            It looks like you need to add some items to your bill!
+          </p>
+        ) : null}
 
-          {
-            this.state.checkboxValid === false
-              ? <p className="form-error">Please select who will pay for the item!</p>
-              : null
-          }
+        {!this.state.formValid ? (
+          <p className="form-error">
+            Please fill out all sections of the form properly!
+          </p>
+        ) : null}
 
-          <form id="item-form" className="item-form flex-container">
+        {!this.state.checkboxValid ? (
+          <p className="form-error">Please select who will pay for the item!</p>
+        ) : null}
 
-            <div className="item-inputs">
-              <label htmlFor="itemName">Enter an item</label>
-              <input type="text" id="itemName" value={this.state.itemName} onChange={this.inputChange}></input>
-            </div>
+        <form id="item-form" className="item-form flex-container">
+          <div className="item-inputs item-inputs__name">
+            <label htmlFor="itemName">Enter an item</label>
+            <input
+              type="text"
+              id="itemName"
+              placeholder="Item Name"
+              value={this.state.itemName}
+              onChange={this.inputChange}
+            ></input>
+          </div>
 
-            <div className="item-inputs">
-              <label htmlFor="itemCost" className="item-cost-label">Item cost <span className="label-dollar-sign">($)</span></label>
-              <span className="dollar-sign">$ </span>
-              <input type="number" min="0" step="0.01" id="itemCost" placeholder="0.00" className="cost-input" value={this.state.itemCost} onChange={this.inputChange}></input>
-            </div>
+          <div className="item-inputs item-inputs__cost">
+            <label htmlFor="itemCost" className="item-cost-label">
+              Item cost <span className="label-dollar-sign">($)</span>
+            </label>
+            <span className="dollar-sign">$ </span>
+            <input
+              type="number"
+              min="0"
+              step="0.01"
+              id="itemCost"
+              placeholder="0.00"
+              className="cost-input"
+              value={this.state.itemCost}
+              onChange={this.inputChange}
+            ></input>
+          </div>
 
+          <div className="item-form-bottom">
             <fieldset>
               <legend>Who is paying for this item?</legend>
 
-              <label htmlFor="whosPaying1" className="name-label">
-              <input type="checkbox" id="whosPaying1" name="whosPaying" checked={this.state.whosPaying1} onChange={this.inputChange}></input>{this.props.person1}</label>
-
-              <label htmlFor="whosPaying2" className="name-label">
-              <input type="checkbox" id="whosPaying2" name="whosPaying" checked={this.state.whosPaying2} onChange={this.inputChange}></input>{this.props.person2}</label>
+              {this.props.people.map((person, i) => {
+                const personId = `person${i}`;
+                return (
+                  <label
+                    htmlFor={personId}
+                    key={personId}
+                    className="name-label"
+                  >
+                    <input
+                      type="checkbox"
+                      id={personId}
+                      data-idx={i}
+                      checked={person.checked}
+                      onChange={this.checkboxChange}
+                    ></input>
+                    {person.name}
+                  </label>
+                );
+              })}
             </fieldset>
 
-            <button 
-              className="alternate-button add-item" 
-              onClick={(event) => this.validateInputs(event, this.state.itemName, this.state.itemCost)}
-            >Add Item</button>
+            <button
+              className="alternate-button add-item-button"
+              onClick={event =>
+                this.validateInputs(
+                  event,
+                  this.state.itemName,
+                  this.state.itemCost
+                )
+              }
+            >
+              Add Item
+            </button>
+          </div>
+        </form>
 
-          </form>
-
-          <button 
-            className="done-adding" 
-            onClick={() => this.props.displayBill(this.props.currentBillKey)}
-          >I'm done adding items!</button>
-
+        <button className="done-adding" onClick={() => this.checkForItems()}>
+          I'm done adding items!
+        </button>
       </section>
-
-    )
+    );
   }
 }
 

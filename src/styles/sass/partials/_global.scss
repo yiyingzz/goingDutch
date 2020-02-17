@@ -5,7 +5,7 @@ html {
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   font-size: 2rem;
   text-align: center;
   background: $secondaryTextColor;
@@ -27,7 +27,15 @@ li {
 
 header {
   height: 200px;
-  background: linear-gradient(to bottom, $primaryColor 25%, $secondaryColor 25%, $secondaryColor 50%, $tertiaryColor 50%, $tertiaryColor 75%, $fourthColor 75%);
+  background: linear-gradient(
+    to bottom,
+    $primaryColor 25%,
+    $secondaryColor 25%,
+    $secondaryColor 50%,
+    $tertiaryColor 50%,
+    $tertiaryColor 75%,
+    $fourthColor 75%
+  );
 }
 
 footer {
@@ -69,7 +77,7 @@ a {
 }
 
 .flex-container {
-  display:flex;
+  display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
@@ -87,7 +95,7 @@ h2 {
   font-size: 3rem;
   letter-spacing: 2px;
   margin-top: 10px;
-  color: $accentColor;
+  color: $darkerAccentColor;
   text-shadow: 2px 2px $secondaryTextColor;
 }
 
@@ -118,6 +126,7 @@ button {
   height: 48px;
   padding: 10px 25px;
   transition: 0.3s all;
+  cursor: pointer;
 
   &:hover,
   &:focus {
@@ -127,6 +136,35 @@ button {
 
 .alternate-button {
   background: $secondaryColor;
+}
+
+.input-button {
+  font-size: smaller;
+  background: $bgColor;
+  border: 1px solid $bgColor;
+  color: $darkerAccentColor;
+  margin: 0 auto;
+
+  &:hover,
+  &:focus {
+    background: $bgColor;
+    border: 1px solid $darkerAccentColor;
+    color: $darkerAccentColor;
+  }
+
+  &__add {
+    margin-top: 5px;
+  }
+
+  &__remove {
+    margin-left: 10px;
+    height: 100%;
+    padding: 17px 25px;
+
+    @include mqSmallPhone {
+      padding: 17px 15px;
+    }
+  }
 }
 
 form {
@@ -158,6 +196,22 @@ input {
   &:hover,
   &:focus {
     border: 2px solid $accentColor;
+  }
+}
+
+.name-input {
+  margin: 5px 0;
+}
+
+.person-component {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.person-component-input {
+  @include mqSmallPhone {
+    width: calc(100% - 104px);
   }
 }
 
