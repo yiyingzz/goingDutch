@@ -3,6 +3,9 @@ import CardItem from "./CardItem";
 
 const IndividualBillCard = props => {
   const { name, totalAmount, items } = props;
+  function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  }
 
   let totalPrice = totalAmount;
   if (typeof totalAmount === "number") {
@@ -10,6 +13,7 @@ const IndividualBillCard = props => {
   } else {
     totalPrice = Number(totalAmount).toFixed(2);
   }
+  totalPrice = formatNumber(totalPrice);
 
   const billItems = [];
   for (let item in items) {

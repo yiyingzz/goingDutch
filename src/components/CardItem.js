@@ -2,6 +2,9 @@ import React from "react";
 
 const CardItem = props => {
   const { itemName, itemCost } = props;
+  function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  }
 
   let itemPrice = itemCost;
   if (typeof itemCost === "number") {
@@ -9,6 +12,7 @@ const CardItem = props => {
   } else {
     itemPrice = Number(itemCost).toFixed(2);
   }
+  itemPrice = formatNumber(itemPrice);
 
   return (
     <li>

@@ -3,12 +3,17 @@ import React from "react";
 const SingleItem = props => {
   const { itemName, itemCost, whosPaying, costPerPerson } = props;
 
+  function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  }
+
   let itemPrice = itemCost;
   if (typeof itemCost === "number") {
     itemPrice = itemCost.toFixed(2);
   } else {
     itemPrice = Number(itemCost).toFixed(2);
   }
+  itemPrice = formatNumber(itemPrice);
 
   return (
     <li>
