@@ -1,0 +1,22 @@
+DATABASE STRUCTURE
+- Event {}
+   - Event name ""
+   - Date created ""
+     - People - obj[]
+       - Person {}
+          - Item(s) to pay for - obj[]
+            - Item name ""
+            - Item cost - num
+            - Fraction of item to pay for - ""
+          - Total to pay - num
+          - Total paid already - num 
+          - Total owed - num
+	  - Bill {}
+	      - All Items - obj[]
+          - Item name - ""
+          - Item cost - num
+          - Who's paying for it - obj[]
+            - Person name
+            - How much they need to oay - num
+        - Total amount  
+        - Total paid

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import firebase from "../firebase.js";
+import firebase from "../firebase";
 
 // component to display all bills in database
 class ListAllBills extends Component {
@@ -13,7 +13,7 @@ class ListAllBills extends Component {
   componentDidMount() {
     const dbRef = firebase.database().ref(); // database reference
 
-    dbRef.on("value", snapshot => {
+    dbRef.on("value", (snapshot) => {
       const data = snapshot.val();
 
       const billData = [];

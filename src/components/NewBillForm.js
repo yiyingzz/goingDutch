@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import firebase from "../firebase.js";
-import PersonInput from "./PersonInput.js";
+import firebase from "../firebase";
+import PersonInput from "./PersonInput";
 
-const NewBillForm = props => {
+const NewBillForm = (props) => {
   const { getBillInfo, listAllBills } = props;
 
   const [formState, setFormState] = useState({
@@ -16,11 +16,11 @@ const NewBillForm = props => {
     let formChecker = true;
     // loop through peopleInput to get names and put them on an array with billInput
     const inputs = [billInput];
-    peopleInput.forEach(person => {
+    peopleInput.forEach((person) => {
       inputs.push(person.name);
     });
 
-    inputs.forEach(input => {
+    inputs.forEach((input) => {
       if (
         !(formState.isValid && input.trim() !== "" && input.trim().length > 0)
       ) {
@@ -76,7 +76,7 @@ const NewBillForm = props => {
   // bill name
   const [billState, setBillState] = useState({ billName: "" });
 
-  const handleBillNameChange = e => {
+  const handleBillNameChange = (e) => {
     setBillState({
       billName: e.target.value
     });
@@ -90,12 +90,12 @@ const NewBillForm = props => {
   ]);
 
   // add another input
-  const addPersonInput = event => {
+  const addPersonInput = (event) => {
     event.preventDefault();
     setPeopleState([...peopleState, blankPerson]);
   };
 
-  const handlePersonChange = e => {
+  const handlePersonChange = (e) => {
     // update people in state
     const updatedPeople = [...peopleState];
     updatedPeople[e.target.dataset.index].name = e.target.value;
@@ -165,7 +165,7 @@ const NewBillForm = props => {
 
         <button
           className="input-button input-button__add"
-          onClick={e => {
+          onClick={(e) => {
             addPersonInput(e);
           }}
         >
@@ -174,7 +174,7 @@ const NewBillForm = props => {
 
         <button
           type="submit"
-          onClick={e => validateInputs(e, billState.billName, peopleState)}
+          onClick={(e) => validateInputs(e, billState.billName, peopleState)}
         >
           Submit
         </button>

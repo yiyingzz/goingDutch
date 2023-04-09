@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import firebase from "../firebase.js";
-import ItemsList from "./ItemsList.js";
+import firebase from "../firebase";
+import ItemsList from "./ItemsList";
 
 class ItemForm extends Component {
   constructor() {
@@ -23,7 +23,7 @@ class ItemForm extends Component {
   componentDidMount() {
     const billRef = firebase.database().ref(this.props.currentBillKey);
 
-    billRef.on("value", snapshot => {
+    billRef.on("value", (snapshot) => {
       const items = snapshot.val().allItems;
       const itemsList = [];
       for (let item in items) {
@@ -37,7 +37,7 @@ class ItemForm extends Component {
     });
   }
 
-  checkboxChange = event => {
+  checkboxChange = (event) => {
     // create a new array from state
     const updatedPeople = [...this.state.people];
 
@@ -51,7 +51,7 @@ class ItemForm extends Component {
     });
   };
 
-  inputChange = event => {
+  inputChange = (event) => {
     this.setState({
       [event.target.id]: event.target.value,
       formValid: true
@@ -78,7 +78,7 @@ class ItemForm extends Component {
 
   validateCheckboxes = () => {
     let uncheckedCounter = 0;
-    this.state.people.forEach(person => {
+    this.state.people.forEach((person) => {
       if (person.checked !== true) {
         uncheckedCounter++;
         // if all people are unchecked
@@ -111,8 +111,8 @@ class ItemForm extends Component {
 
     // get who's paying for the current item
     const whosPaying = this.state.people
-      .filter(person => person.checked)
-      .map(person => {
+      .filter((person) => person.checked)
+      .map((person) => {
         return person.name;
       });
 
@@ -144,7 +144,7 @@ class ItemForm extends Component {
       }
 
       const updatedPeople = [...this.state.people];
-      updatedPeople.forEach(person => {
+      updatedPeople.forEach((person) => {
         if (person.checked === true) {
           person.items.push(splitItem);
           // set total amount for each person
@@ -258,7 +258,7 @@ class ItemForm extends Component {
 
             <button
               className="alternate-button add-item-button"
-              onClick={event =>
+              onClick={(event) =>
                 this.validateInputs(
                   event,
                   this.state.itemName,

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import firebase from "../firebase.js";
+import firebase from "../firebase";
 import IndividualBillCard from "./IndividualBillCard";
 
 class DisplayBill extends Component {
@@ -14,7 +14,7 @@ class DisplayBill extends Component {
   componentDidMount() {
     const billRef = firebase.database().ref(this.props.currentBillKey);
 
-    billRef.on("value", snapshot => {
+    billRef.on("value", (snapshot) => {
       this.setState({
         billItem: snapshot.val(),
         people: snapshot.val().people
