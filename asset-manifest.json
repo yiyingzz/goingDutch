@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/goingDutch/static/css/main.49da0c9c.css",
+    "main.js": "/goingDutch/static/js/main.1bc36845.js",
+    "index.html": "/goingDutch/index.html",
+    "main.49da0c9c.css.map": "/goingDutch/static/css/main.49da0c9c.css.map",
+    "main.1bc36845.js.map": "/goingDutch/static/js/main.1bc36845.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.49da0c9c.css",
+    "static/js/main.1bc36845.js"
+  ]
+}
